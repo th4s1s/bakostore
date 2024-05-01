@@ -9,13 +9,13 @@ const HomePage: React.FC = () => {
         <div className="relative grid md:grid-cols-12 grid-cols-1 items-center mt-10 gap-[30px]">
           <div className="md:col-span-7">
             <div className="md:mr-6">
-              <h4 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-black dark:text-white relative">
-                Mua những cuốn Manga, LN yêu thích của bạn <span className="relative text-pink-200">
+              <h4 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-black relative">
+                Mua những cuốn Manga/LN yêu thích của bạn <span className="relative text-pink-200">
                 tại nhà
                 </span>
               </h4>
               <p className="text-slate-400 text-lg max-w-xl">
-              Tại Bako, mỗi quyển manga không chỉ là một cuốn sách; chúng là cánh cửa dẫn vào những thế giới kỳ diệu, nơi mỗi trang truyện là một cuộc phiêu lưu mới. Với lòng đam mê cháy bỏng dành cho manga và sự tận tâm trong từng tác phẩm, Bako cam kết mang đến cho bạn những trải nghiệm mua sách đặc sắc và đầy cảm hứng.
+              Tại Bako, mỗi quyển Manga/LN không chỉ là một cuốn sách; chúng là cánh cửa dẫn vào những thế giới kỳ diệu, nơi mỗi trang truyện là một cuộc phiêu lưu mới. Với lòng đam mê cháy bỏng dành cho manga và sự tận tâm trong từng tác phẩm, Bako cam kết mang đến cho bạn những trải nghiệm mua sách đặc sắc và đầy cảm hứng.
               </p>
               <div className="relative mt-8">
               <Link
@@ -80,7 +80,7 @@ const HomePage: React.FC = () => {
             Manga Đa Dạng
           </a>
           <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-          Khám phá kho tàng manga đa dạng, nơi bán mọi thể loại từ shojo đến yuri.
+          Khám phá kho tàng manga đa dạng, nơi bán mọi thể loại từ shoujo đến yuri.
           </p>
         </div>
       </div>

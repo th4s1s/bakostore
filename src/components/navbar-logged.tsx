@@ -1,4 +1,3 @@
-import React from 'react';
 import { SearchBar } from './searchbar';
 import { NotificationsButton } from './notifications-button';
 import { AccountButton } from './account-button';
