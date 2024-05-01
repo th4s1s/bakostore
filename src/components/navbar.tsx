@@ -14,21 +14,21 @@ const Navbar: React.FC = () => {
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div className="text-lg lg:flex-grow">
           <RouterLink href="/" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
-            Home
+            Trang Chủ
           </RouterLink>
           <RouterLink href="/shop" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
-            Shop
+            Cửa Hàng
           </RouterLink>
           <RouterLink href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
-            Contact
+            Liên Hệ
           </RouterLink>
           <RouterLink href="/about-us" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white">
-            About Us
+            Về Chúng Tôi
           </RouterLink>
         </div>
         <div>
           <button className="bg-white text-teal-800 font-semibold py-2 px-4 rounded">
-            Login
+            Đăng Nhập
           </button>
         </div>
       </div>

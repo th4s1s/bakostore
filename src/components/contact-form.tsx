@@ -53,7 +53,7 @@ export const ContactForm: FC = () => {
         <Grid container spacing={3}>
           <Grid xs={12} sm={6}>
             <FormControl fullWidth>
-              <FormLabel>Your Name *</FormLabel>
+              <FormLabel>Họ Và Tên *</FormLabel>
               <OutlinedInput name="name" required />
             </FormControl>
           </Grid>
@@ -65,13 +65,13 @@ export const ContactForm: FC = () => {
           </Grid>
           <Grid xs={12}>
             <FormControl fullWidth>
-              <FormLabel>Subject *</FormLabel>
+              <FormLabel>Chủ Đề *</FormLabel>
               <OutlinedInput name="subject" required />
             </FormControl>
           </Grid>
           <Grid xs={12}>
             <FormControl fullWidth>
-              <FormLabel>Message *</FormLabel>
+              <FormLabel>Tin Nhắn *</FormLabel>
               <OutlinedInput name="message" required multiline rows={6} />
             </FormControl>
           </Grid>
@@ -92,8 +92,8 @@ export const ContactForm: FC = () => {
           fontSize: '16px' 
         }}
       >
-  Send Message
-</Button>
+    Gửi Tin Nhắn
+    </Button>
         </Box>
       </form>
     </ThemeProvider>

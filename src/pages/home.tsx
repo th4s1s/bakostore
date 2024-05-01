@@ -10,12 +10,12 @@ const HomePage: React.FC = () => {
           <div className="md:col-span-7">
             <div className="md:mr-6">
               <h4 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-black dark:text-white relative">
-                Buy Your Favorite Manga <span className="after:absolute after:right-0 after:left-0 after:bottom-3 after:lg:h-3 after:h-2 after:w-auto after:rounded-md after:bg-indigo-600/30 relative text-pink-200">
-                  At Home
+                Mua những cuốn Manga, LN yêu thích của bạn <span className="relative text-pink-200">
+                tại nhà
                 </span>
               </h4>
               <p className="text-slate-400 text-lg max-w-xl">
-                Welcome to Bako, your charming destination for manga delights! Dive into our vibrant selection of Japanese comics, featuring both beloved classics and fresh releases. Explore an atmosphere that promises joy and sparks your imagination with every visit. Discover your next favorite story at Bako today!
+              Tại Bako, mỗi quyển manga không chỉ là một cuốn sách; chúng là cánh cửa dẫn vào những thế giới kỳ diệu, nơi mỗi trang truyện là một cuộc phiêu lưu mới. Với lòng đam mê cháy bỏng dành cho manga và sự tận tâm trong từng tác phẩm, Bako cam kết mang đến cho bạn những trải nghiệm mua sách đặc sắc và đầy cảm hứng.
               </p>
               <div className="relative mt-8">
               <Link
@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)' 
                 }}
               >
-                Buy Now 🎀
+                Mua Ngay 🎀
               </Link>
             </div>
             </div>
@@ -50,16 +50,16 @@ const HomePage: React.FC = () => {
     </section>
 
     <section
-  className="relative md:py-24 py-16 bg-gray-50 dark:bg-slate-800"
+  className="relative md:py-24 py-16 bg-gray-50"
   id="features"
 >
   <div className="container lg mx-auto">
     <div className="grid grid-cols-1 pb-8 text-center">
       <h3 className="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">
-        Discover Bako
+       Khám Phá Bako
       </h3>
       <p className="text-slate-400 max-w-xl mx-auto">
-        Step into a world where every page turns into an adventure. At Bako, we bring stories to life!
+        Bước vào thế giới mà mỗi trang sách mở ra một cuộc phiêu lưu. Tại Bako, chúng tôi làm sống dậy những câu chuyện!
       </p>
     </div>
     {/*end grid*/}
@@ -77,10 +77,10 @@ const HomePage: React.FC = () => {
             href="#"
             className="text-xl font-medium hover:text-pink-500 duration-500 ease-in-out"
           >
-            Manga Love
+            Manga Đa Dạng
           </a>
           <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-            Explore a treasure trove of manga collections where every genre from shojo to shonen thrives.
+          Khám phá kho tàng manga đa dạng, nơi bán mọi thể loại từ shojo đến yuri.
           </p>
         </div>
       </div>
@@ -98,10 +98,10 @@ const HomePage: React.FC = () => {
             href="#"
             className="text-xl font-medium hover:text-pink-500 duration-500 ease-in-out"
           >
-            Community Corner
+            Góc Cộng Đồng
           </a>
           <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-            Dive into discussions, fan art, and creator spotlights. Bako is your community for all things manga!
+          Tham gia vào các cuộc thảo luận của người hâm mộ, và tìm hiểu về các tác giả. Bako là cộng đồng của bạn cho mọi thứ về manga, LN!
           </p>
         </div>
       </div>
@@ -119,10 +119,10 @@ const HomePage: React.FC = () => {
             href="#"
             className="text-xl font-medium hover:text-pink-500 duration-500 ease-in-out"
           >
-            Non-Profit Nook
+            Không Lợi Nhuận
           </a>
           <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-            At Bako, we believe in the spirit of giving. Every purchase supports community projects and artist collaborations.
+          Tại Bako, chúng tôi nói không với ăn chặn. Tất cả lợi nhuận sẽ được hoàn trả lại cho tác giả.
           </p>
         </div>
       </div>
@@ -137,17 +137,17 @@ const HomePage: React.FC = () => {
       <div className="relative order-2 md:order-1">
       <img
         src='/context.webp'
-        className="rounded-lg shadow-md dark:shadow-gray-800"
+        className="rounded-lg shadow-md "
         alt="Context"
       />
         </div>
       </div>
       <div className="lg:ml-8 mt-8 md:mt-0 order-1 md:order-2">
         <h4 className="mb-4 text-2xl md:leading-normal leading-normal font-semibold">
-          Bako's Story
+          Câu truyện của chúng tôi
         </h4>
         <p className="text-slate-400">
-          Born from a love of manga and a wish to unite fans, Bako stands as a beacon for community and creativity in the manga world.
+          Được sinh ra từ tình yêu đằm thấm đối với Manga và LN, chúng tôi mong muốn lan tỏa tình yêu này đến với mọi người trên khắp mọi miền tổ quốc.
         </p>
         <div className="mt-4">
           <a
@@ -155,7 +155,7 @@ const HomePage: React.FC = () => {
             target="_blank"
             className="btn btn-link text-pink-600 hover:text-pink-600 after:bg-pink-600 duration-500 ease-in-out"
           >
-            Our Journey
+            Xem hành trình chúng tôi tại đây
           </a>
         </div>
       </div>

@@ -43,7 +43,7 @@ const Contact: React.FC = () => {
                 </SvgIcon>
               </Avatar>
               <Typography variant="overline" style={{ color: '#ff79b0' }}> 
-                Contact us
+                Liên Hệ Chúng Tôi
               </Typography>
             </Stack>
             <Typography
@@ -51,14 +51,14 @@ const Contact: React.FC = () => {
               variant="h1"
               style={{ color: '#6a1b9a' }} // Deep purple for major headings
             >
-              Have a question for us?
+              Bạn có thắc mắc hay yêu cầu gì ư?
             </Typography>
             <Typography
               sx={{ mb: 3 }}
               variant="body1"
               style={{ color: '#333' }} // Soft black for body text
             >
-              Have question about our manga or LN? Feel free to contact us. We will get back to you as soon as possible.
+              Nếu có thắc mắc nào hãy điền vào form kế bên, chúng tôi sẽ trả lời bạn trong thời gian sớm nhất.
             </Typography>
             <Stack
               alignItems="center"
@@ -95,7 +95,7 @@ const Contact: React.FC = () => {
               variant="h6"
               style={{ color: '#f48fb1' }} // Lighter pink for secondary text
             >
-              Fill the form below
+              Điền vào form bên dưới
             </Typography>
             <ContactForm />
           </Container>
