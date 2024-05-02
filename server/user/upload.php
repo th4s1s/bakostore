@@ -1,7 +1,6 @@
 <?php
 function upload($type) {
     if ($_FILES["fileToUpload"]["name"] == "") {
-        echo "No file uploaded.";
         return false;
     }
     
@@ -47,7 +46,6 @@ function upload($type) {
             return "/img" . explode("/img", $target_file)[1];
         }
         else if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo "File uploaded successfully.";
             return "/img" . explode("/img", $target_file)[1];
         } else {
             echo "Something went wrong.";
