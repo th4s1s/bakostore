@@ -6,7 +6,7 @@ import Footer from "./components/footer"
 import Shop from "./pages/shop"
 import NewsPage from "./pages/news"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import ProductDetail from "./pages/shop-detail"
 
 const theme = createTheme({
   typography: {
@@ -29,6 +29,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/news" element={<NewsPage />} />
+        <Route path="/product/:productId" element={<ProductDetail />} />
       </Routes>  
       <Footer />
     </ThemeProvider>

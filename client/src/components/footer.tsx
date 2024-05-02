@@ -11,7 +11,7 @@ const Footer = () => {
       textAlign: 'center'
     }}>
       <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-        Bako Manga Store
+        Bako Store
       </Typography>
       <Typography variant="body2" sx={{ marginY: '10px' }}>
         Mua Manga/LN yêu thích của bạn tại nhà
@@ -27,7 +27,7 @@ const Footer = () => {
         <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" sx={{ color: 'inherit' }}><Facebook /></Link>
       </Box>
       <Typography variant="body2">
-        © 2024 Bako Manga Store. All rights reserved.
+        © 2024 Bako Store. All rights reserved.
       </Typography>
     </Box>
   );
