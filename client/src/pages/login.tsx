@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';  
+import axios from 'axios';
 
 function Login() {
 
@@ -29,7 +29,7 @@ function Login() {
         username: '',
         password: '',
         name: '',
-        phone: ''
+        phone: '',
     });
 
     const [username, setUsername] = useState('');
@@ -75,26 +75,62 @@ function Login() {
             } else {
                 newErrors.phone = '';
             }
-            setErrors(newErrors);
-            
-            const formData = new URLSearchParams({
-                username: e.target.username.value,
-                password: e.target.password.value,
-                name: e.target.name.value,
-                phone: e.target.phone.value
-            });
-            
-            try {
-                const response = await axios.post(`/api/server/user/register.php`, formData, {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
+            // setErrors(newErrors);
+
+            if (Object.values(newErrors).every(error => !error)) {
+                const formData = new URLSearchParams({
+                    username: e.target.username.value,
+                    password: e.target.password.value,
+                    name: e.target.name.value,
+                    phone: e.target.phone.value
                 });
-                console.log('Success:', response.data);
-                // Handle navigation or state update on successful registration
-            } catch (error) {
-                console.error('Error:', error.response ? error.response.data : error.message);
+
+                try {
+                    //localhost
+                    const response = await axios.post(`/api/user/register.php`, formData, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+                } catch (error) {
+                    // console.error('Error:', error.response.status);
+                    if(error.response.status == 409){
+                        newErrors.username = 'Tên đăng ký đã tồn tại';
+                    }
+                }
             }
+            setErrors(newErrors);
+        }
+        else{
+            const newErrors = {};
+            if(!e.target.username.value){
+                newErrors.username = 'Vui lòng nhập tên đăng nhập';
+            }
+            if(!e.target.password.value){
+                newErrors.password = 'Vui lòng nhập mật khẩu';
+            }
+
+            if (Object.values(newErrors).every(error => !error)) {
+                const formData = new URLSearchParams({
+                    username: e.target.username.value,
+                    password: e.target.password.value,
+                });
+                try {
+                    //localhost
+                    const response = await axios.post(`/api/user/login.php`, formData, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+                    // console.log(response.data)
+                } catch (error) {
+                    console.error('Error:', error);
+                    if(error.response.status == 404 || error.response.status == 400){
+                        newErrors.username = 'Tài khoản không tồn tại hoặc sai mật khẩu';
+                    }
+                }
+            }
+            setErrors(newErrors);
         }
         // setUsername(e.target.username.value);
         // setPassword(e.target.password.value);
@@ -138,6 +174,7 @@ function Login() {
                             // value={password}
                             // onChange={(e) => setPassword(e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                            {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
                     </div>
                     <button
                         type="submit"
