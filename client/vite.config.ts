@@ -4,4 +4,14 @@ import react from '@vitejs/plugin-react-swc'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
+  server: {
+    proxy: {
+      // Using '/api' as an example. Adjust according to your needs.
+      '/api': {
+        target: 'http://192.168.1.15',  // Target server
+        changeOrigin: true,             // Needed for virtual hosted sites
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
+});

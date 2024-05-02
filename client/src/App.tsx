@@ -15,7 +15,7 @@ const theme = createTheme({
       'cursive',
       'sans-serif' // Fallback fonts
     ].join(','),
-  }
+  },
 });
 
 function App() {
