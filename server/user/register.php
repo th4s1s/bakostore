@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $phone = $_POST["phone"];
 
-    if (!ctype_alnum($username) || !ctype_alnum($password) || !ctype_alnum(str_replace(' ', '', $name))) {
+    if (!ctype_alnum($username) || !ctype_alnum(str_replace(' ', '', $name))) {
         http_response_code(400); // Bad Request
         exit;
     }
