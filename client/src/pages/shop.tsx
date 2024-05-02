@@ -1,21 +1,12 @@
 import React, { useState } from 'react';
-import { Card, CardMedia, CardContent, Typography, Pagination, Box } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+
+import { Card, CardMedia, CardContent, Typography, Pagination, Box, Rating } from '@mui/material';
 import { pink } from '@mui/material/colors';
 
 const products = [
-  { id: 1, name: 'Hành Trình Của Elaina - Tập 1', description: 'Mô tả gì đó', price: '100000 VND', image: 'https://upload.wikimedia.org/wikipedia/vi/9/9b/Hanh_trinh_cua_Elaina_quyen_1.png', rating: '5', type: 'novel'},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: '5', type: "novel"},
-
+  { id: 1, name: 'Hành Trình Của Elaina - Tập 1', description: 'Mô tả gì đó', price: '100000 VND', image: 'https://upload.wikimedia.org/wikipedia/vi/9/9b/Hanh_trinh_cua_Elaina_quyen_1.png', rating: 3.5, type: 'novel'},
+  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: 4.6, type: "novel"},
+  { id: 2, name: 'Hành Trình Của Elaina - Tập 2', description: 'This is product 2', price: '200000 VND', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ljV_EpQefXyXZXJSFd0aFZD1EcZGnJkCqysNSUTL1w&s', rating: 5, type: "novel"},
 ];
 
 const itemsPerPage = 8;
@@ -26,14 +17,6 @@ const Shop: React.FC = () => {
     const itemsOffset = (page - 1) * itemsPerPage;
     const endOffset = itemsOffset + itemsPerPage;
     const currentItems = products.slice(itemsOffset, endOffset);
-
-    const renderRating = (rating: number) => {
-      return [...Array(5)].map((star, index) => {
-        index += 1;
-        return index <= rating ? <StarIcon key={index} style={{ color: pink[200] }} /> : <StarBorderIcon key={index} style={{ color: pink[100] }} />;
-      });
-    };
-
     return (
       <Box sx={{ backgroundColor: pink[50], py: 8, minHeight: '100vh' }}>
         <Typography variant="h4" component="h1" gutterBottom textAlign="center" color={pink[300]}>
@@ -57,8 +40,13 @@ const Shop: React.FC = () => {
                     {product.price}
                   </Typography>
                   <Box sx={{ display: 'flex', mt: 1 }}>
-                    {renderRating(Number(product.rating))}
-                  </Box>
+                  <Rating
+                    readOnly
+                    value={product.rating}
+                    precision={0.1}
+                    max={5}
+                />                  
+                 </Box>
                 </CardContent>
               </Card>
             ))}
@@ -74,5 +62,6 @@ const Shop: React.FC = () => {
       </Box>
     );
   };
-
+ 
   export default Shop;
+  

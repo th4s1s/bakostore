@@ -22,9 +22,9 @@ const Footer = () => {
         gap: '10px',
         marginBottom: '10px'
       }}>
-        <Link href="https://instagram.com/bako" target="_blank" sx={{ color: 'inherit' }}><Instagram /></Link>
-        <Link href="https://twitter.com/bako" target="_blank" sx={{ color: 'inherit' }}><Twitter /></Link>
-        <Link href="https://facebook.com/bako" target="_blank" sx={{ color: 'inherit' }}><Facebook /></Link>
+        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" sx={{ color: 'inherit' }}><Instagram /></Link>
+        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" sx={{ color: 'inherit' }}><Twitter /></Link>
+        <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" sx={{ color: 'inherit' }}><Facebook /></Link>
       </Box>
       <Typography variant="body2">
         © 2024 Bako Manga Store. All rights reserved.

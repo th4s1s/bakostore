@@ -22,8 +22,7 @@ const HomePage: React.FC = () => {
                 to='/'
                 className="btn bg-pink-200 hover:bg-pink-300 border-pink-200 hover:border-pink-300 hover:text-white text-black rounded-full mr-2 text-xl px-6 py-3 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
                 style={{
-                  fontFamily: '"Caveat", cursive',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.1)' 
                 }}
               >
                 Mua Ngay 🎀
@@ -170,3 +169,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+
