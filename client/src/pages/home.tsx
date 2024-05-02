@@ -4,9 +4,9 @@ import Iconify from '../components/iconify';
 const HomePage: React.FC = () => {
   return (
     <>
-    <section className="relative w-full mt-0 lg:py-44 overflow-hidden z-1 flex items-start justify-center">
-      <div className="container">
-        <div className="relative grid md:grid-cols-12 grid-cols-1 items-center mt-10 gap-[30px]">
+    <section className="relative mt-0 lg:py-44 overflow-hidden z-1 flex items-start justify-center">
+      <div className="container pl-10">
+        <div className="relative grid md:grid-cols-12 grid-cols-1 items-center mt-0 gap-[30px]">
           <div className="md:col-span-7">
             <div className="md:mr-6">
               <h4 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-black relative">
@@ -22,7 +22,6 @@ const HomePage: React.FC = () => {
                 to='/'
                 className="btn bg-pink-200 hover:bg-pink-300 border-pink-200 hover:border-pink-300 hover:text-white text-black rounded-full mr-2 text-xl px-6 py-3 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
                 style={{
-                  fontFamily: '"Caveat", cursive',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)' 
                 }}
               >
@@ -131,7 +130,7 @@ const HomePage: React.FC = () => {
     {/*end grid*/}
   </div>
   {/*end container*/}
-  <div className="container ml-20 md:mt-24 mt-16">
+  <div className="ml-20 md:mt-24 mt-16">
     <div className="grid md:grid-cols-2 grid-cols-1 items-center mt-16 gap-[30px]">
       <div className="relative order-2 md:order-1">
       <div className="relative order-2 md:order-1">
@@ -170,3 +169,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+

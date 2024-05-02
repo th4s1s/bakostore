@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+
 import { Card, CardMedia, CardContent, Typography, Pagination, Box, Rating } from '@mui/material';
 import { pink } from '@mui/material/colors';
-
 
 const products = [
   { id: 1, name: 'Hành Trình Của Elaina - Tập 1', description: 'Mô tả gì đó', price: '100000 VND', image: 'https://upload.wikimedia.org/wikipedia/vi/9/9b/Hanh_trinh_cua_Elaina_quyen_1.png', rating: 3.5, type: 'novel'},
@@ -62,6 +62,6 @@ const Shop: React.FC = () => {
       </Box>
     );
   };
-  
+ 
   export default Shop;
   

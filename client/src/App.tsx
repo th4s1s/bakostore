@@ -18,7 +18,6 @@ const theme = createTheme({
   }
 });
 
-
 function App() {
 
   return (
@@ -29,6 +28,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/shop" element={<Shop />} />
+      </Routes>  
+      <Footer />
         <Route path="/news" element={<NewsPage />} />
       </Routes>  
       <Footer />

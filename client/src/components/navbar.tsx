@@ -1,6 +1,5 @@
 import { RouterLink } from "./router-link";
 
-
 const Navbar: React.FC = () => {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-pink-200 p-6">
