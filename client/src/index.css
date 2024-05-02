@@ -1,6 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 * {
     font-family: "Nunito", sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 5px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ff69b4; /* pink color */
+    border-radius: 10px;
+    border: 2px solid #ffffff; /* white border */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ff99cc; /* lighter pink color on hover */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #f0f0f0;
 }
