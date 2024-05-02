@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    if (!ctype_alnum($username) || !ctype_alnum($password)) {
+    if (!ctype_alnum($username)) {
         http_response_code(400); // Bad Request
         exit;
     }
