@@ -5,6 +5,7 @@ import Contact from "./pages/contact"
 import Footer from "./components/footer"
 import Shop from "./pages/shop"
 import NewsPage from "./pages/news"
+import Login from "./pages/login"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
@@ -29,7 +30,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/news" element={<NewsPage />} />
-      </Routes>  
+        <Route path="/login" element={<Login />} />
+      </Routes>
       <Footer />
     </ThemeProvider>
       </>
