@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Management</title>
+</head>
+<body>
+    <h1>User Management</h1>
+
+    <!-- Remove User Form -->
+    <h2>Remove User</h2>
+    <form action="remove.php" method="post">
+        <label for="id">User ID:</label><br>
+        <input type="text" id="id" name="id"><br>
+        <input type="submit" value="Remove User" name="submit">
+    </form>
+
+    <!-- Show Users -->
+    <h2>Users</h2>
+    <div id="Users"></div>
+
+    <script>
+        // Fetch Users from the server
+        fetch('show.php')
+            .then(response => response.json())
+            .then(data => {
+                const UsersDiv = document.getElementById('Users');
+                data.forEach(users => {
+                    const UserDiv = document.createElement('div');
+                    UserDiv.textContent = `Username: ${users.username}, Password: ${users.password}, Name: ${users.name}, Phone: ${users.phone}, Token: ${users.token}`;
+
+                    // Create an img element and set its src to the image path
+                    const img = document.createElement('img');
+                    img.src = users.avatar;
+                    img.alt = users.name;
+
+                    // Append the img element to the UserDiv
+                    UserDiv.appendChild(img);
+
+                    UsersDiv.appendChild(UserDiv);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
