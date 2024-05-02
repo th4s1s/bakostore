@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';  
 
 function Login() {
 
@@ -37,7 +38,7 @@ function Login() {
     const [phone, setPhone] = useState('');
 
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         if(!isSignIn){
@@ -75,6 +76,25 @@ function Login() {
                 newErrors.phone = '';
             }
             setErrors(newErrors);
+            
+            const formData = new URLSearchParams({
+                username: e.target.username.value,
+                password: e.target.password.value,
+                name: e.target.name.value,
+                phone: e.target.phone.value
+            });
+            
+            try {
+                const response = await axios.post(`/api/server/user/register.php`, formData, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+                console.log('Success:', response.data);
+                // Handle navigation or state update on successful registration
+            } catch (error) {
+                console.error('Error:', error.response ? error.response.data : error.message);
+            }
         }
         // setUsername(e.target.username.value);
         // setPassword(e.target.password.value);

@@ -1,24 +1,7 @@
-import React from 'react';
 
-const newsData = [
-  {
-    id: 1,
-    title: "Ôn lại kỉ niệm tuổi thơ với bộ manga vui nhộn Yotsuba&!",
-    date: "22/04/2024",
-    summary: "Tháng 4 này, IPM ra mắt bạn đọc bộ truyện từng là một phần tuổi thơ của nhiều độc giả - Yotsuba&!...",
-    imageUrl: "https://file.hstatic.net/200000287623/article/435888831_851703520336227_5168597008643256007_n_55a9a0f5430c409a93493c1c2834b2f1.jpg",
-    link: "/blogs/tintuc/on-lai-ki-niem-tuoi-tho-voi-bo-manga-vui-nhon-yotsuba"
-  },
-  {
-    id: 1,
-    title: "Ôn lại kỉ niệm tuổi thơ với bộ manga vui nhộn Yotsuba&!",
-    date: "22/04/2024",
-    summary: "Tháng 4 này, IPM ra mắt bạn đọc bộ truyện từng là một phần tuổi thơ của nhiều độc giả - Yotsuba&!...",
-    imageUrl: "https://file.hstatic.net/200000287623/article/435888831_851703520336227_5168597008643256007_n_55a9a0f5430c409a93493c1c2834b2f1.jpg",
-    link: "/blogs/tintuc/on-lai-ki-niem-tuoi-tho-voi-bo-manga-vui-nhon-yotsuba"
-  },
-  // More dummy articles...
-];
+
+
+
 
 const NewsPage = () => {
   return (
