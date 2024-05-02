@@ -1,5 +1,6 @@
 import { RouterLink } from "./router-link";
 
+
 const Navbar: React.FC = () => {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-pink-200 p-6">
@@ -21,6 +22,9 @@ const Navbar: React.FC = () => {
           </RouterLink>
           <RouterLink href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
             Liên Hệ
+          </RouterLink>
+          <RouterLink href="/news" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
+            Tin Tức
           </RouterLink>
           <RouterLink href="/about-us" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white">
             Về Chúng Tôi
