@@ -30,12 +30,7 @@
             exit;
         }
 
-        if ($amount < 1) {
-            http_response_code(400); // Bad Request
-            exit;
-        }
-
-        $stmt = $mysqli->prepare("CALL AddToCart(?, ?, ?)");
+        $stmt = $mysqli->prepare("CALL UpdateCart(?, ?, ?)");
         $stmt->bind_param("sii", $username, $pid, $amount);
         $stmt->execute();
 

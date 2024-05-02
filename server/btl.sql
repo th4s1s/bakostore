@@ -148,9 +148,32 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE UpdateCart(IN p_username VARCHAR(255), IN p_pid INT, IN p_new_amount INT)
+BEGIN
+    DECLARE existing_amount INT;
+
+    SELECT amount INTO existing_amount
+    FROM cart
+    WHERE username = p_username AND pid = p_pid;
+
+    IF existing_amount IS NOT NULL THEN
+        IF p_new_amount > 0 THEN
+            UPDATE cart
+            SET amount = p_new_amount
+            WHERE username = p_username AND pid = p_pid;
+        ELSE
+            DELETE FROM cart
+            WHERE username = p_username AND pid = p_pid;
+        END IF;
+    END IF;
+END //
+DELIMITER ;
+
 CALL AddToCart('admin', 1, 3);
 CALL AddToCart('admin', 2, 2);
 CALL AddToCart('admin', 3, 1);
+
 
 DELIMITER //
 CREATE PROCEDURE GetCart(IN p_username VARCHAR(255))
