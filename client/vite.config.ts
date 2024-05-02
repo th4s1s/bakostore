@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // Using '/api' as an example. Adjust according to your needs.
       '/api': {
-        target: 'http://192.168.1.15',  // Target server
+        target: 'http://localhost:8080',  // Target server
         changeOrigin: true,             // Needed for virtual hosted sites
         rewrite: (path) => path.replace(/^\/api/, '')
       }

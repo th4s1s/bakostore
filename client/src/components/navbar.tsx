@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
         </div>
         <div>
         <RouterLink href="/login">
-          <button className="text-teal-800 py-2 px-4 rounded bg-pink-500 hover:bg-pink-600 text-white font-bold focus:outline-none focus:shadow-outline">
+          <button className="text-teal-800 py-2 px-4 rounded bg-pink-500 hover:bg-pink-600  font-bold focus:outline-none focus:shadow-outline">
             Đăng Nhập
           </button>
         </RouterLink>

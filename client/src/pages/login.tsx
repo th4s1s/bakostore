@@ -1,48 +1,57 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
+interface FormErrors {
+    username?: string;
+    password?: string;
+    name?: string;
+    phone?: string;
+  }
+  
 
 function Login() {
-
+    const { login } = useAuth();
     const [isSignIn, setIsSignIn] = useState(true);
-
-    const handleSignIn = () => {
-        const newErrors = {};
-        newErrors.username = '';
-        newErrors.password = '';
-        newErrors.name = '';
-        newErrors.phone = '';
-        setErrors(newErrors);
-        setIsSignIn(true);
-    };
-
-    const handleSignUp = () => {
-        const newErrors = {};
-        newErrors.username = '';
-        newErrors.password = '';
-        newErrors.name = '';
-        newErrors.phone = '';
-        setErrors(newErrors);
-        setIsSignIn(false);
-    };
-
-    const [errors, setErrors] = useState({
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState<FormErrors>({
         username: '',
         password: '',
         name: '',
         phone: '',
     });
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
 
 
-    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    const handleSignIn = () => {
+        const newErrors: { username: string; password: string; name: string; phone: string; } = {
+            username: '',
+            password: '',
+            name: '',
+            phone: ''
+        };
+        setErrors(newErrors);
+        setIsSignIn(true);
+    };
+
+    const handleSignUp = () => {
+        const newErrors: { username: string; password: string; name: string; phone: string; } = {
+            username: '',
+            password: '',
+            name: '',
+            phone: '',
+        };
+        setErrors(newErrors);
+        setIsSignIn(false);
+    };
+
+    const handleSubmit = async (e: {[x: string]: any; preventDefault: () => void; }) => {
         e.preventDefault();
 
         if(!isSignIn){
-            const newErrors = {};
+            const newErrors: FormErrors = {}; 
 
             if (e.target.username.value.length < 8 || e.target.username.value.length > 25) {
                 newErrors.username = 'Tên đăng ký phải có độ dài từ 8 đến 25 ký tự';
@@ -86,7 +95,7 @@ function Login() {
                 });
 
                 try {
-                    //localhost
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const response = await axios.post(`/api/user/register.php`, formData, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -94,7 +103,7 @@ function Login() {
                     });
                 } catch (error) {
                     // console.error('Error:', error.response.status);
-                    if(error.response.status == 409){
+                    if((error as any).response.status == 409){
                         newErrors.username = 'Tên đăng ký đã tồn tại';
                     }
                 }
@@ -102,7 +111,7 @@ function Login() {
             setErrors(newErrors);
         }
         else{
-            const newErrors = {};
+            const newErrors: FormErrors = {}; 
             if(!e.target.username.value){
                 newErrors.username = 'Vui lòng nhập tên đăng nhập';
             }
@@ -123,27 +132,19 @@ function Login() {
                         }
                     });
                     // console.log(response.data)
+                    login(response.data); 
+                    navigate('/shop'); 
                 } catch (error) {
                     console.error('Error:', error);
-                    if(error.response.status == 404 || error.response.status == 400){
+                    if((error as any).response.status == 404 || (error as any).response.status == 400){
                         newErrors.username = 'Tài khoản không tồn tại hoặc sai mật khẩu';
                     }
                 }
             }
             setErrors(newErrors);
         }
-        // setUsername(e.target.username.value);
-        // setPassword(e.target.password.value);
-        // setName(e.target.name.value);
-        // setPhone(e.target.phone.value);
-        // console.log(e.target.name.value)
-        // Perform login logic here
-        // console.log(`Username: ${username}, Password: ${password}, name: ${name}, phone: ${phone}`);
 
-        setUsername('');
-        setPassword('');
-        setName('');
-        setPhone('');
+
     };
 
     const SignInForm = () =>{

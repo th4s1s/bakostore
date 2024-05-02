@@ -36,7 +36,7 @@ const Shop: React.FC = () => {
   const currentNovelItems = filteredNovelProducts.slice((novelPage - 1) * itemsPerPage, novelPage * itemsPerPage);
 
   useEffect(() => {
-    fetch('/api/server/product/list.php')
+    fetch('/api/product/list.php')
       .then(response => response.json())
       .then(data => {
         const updatedProducts = data.map((product: Product) => ({
