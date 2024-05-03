@@ -1,22 +1,14 @@
-import type { FC } from 'react';
+import { FC } from 'react';
 import PropTypes from 'prop-types';
-import CreditCard01Icon from '@untitled-ui/icons-react/build/esm/CreditCard01';
-import Settings04Icon from '@untitled-ui/icons-react/build/esm/Settings04';
-import User03Icon from '@untitled-ui/icons-react/build/esm/User03';
 import {
-  Box,
-  Button,
-  Divider,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Popover,
-  SvgIcon,
-  Typography
+  Box, Button, Divider, ListItemButton, ListItemIcon,
+  ListItemText, Popover, SvgIcon, Typography
 } from '@mui/material';
 import { RouterLink } from '../router-link';
-import { useMockedUser } from '../../hooks/use-mocked-user';
-import { paths } from '../../paths';
+import { useAuth } from '../../context/AuthContext';
+import User03Icon from '@untitled-ui/icons-react/build/esm/User03';
+import Container from '@untitled-ui/icons-react/build/esm/Container';
+import { useNavigate } from 'react-router-dom';
 
 interface AccountPopoverProps {
   anchorEl: null | Element;
@@ -24,10 +16,15 @@ interface AccountPopoverProps {
   open?: boolean;
 }
 
-export const AccountPopover: FC<AccountPopoverProps> = (props) => {
-  const { anchorEl, onClose, open, ...other } = props;
-  const user = useMockedUser();
+export const AccountPopover: FC<AccountPopoverProps> = ({ anchorEl, onClose, open, ...other }) => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    if (onClose) onClose(); 
+  };
 
   return (
     <Popover
@@ -43,99 +40,39 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
       {...other}
     >
       <Box sx={{ p: 2 }}>
-        <Typography variant="body1">
-          {user.name}
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
-          demo@devias.io
-        </Typography>
+        <Typography variant="body1">{user.name}</Typography>
+        <Typography color="text.secondary" variant="body2">{user.username}</Typography>
       </Box>
       <Divider />
       <Box sx={{ p: 1 }}>
         <ListItemButton
           component={RouterLink}
-          href={paths.dashboard.social.profile}
+          href="/profile"
           onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5
-          }}
+          sx={{ borderRadius: 1, px: 1, py: 0.5 }}
         >
           <ListItemIcon>
-            <SvgIcon fontSize="small">
-              <User03Icon />
-            </SvgIcon>
+            <SvgIcon fontSize="small"><User03Icon /></SvgIcon>
           </ListItemIcon>
-          <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Profile
-              </Typography>
-            )}
-          />
+          <ListItemText primary={<Typography variant="body1">Profile</Typography>} />
         </ListItemButton>
         <ListItemButton
           component={RouterLink}
-          href={paths.dashboard.account}
+          href="/order"
           onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5
-          }}
+          sx={{ borderRadius: 1, px: 1, py: 0.5 }}
         >
           <ListItemIcon>
-            <SvgIcon fontSize="small">
-              <Settings04Icon />
-            </SvgIcon>
+            <SvgIcon fontSize="small"><Container /></SvgIcon>
           </ListItemIcon>
-          <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Settings
-              </Typography>
-            )}
-          />
-        </ListItemButton>
-        <ListItemButton
-          component={RouterLink}
-          href={paths.dashboard.index}
-          onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5
-          }}
-        >
-          <ListItemIcon>
-            <SvgIcon fontSize="small">
-              <CreditCard01Icon />
-            </SvgIcon>
-          </ListItemIcon>
-          <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Billing
-              </Typography>
-            )}
-          />
+          <ListItemText primary={<Typography variant="body1">Order</Typography>} />
         </ListItemButton>
       </Box>
       <Divider sx={{ my: '0 !important' }} />
-      <Box
-        sx={{
-          display: 'flex',
-          p: 1,
-          justifyContent: 'center'
-        }}
-      >
+      <Box sx={{ display: 'flex', p: 1, justifyContent: 'center' }}>
         <Button
           color="inherit"
-          // onClick={handleLogout}
+          onClick={handleLogout}
           size="small"
         >
           Logout

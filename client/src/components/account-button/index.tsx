@@ -1,12 +1,11 @@
 import type { FC } from 'react';
-import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
-import { Avatar, Box, ButtonBase, SvgIcon } from '@mui/material';
-import { useMockedUser } from '../../hooks/use-mocked-user';
+import { Avatar, Box, ButtonBase } from '@mui/material';
 import { usePopover } from '../../hooks/use-popover';
 import { AccountPopover } from './account-popover';
+import { useAuth } from '../../context/AuthContext';
 
 export const AccountButton: FC = () => {
-  const user = useMockedUser();
+  const { user } = useAuth();
   const popover = usePopover<HTMLButtonElement>();
 
   return (
@@ -18,24 +17,21 @@ export const AccountButton: FC = () => {
         sx={{
           alignItems: 'center',
           display: 'flex',
-          borderWidth: 2,
-          borderStyle: 'solid',
-          borderColor: 'divider',
-          height: 40,
-          width: 40,
+          // borderWidth: 2,
+          // borderStyle: 'solid',
+          // borderColor: 'divider',
+          height: 60,
+          width: 60,
           borderRadius: '50%'
         }}
       >
         <Avatar
           sx={{
-            height: 32,
-            width: 32
+            height: 60,
+            width: 60
           }}
           src={user.avatar}
         >
-          <SvgIcon>
-            <User01Icon />
-          </SvgIcon>
         </Avatar>
       </Box>
       <AccountPopover

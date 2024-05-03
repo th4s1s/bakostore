@@ -4,7 +4,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-pink-200 p-6">
       <div className="flex items-center flex-shrink-0 text-black mr-6">
-        <img src="/logo.webp" alt="Logo" className="h-10 w-10 mr-2" />
+        <img src="/logo.png" alt="Logo" className="h-20 w-20 mr-2" />
       </div>
       <div className="block lg:hidden">
         <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
