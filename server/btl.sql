@@ -195,6 +195,7 @@ CREATE TABLE IF NOT EXISTS orders (
   amount int(11) NOT NULL,
   address varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   phone varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  ship = int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (id, username, pid),
   FOREIGN KEY (username) REFERENCES users(username),
   FOREIGN KEY (pid) REFERENCES products(id)
@@ -213,7 +214,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetOrderDetail(IN p_id INT)
 BEGIN
-	SELECT o.id, o.username, o.pid, p.name, p.image, o.amount, p.price, o.amount * p.price AS total_price, o.address, o.phone
+	SELECT o.id, o.username, o.pid, p.name, p.image, o.amount, p.price, o.amount * p.price AS total_price, o.address, o.phone, o.ship
 	FROM orders o
 	INNER JOIN products p ON o.pid = p.id
 	WHERE o.id = p_id;
@@ -221,14 +222,14 @@ END //
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE Purchase(IN p_username VARCHAR(255), IN p_address VARCHAR(255), IN p_phone VARCHAR(255))
+CREATE PROCEDURE Purchase(IN p_username VARCHAR(255), IN p_address VARCHAR(255), IN p_phone VARCHAR(255), IN p_ship INT)
 BEGIN
     DECLARE order_id INT;
 
     SELECT IFNULL(MAX(id), 0) + 1 INTO order_id FROM orders;
 
-    INSERT INTO orders(id, username, pid, amount, address, phone)
-    SELECT order_id, username, pid, amount, p_address, p_phone
+    INSERT INTO orders(id, username, pid, amount, address, phone, ship)
+    SELECT order_id, username, pid, amount, p_address, p_phone, p_ship
     FROM cart
     WHERE username = p_username;
 
