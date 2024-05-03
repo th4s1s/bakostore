@@ -7,16 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $_POST["username"];
     $password = $_POST["password"];
-
-    if (!ctype_alnum($username)) {
-        http_response_code(400); // Bad Request
-        exit;
-    }
-
-    if (strlen($username) < 8 || strlen($username) > 25 || strlen($password) < 8 || strlen($password) > 25) {
-        http_response_code(400); // Bad Request
-        exit;
-    }
+    
 
     $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
