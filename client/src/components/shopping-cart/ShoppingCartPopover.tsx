@@ -40,7 +40,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
       PaperProps={{ sx: { width: 300, maxWidth: '100%' } }}
     >
       <Typography variant="h6" sx={{ p: 2, textAlign: 'center' }}>
-        Shopping Cart
+        Giỏ hàng
       </Typography>
       <Divider />
       <List dense>
@@ -51,7 +51,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
             </ListItemIcon>
             <ListItemText
               primary={item.name}
-              secondary={`$${item.price.toFixed(2)}`}
+              secondary={`${item.price} đ`}
               primaryTypographyProps={{ noWrap: true }}
               secondaryTypographyProps={{ noWrap: true, style: { fontSize: '1rem' } }}
             />
@@ -60,8 +60,8 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
       </List>
       {items.length > 0 && (
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-          <Button onClick={viewCartDetails} color="primary" variant="contained">
-            View Cart
+          <Button onClick={viewCartDetails} color="secondary" variant="contained">
+            Xem chi tiết
           </Button>
         </Box>
       )}

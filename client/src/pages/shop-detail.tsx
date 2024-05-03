@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { useCartContext } from '../context/CartContext';
 
 interface Product {
   id: string;
@@ -17,6 +18,7 @@ const ProductDetail: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const { user } = useAuth(); 
+  const { addProductToCart } = useCartContext(); 
 
   useEffect(() => {
     fetch(`/api/product/detail.php?id=${productId}`)
@@ -28,35 +30,20 @@ const ProductDetail: React.FC = () => {
     setQuantity((prev) => Math.max(1, prev + delta));
   };
 
-  const handleAddToCart = async () => {
-    if (user && product) {
-      try {
-        const formData = new URLSearchParams({
-          username: user.username,
-          token: user.token,
-          pid: product.id,
-          amount: quantity.toString(),
-        });
-
-        const response = await axios.post('/api/cart/add.php', formData, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        });
-
-        if (response.status === 200) {
-          alert('Added to cart successfully!');
-        } else {
-          alert('Failed to add to cart!');
-        }
-      } catch (error) {
+const handleAddToCart = (): void => {
+  if (user && product) {
+      addProductToCart(product.id, product.name, product.price, quantity, product.image)
+      .then(() => {
+        alert('Added to cart successfully!');
+      })
+      .catch((error: any) => {
         console.error('Error adding to cart:', error);
         alert('Error adding to cart.');
-      }
-    } else {
-      alert('You need to be logged in to add items to the cart.');
-    }
-  };
+      });
+  } else {
+    alert('You need to be logged in to add items to the cart.');
+  }
+};
 
   if (!product) {
     return <h1>Loading...</h1>;

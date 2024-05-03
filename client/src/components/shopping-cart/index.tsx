@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ButtonBase, SvgIcon, Box, Avatar } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { usePopover } from '../../hooks/use-popover';
 import { ShoppingCartPopover } from './ShoppingCartPopover';
-import { useCart } from '../../hooks/use-cart'; 
+import { useCartContext } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 
 
 export const ShoppingCartButton: React.FC = () => {
   const { user } = useAuth(); 
-  const { cartItems } = useCart(user?.username); // Corrected from items to cartItems
+  const { cartItems, refreshCart } = useCartContext();
   const popover = usePopover<HTMLButtonElement>();
+
+    useEffect(() => {
+    if (user?.username) {
+      refreshCart();
+    }
+  }, [user?.username, refreshCart]);
 
   return (
     <>
