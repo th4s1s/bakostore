@@ -14,17 +14,20 @@ const TestComponent: React.FC = () => {
   }, []);
 
   return (
-
-    <div>
-      <h1>Test Component</h1>
-      <h2>Status: {status}</h2>
-      <h3>Data:</h3>
-      <ul>
-        {data.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-    </div>
+<div className="ma-title">
+                    <div className="tabslider-tabs tabslider-tabs-gird">
+                        <ul className="swiper-container fhs-tabs tabs tabs-gia-noi-bat tabs-gia-noi-bat-516014 tab_categorys girdslider-header-menu-aaa swiper-container-horizontal">
+                            <div class="swiper-wrapper ts-header" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+                                                                        <li className="swiper-slide fhs-tabs-item-li swiper-slide-active active" rel="deal">
+                                                                                            Xu Hướng Theo Ngày                                              
+                                        </li>
+                                                                                <li className="swiper-slide fhs-tabs-item-li swiper-slide-next" rel="km">
+                                                                                            Sách HOT - Giảm Sốc                                                
+                                        </li>                                          
+                                                                    </div>
+                        <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span></ul>
+                    </div>
+                </div>
 );
 };
 
