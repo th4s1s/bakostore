@@ -12,6 +12,7 @@ import NewsDetail from "./pages/news-detail"
 import AboutUs from "./pages/about-us"
 import Login from "./pages/login"
 import CartPage from "./pages/cart";
+import CheckoutPage from "./pages/checkout";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProductDetail from "./pages/shop-detail"
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />

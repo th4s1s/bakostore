@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import axios from 'axios';
 
 interface CartItem {
-    id: string;
+    pid: string;
     name: string;
     amount: number;  
     price: number;
@@ -12,10 +12,14 @@ interface CartItem {
 interface CartContextType {
     cartItems: CartItem[];
     loading: boolean;
+    shippingCost: number;
     error: string | null;
     refreshCart: () => void;
-    addProductToCart: (productId: string, name: string, price: string, quantity: number, img: string) => void; 
+    updateShippingCost: (cost: number) => void;
+    addProductToCart: (productId: string, name: string, price: number, quantity: number, img: string) => void;
+    updateProductAmount: (productId: string, newAmount: number) => Promise<void>;
 }
+
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -23,10 +27,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-
+    const [shippingCost, setShippingCost] = useState(() => {
+            return JSON.parse(localStorage.getItem('shippingCost') as string) || 100000;
+        });
+    
     const saveCartItems = (items: CartItem[]) => {
-        localStorage.setItem('cartItems', JSON.stringify(items));
-        setCartItems(items);
+            localStorage.setItem('cartItems', JSON.stringify(items));
+            setCartItems(items);
     };
 
     const fetchCart = useCallback(async () => {
@@ -59,13 +66,21 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
         }
     }, [username, fetchCart]);
 
-    const addProductToCart = async (productId: string, name: string, price: number, quantity: number, img: string) => {
-        const newItem = { id: productId, name: name, quantity, price, image: img };
+    useEffect(() => {
+        localStorage.setItem('shippingCost', JSON.stringify(shippingCost));
+      }, [shippingCost]);
+
+      const updateShippingCost = (cost: number) => {
+        setShippingCost(cost);
+      };
+
+    const addProductToCart = async (productId: string, name: string, price: number, amount: number, img: string) => {
+        const newItem = { pid: productId, name: name, amount, price, image: img };
         const updatedCartItems = [...cartItems, newItem];
         saveCartItems(updatedCartItems);
         
         try {
-            await axios.post(`/api/cart/add.php`, `username=${username}&token=${token}&pid=${productId}&amount=${quantity}`, {
+            await axios.post(`/api/cart/add.php`, `username=${username}&token=${token}&pid=${productId}&amount=${amount}`, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -75,9 +90,35 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
             console.error('Failed to add item to cart:', error);
         }
     };
+    
+    const updateProductAmount = async (productId: string, newAmount: number) => {
+        const updatedCartItems = cartItems.map(item =>
+            item.pid === productId ? { ...item, amount: newAmount } : item
+        );
+        saveCartItems(updatedCartItems);
+
+    
+        try {
+            const response = await axios.post(`/api/cart/update.php`, `username=${username}&token=${token}&pid=${productId}&amount=${newAmount}`, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            if (response.status === 200) {
+                console.log('Update successful:', response);
+                fetchCart(); 
+            } else {
+                console.error('Failed to update amount with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Failed to update amount:', error);
+        }
+    };
+    
+
 
     return (
-        <CartContext.Provider value={{ cartItems, loading, error, refreshCart: fetchCart, addProductToCart }}>
+        <CartContext.Provider value={{ cartItems, loading, error, refreshCart: fetchCart, addProductToCart, updateShippingCost, shippingCost, updateProductAmount }}>
             {children}
         </CartContext.Provider>
     );
