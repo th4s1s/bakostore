@@ -9,7 +9,7 @@
         $token = $_POST["token"];
         $address = $_POST["address"];
         $phone = $_POST["phone"];
-        $ship = $_POST["ship"];
+        $ship = intval($_POST["ship"]);
 
         if (strlen($phone) !== 10 || strpos($phone, '0') !== 0) {
             http_response_code(400); // Bad Request
