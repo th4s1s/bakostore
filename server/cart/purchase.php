@@ -1,6 +1,6 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (!isset($_POST["username"]) || !isset($_POST["token"]) || !isset($_POST["address"]), || !isset($_POST["phone"])) {
+        if (!isset($_POST["username"]) || !isset($_POST["token"]) || !isset($_POST["address"]) || !isset($_POST["phone"])) {
             http_response_code(404);
             exit;
         }
