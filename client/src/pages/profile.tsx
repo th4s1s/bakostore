@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 interface FormErrors {
     name?: string;
@@ -13,14 +13,27 @@ const UserProfile = () => {
         phone: '',
     });
 
+    const navigate = useNavigate();
     const gotUser = localStorage.getItem("user");
 
     const[isEditMode, setEditMode] = useState(false)
     const[tmpAvt, setTmpAvt] = useState(null)
 
+    const handleRes = (res : string) => {
+        if(res.constructor  == String){
+            const startIndex = res.indexOf('{');
+            const jsonString = res.substring(startIndex);
+            res = JSON.parse(jsonString);
+        }
+        // return res
+        localStorage.setItem("user", JSON.stringify(res));
+        navigate('/dashboard/social/profile');
+    }
+
     const handleImageUpload = (e: { target: { files: any[]; }; }) => {
         const file = e.target.files[0];
         setTmpAvt(file);
+        // console.log(file)
     };
 
     const[tmpName, setTmpName] = useState(null)
@@ -50,7 +63,9 @@ const UserProfile = () => {
             formData.append('name', !tmpName ? info.name : tmpName);
             formData.append('avatar', info.avatar);
             formData.append('phone', !tmpPhone ? info.phone : tmpPhone);
-            formData.append('fileToUpload', tmpAvt ? tmpAvt : null);
+            if(tmpAvt){
+                formData.append('fileToUpload', tmpAvt);
+            }
 
             try {
                 const response = await axios.post(`/api/user/update_profile.php`, formData, {
@@ -58,7 +73,8 @@ const UserProfile = () => {
                         'Content-Type': 'multipart/form-data',
                     }
                 });
-                localStorage.setItem("user",response.data);
+                // console.log(response.data)
+                handleRes(response.data);
             } catch (error) {
                 console.error('Error:', error.response.status);
             }
@@ -113,7 +129,7 @@ const UserProfile = () => {
                 ) :
                     <>
                     <div className="flex h-screen bg-white justify-center place-items-start">
-                        <div className="w-6/12 bg-white rounded-lg border border-pink-200 shadow-default py-10 px-16 mt-5">
+                        <div className="w-6/12 bg-white rounded-lg border border-pink-200 shadow-default py-10 px-16 mt-5 box-border">
                             <div className='w-full flex items-end justify-end'>
                                 <button className='rounded-lg border-2 p-1 right-0 font-bold py-2 px-4 rounded' onClick={() => {setEditMode(true); setTmpAvt(null); setTmpName(null); setTmpPhone(null)}}>
                                     {/* <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="26px" viewBox="0 0 24 24" fill="none">
@@ -125,6 +141,7 @@ const UserProfile = () => {
                             <div className="flex flex-col items-center text-center">
                                 <img className="object-cover h-40 w-40 rounded-full" src={info.avatar} alt="User Avatar" />
                                 <h1 className="mt-4 text-3xl font-bold text-gray-800 mt-6">{info.name}</h1>
+
                                 {errors.name && <p className="text-red-500 text-xs italic">{errors.name}</p>}
                                 <p className="text-sm text-gray-600">@{info.username}</p>
                             </div>
