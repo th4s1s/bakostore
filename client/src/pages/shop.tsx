@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography, Box, Rating, Grid, Pagination } from '@mui/material';
@@ -55,11 +56,11 @@ const Shop: React.FC = () => {
     navigate(`/product/${productId}`);
   };
 
-  const handleMangaPageChange = (event, value) => {
+  const handleMangaPageChange = (event: any, value: React.SetStateAction<number>) => {
     setMangaPage(value);
   };
   
-  const handleNovelPageChange = (event, value) => {
+  const handleNovelPageChange = (event: any, value: React.SetStateAction<number>) => {
     setNovelPage(value);
   };
   

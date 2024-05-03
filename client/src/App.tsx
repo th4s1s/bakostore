@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import Navbar from "./components/navbar"
 import NavbarLogged from "./components/navbar-logged"
 import { useAuth } from './context/AuthContext';
+import { CartProvider } from "./context/CartContext";
 import HomePage from "./pages/home"
 import Contact from "./pages/contact"
 import Footer from "./components/footer"
@@ -29,6 +30,7 @@ function App() {
   return (
     <>
     <ThemeProvider theme={theme}>
+    <CartProvider username={user?.username}>
      {user ? <NavbarLogged /> : <Navbar />} 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -41,6 +43,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
+      </CartProvider>
     </ThemeProvider>
       </>
   )
