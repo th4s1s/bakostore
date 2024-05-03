@@ -1,6 +1,6 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (!isset($_POST["username"]) || !isset($_POST["token"]) || !isset($_POST["address"])) {
+        if (!isset($_POST["username"]) || !isset($_POST["token"]) || !isset($_POST["address"]), || !isset($_POST["phone"])) {
             http_response_code(404);
             exit;
         }
@@ -8,6 +8,12 @@
         $username = $_POST["username"];
         $token = $_POST["token"];
         $address = $_POST["address"];
+        $phone = $_POST["phone"];
+
+        if (strlen($phone) !== 10 || strpos($phone, '0') !== 0) {
+            http_response_code(400); // Bad Request
+            exit;
+        }
 
         $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
@@ -29,8 +35,8 @@
             exit;
         }
 
-        $stmt = $mysqli->prepare("CALL Purchase(?, ?)");
-        $stmt->bind_param("ss", $username, $address);
+        $stmt = $mysqli->prepare("CALL Purchase(?, ?, ?)");
+        $stmt->bind_param("sss", $username, $address, $phone);
         $stmt->execute();
 
         $stmt->close();
