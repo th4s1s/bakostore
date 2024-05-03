@@ -178,7 +178,7 @@ CALL AddToCart('admin', 3, 1);
 DELIMITER //
 CREATE PROCEDURE GetCart(IN p_username VARCHAR(255))
 BEGIN
-    SELECT c.username, c.pid, p.name, c.amount, p.price, c.amount * p.price AS total_price
+    SELECT c.username, c.pid, p.name, p.image, c.amount, p.price, c.amount * p.price AS total_price
     FROM cart c
     INNER JOIN products p ON c.pid = p.id
     WHERE c.username = p_username;
@@ -212,7 +212,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetOrderDetail(IN p_id INT)
 BEGIN
-	SELECT o.id, o.username, o.pid, p.name, o.amount, p.price, o.amount * p.price AS total_price, o.address
+	SELECT o.id, o.username, o.pid, p.name,, p.image, o.amount, p.price, o.amount * p.price AS total_price, o.address
 	FROM orders o
 	INNER JOIN products p ON o.pid = p.id
 	WHERE o.id = p_id;
