@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS orders (
   amount int(11) NOT NULL,
   address varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   phone varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  ship = int(11) NOT NULL DEFAULT 0,
+  ship int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (id, username, pid),
   FOREIGN KEY (username) REFERENCES users(username),
   FOREIGN KEY (pid) REFERENCES products(id)
