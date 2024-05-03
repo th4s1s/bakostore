@@ -4,7 +4,7 @@ import axios from 'axios';
 interface CartItem {
     id: string;
     name: string;
-    quantity: number;  
+    amount: number;  
     price: number;
     image: string; 
 }
@@ -19,10 +19,15 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: React.ReactNode, username: string }> = ({ children, username }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode, username: string, token: string }> = ({ children, username, token }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+
+    const saveCartItems = (items: CartItem[]) => {
+        localStorage.setItem('cartItems', JSON.stringify(items));
+        setCartItems(items);
+    };
 
     const fetchCart = useCallback(async () => {
         setLoading(true);
@@ -30,7 +35,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
         try {
             const response = await axios.get(`/api/cart/show.php?username=${encodeURIComponent(username)}`);
             if (response.status === 200 && response.data) {
-                setCartItems(response.data);
+                saveCartItems(response.data);
             } else {
                 throw new Error('Failed to fetch cart items');
             }
@@ -46,23 +51,25 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
     }, [username]);
 
     useEffect(() => {
-        if (username) {
+        const items = localStorage.getItem('cartItems');
+        if (items) {
+            setCartItems(JSON.parse(items));
+        } else if (username) {
             fetchCart();
         }
     }, [username, fetchCart]);
 
     const addProductToCart = async (productId: string, name: string, price: number, quantity: number, img: string) => {
-        const newItem = { id: productId, name: name, quantity, price: price, image: img };
-        setCartItems(prev => [...prev, newItem]);
+        const newItem = { id: productId, name: name, quantity, price, image: img };
+        const updatedCartItems = [...cartItems, newItem];
+        saveCartItems(updatedCartItems);
         
         try {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const response = await axios.post(`/api/cart/add.php`, {
-                username,
-                productId,
-                quantity
+            await axios.post(`/api/cart/add.php`, `username=${username}&token=${token}&pid=${productId}&amount=${quantity}`, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             });
-
             fetchCart(); 
         } catch (error) {
             console.error('Failed to add item to cart:', error);
@@ -75,6 +82,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
         </CartContext.Provider>
     );
 };
+
 
 // Hook to use the cart's context
 export const useCartContext = () => {

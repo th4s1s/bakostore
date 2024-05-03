@@ -11,6 +11,7 @@ import NewsPage from "./pages/news"
 import NewsDetail from "./pages/news-detail"
 import AboutUs from "./pages/about-us"
 import Login from "./pages/login"
+import CartPage from "./pages/cart";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProductDetail from "./pages/shop-detail"
 
@@ -30,7 +31,7 @@ function App() {
   return (
     <>
     <ThemeProvider theme={theme}>
-    <CartProvider username={user?.username}>
+    <CartProvider username={user?.username} token={user?.token}>
      {user ? <NavbarLogged /> : <Navbar />} 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -40,6 +41,7 @@ function App() {
         <Route path="/news/:id" element={<NewsDetail />} />
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
