@@ -42,9 +42,26 @@
 
         $stmt->close();
 
+        $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND token = ?");
+        $stmt->bind_param("ss", $username, $token);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        $stmt->close();
+
         $mysqli->close();
 
-        http_response_code(200); // OK
+        if ($user) {
+            http_response_code(200); // OK
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($user);
+        }
+        else {
+            http_response_code(404); // Not Found
+        }
     }
     else {
         http_response_code(405); // Method Not Allowed
