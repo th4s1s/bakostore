@@ -11,6 +11,7 @@ client/node_modules
 client/.env
 client/package.json
 client/package-lock.json
+client/vite.config.ts
 dist
 dist-ssr
 *.local

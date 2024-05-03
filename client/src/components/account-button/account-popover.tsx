@@ -1,7 +1,5 @@
 import type { FC } from 'react';
-import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import toast from 'react-hot-toast';
 import CreditCard01Icon from '@untitled-ui/icons-react/build/esm/CreditCard01';
 import Settings04Icon from '@untitled-ui/icons-react/build/esm/Settings04';
 import User03Icon from '@untitled-ui/icons-react/build/esm/User03';
@@ -17,11 +15,8 @@ import {
   Typography
 } from '@mui/material';
 import { RouterLink } from '../router-link';
-// import { useAuth } from '../../hooks/use-auth';
 import { useMockedUser } from '../../hooks/use-mocked-user';
-import { useRouter } from '../../hooks/use-router';
 import { paths } from '../../paths';
-import { Issuer } from '../../utils/auth';
 
 interface AccountPopoverProps {
   anchorEl: null | Element;
@@ -31,49 +26,8 @@ interface AccountPopoverProps {
 
 export const AccountPopover: FC<AccountPopoverProps> = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
-  // const router = useRouter();
-  // const auth = useAuth();
   const user = useMockedUser();
 
-  // const handleLogout = useCallback(
-  //   async (): Promise<void> => {
-  //     try {
-  //       onClose?.();
-
-  //       switch (auth.issuer) {
-  //         case Issuer.Amplify: {
-  //           await auth.signOut();
-  //           break;
-  //         }
-
-  //         case Issuer.Auth0: {
-  //           await auth.logout();
-  //           break;
-  //         }
-
-  //         case Issuer.Firebase: {
-  //           await auth.signOut();
-  //           break;
-  //         }
-
-  //         case Issuer.JWT: {
-  //           await auth.signOut();
-  //           break;
-  //         }
-
-  //         default: {
-  //           console.warn('Using an unknown Auth Issuer, did not log out');
-  //         }
-  //       }
-
-  //       router.push(paths.index);
-  //     } catch (err) {
-  //       console.error(err);
-  //       toast.error('Something went wrong!');
-  //     }
-  //   },
-  //   [auth, router, onClose]
-  // );
 
   return (
     <Popover
