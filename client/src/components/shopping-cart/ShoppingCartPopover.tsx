@@ -45,7 +45,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
       <Divider />
       <List dense>
         {items.map(item => (
-          <ListItem key={item.id} sx={{ alignItems: 'center' }}>
+          <ListItem key={item.pid} sx={{ alignItems: 'center' }}>
             <ListItemIcon>
               <img src={item.image} alt={item.name} style={{ width: 50, height: 50, marginRight: 10 }} />
             </ListItemIcon>

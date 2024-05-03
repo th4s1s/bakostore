@@ -18,8 +18,8 @@ interface CartContextType {
     updateShippingCost: (cost: number) => void;
     addProductToCart: (productId: string, name: string, price: number, quantity: number, img: string) => void;
     updateProductAmount: (productId: string, newAmount: number) => Promise<void>;
+    checkoutCart: (address: string, phone: string) => Promise<void>;
 }
-
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -27,13 +27,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [shippingCost, setShippingCost] = useState(() => {
-            return JSON.parse(localStorage.getItem('shippingCost') as string) || 100000;
-        });
+    const [shippingCost, setShippingCost] = useState(() => JSON.parse(localStorage.getItem('shippingCost') as string) || 20000);
     
     const saveCartItems = (items: CartItem[]) => {
-            localStorage.setItem('cartItems', JSON.stringify(items));
-            setCartItems(items);
+        localStorage.setItem('cartItems', JSON.stringify(items));
+        setCartItems(items);
     };
 
     const fetchCart = useCallback(async () => {
@@ -68,45 +66,35 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
 
     useEffect(() => {
         localStorage.setItem('shippingCost', JSON.stringify(shippingCost));
-      }, [shippingCost]);
+    }, [shippingCost]);
 
-      const updateShippingCost = (cost: number) => {
+    const updateShippingCost = (cost: number) => {
         setShippingCost(cost);
-      };
+    };
 
     const addProductToCart = async (productId: string, name: string, price: number, amount: number, img: string) => {
-        const newItem = { pid: productId, name: name, amount, price, image: img };
+        const newItem = { pid: productId, name, amount, price, image: img };
         const updatedCartItems = [...cartItems, newItem];
         saveCartItems(updatedCartItems);
-        
         try {
             await axios.post(`/api/cart/add.php`, `username=${username}&token=${token}&pid=${productId}&amount=${amount}`, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
             fetchCart(); 
         } catch (error) {
             console.error('Failed to add item to cart:', error);
         }
     };
-    
-    const updateProductAmount = async (productId: string, newAmount: number) => {
-        const updatedCartItems = cartItems.map(item =>
-            item.pid === productId ? { ...item, amount: newAmount } : item
-        );
-        saveCartItems(updatedCartItems);
 
-    
+    const updateProductAmount = async (productId: string, newAmount: number) => {
+        const updatedCartItems = cartItems.map(item => item.pid === productId ? { ...item, amount: newAmount } : item);
+        saveCartItems(updatedCartItems);
         try {
             const response = await axios.post(`/api/cart/update.php`, `username=${username}&token=${token}&pid=${productId}&amount=${newAmount}`, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
             if (response.status === 200) {
-                console.log('Update successful:', response);
-                fetchCart(); 
+                fetchCart();
             } else {
                 console.error('Failed to update amount with status:', response.status);
             }
@@ -114,16 +102,36 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
             console.error('Failed to update amount:', error);
         }
     };
-    
 
+    const checkoutCart = async (address: string, phone: string) => {
+        try {
+            const response = await axios.post(`/api/cart/purchase.php`, `username=${username}&token=${token}&address=${encodeURIComponent(address)}&phone=${encodeURIComponent(phone)}&ship=${shippingCost}`, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+            if (response.status === 200) {
+                console.log('Checkout successful:', response);
+                localStorage.removeItem('cartItems');  // Remove cart items from local storage
+                localStorage.setItem('shippingCost', JSON.stringify(20000));  // Reset shipping cost 
+                setTimeout(() => {
+                    setCartItems([]);  // Clear cart items
+                    fetchCart()                  
+                }, 3000);
+
+       
+                } else {
+                console.error('Failed to complete checkout with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Failed to complete checkout:', error);
+        }
+    };
 
     return (
-        <CartContext.Provider value={{ cartItems, loading, error, refreshCart: fetchCart, addProductToCart, updateShippingCost, shippingCost, updateProductAmount }}>
+        <CartContext.Provider value={{ cartItems, loading, error, refreshCart: fetchCart, addProductToCart, updateShippingCost, shippingCost, updateProductAmount, checkoutCart }}>
             {children}
         </CartContext.Provider>
     );
 };
-
 
 // Hook to use the cart's context
 export const useCartContext = () => {

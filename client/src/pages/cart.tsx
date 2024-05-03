@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from 'react-router-dom';
 import { useCartContext } from '../context/CartContext';
 
@@ -80,8 +81,8 @@ const CartPage = () => {
           <div>
             <label className="font-medium inline-block mb-3 text-sm uppercase text-pink-500">Phương thức vận chuyển</label>
             <select onChange={handleShippingChange} value={shippingCost} className="block p-2 text-gray-600 w-full text-sm rounded bg-pink-50">
-              <option value={1000000}>Vận chuyển bằng trực thăng - 1,000,000₫</option>
-              <option value={50000}>Vận chuyển bằng xe máy - 50,000₫</option>
+              <option value={20000}>Tiêu chuẩn - 20,000₫</option>
+              <option value={50000}>Hỏa tốc - 50,000₫</option>
               <option value={0}>Tự đến lấy - Miễn phí</option>
             </select>
           </div>
