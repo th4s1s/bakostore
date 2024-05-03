@@ -212,7 +212,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetOrderDetail(IN p_id INT)
 BEGIN
-	SELECT o.id, o.username, o.pid, p.name,, p.image, o.amount, p.price, o.amount * p.price AS total_price, o.address
+	SELECT o.id, o.username, o.pid, p.name, p.image, o.amount, p.price, o.amount * p.price AS total_price, o.address
 	FROM orders o
 	INNER JOIN products p ON o.pid = p.id
 	WHERE o.id = p_id;
