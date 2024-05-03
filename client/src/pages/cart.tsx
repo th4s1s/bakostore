@@ -48,7 +48,7 @@ const CartPage = () => {
             <div className="flex items-center hover:bg-pink-100 -mx-8 px-6 py-5" key={item.pid}>
               <div className="flex w-2/5">
                 <div className="w-20">
-                  <img className="h-24 rounded-full" src={item.image} alt={item.name} />
+                  <img className="w-20" src={item.image} alt={item.name} />
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
                   <span className="font-bold text-sm">{item.name}</span>
@@ -58,7 +58,7 @@ const CartPage = () => {
               <div className="flex justify-center w-1/5">
                 <input 
                   type="number" 
-                  className="mx-2 border text-center w-8 rounded text-pink-500" 
+                  className="mx-2 border text-center w-12 rounded text-pink-500" 
                   value={item.amount} 
                   onChange={(e) => handleQuantityChange(item.pid, parseInt(e.target.value))}
                   min="0"

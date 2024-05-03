@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
-import { ButtonBase, SvgIcon, Box, Avatar } from '@mui/material';
+import { ButtonBase, Box, Typography, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { usePopover } from '../../hooks/use-popover';
 import { ShoppingCartPopover } from './ShoppingCartPopover';
 import { useCartContext } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
+import { pink } from '@mui/material/colors';
 
 
 export const ShoppingCartButton: React.FC = () => {
   const { user } = useAuth(); 
   const { cartItems, refreshCart } = useCartContext();
   const popover = usePopover<HTMLButtonElement>();
+  const totalItems = cartItems.reduce((acc, item) => acc + item.amount, 0);
 
-    useEffect(() => {
+  useEffect(() => {
     if (user?.username) {
       refreshCart();
     }
@@ -27,26 +29,21 @@ export const ShoppingCartButton: React.FC = () => {
         sx={{
           alignItems: 'center',
           display: 'flex',
-          borderWidth: 2,
-          borderStyle: 'solid',
-          borderColor: 'divider',
-          height: 40,
-          width: 40,
+          flexDirection: 'column', 
+          height: 80,
+          width: 80,
           borderRadius: '50%',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          color: pink[300],  // Setting the icon color to pink
+          '&:hover': {    // Optional: change color on hover
+            color: 'deepPink',
+          }
         }}
       >
-        <Avatar
-          sx={{
-            height: 32,
-            width: 32,
-            backgroundColor: 'transparent'
-          }}
-        >
-          <SvgIcon>
-            <ShoppingCartIcon />
-          </SvgIcon>
-        </Avatar>
+        <Badge badgeContent={totalItems} color="error">
+        <ShoppingCartIcon sx={{ fontSize: 42 }} />   
+        {/* <Typography>Giỏ hàng</Typography>    */}
+        </Badge>
       </Box>
       <ShoppingCartPopover
         anchorEl={popover.anchorRef.current}

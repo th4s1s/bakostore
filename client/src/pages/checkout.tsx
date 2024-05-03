@@ -3,6 +3,7 @@ import { useCartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useOrders } from '../context/OrderContext';
 
 const CheckoutPage = () => {
   const { cartItems, shippingCost, checkoutCart } = useCartContext();
@@ -10,6 +11,7 @@ const CheckoutPage = () => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
+  const { fetchOrders } = useOrders();
 
   const totalItems = cartItems.reduce((acc, item) => acc + item.amount, 0);
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.amount, 0);
@@ -54,6 +56,7 @@ const CheckoutPage = () => {
     try {
       await checkoutCart(address, phone);
       notifySuccess();
+      fetchOrders();
       setTimeout(() => {
         navigate('/shop');
       }, 2000); 
@@ -120,7 +123,7 @@ const CheckoutPage = () => {
           </div>
           {cartItems.map((item) => (
             <div key={item.pid} className="flex justify-between mt-4 items-center">
-              <img src={item.image} alt={item.name} className="w-20 h-20 mr-2" />
+              <img src={item.image} alt={item.name} className="w-20 mr-2" />
               <div className="flex-grow">
                 <span className="block font-bold">{item.name}</span>
                 <span className="block text-sm">{item.price * item.amount}₫ x {item.amount}</span>
@@ -135,7 +138,7 @@ const CheckoutPage = () => {
               </thead>
               <tbody>
                 <tr className="bg-white border-b">
-                  <td className="py-4 px-2">Đơn giá</td>
+                  <td className="py-4 px-2">Thành tiền</td>
                   <td className="py-4 px-6 text-right">
                     <span className="font-semibold">{subtotal.toLocaleString()}₫</span>
                   </td>

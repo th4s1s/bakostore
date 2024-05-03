@@ -58,7 +58,7 @@ const handleAddToCart = (): void => {
         <div className="w-full lg:w-7/12 pl-16">
           <h1 className="mt-12 text-3xl font-semibold">{product.name}</h1>
           <p className="text-lg text-gray-700 mt-2">{product.description}</p>
-          <p className="text-3xl text-pink-500 mt-2 font-bold">{product.price} đ</p>
+          <p className="text-3xl text-pink-500 mt-2 font-bold">{product.price.toLocaleString()}đ</p>
           <div className="mt-4 flex items-center">
             <button onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1} className="text-gray-600 border border-gray-400 hover:bg-gray-200 focus:outline-none rounded-l-md px-3 py-2">
               -
