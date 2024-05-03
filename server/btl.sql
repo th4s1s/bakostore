@@ -196,6 +196,7 @@ CREATE TABLE IF NOT EXISTS orders (
   address varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   phone varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   ship int(11) NOT NULL DEFAULT 0,
+  date date NOT NULL DEFAULT CURRENT_DATE,
   PRIMARY KEY (id, username, pid),
   FOREIGN KEY (username) REFERENCES users(username),
   FOREIGN KEY (pid) REFERENCES products(id)
@@ -204,8 +205,9 @@ CREATE TABLE IF NOT EXISTS orders (
 DELIMITER //
 CREATE PROCEDURE GetOrderList(IN p_username VARCHAR(255))
 BEGIN
-    SELECT o.id, SUM(o.amount) AS total_amount
+    SELECT o.id, SUM(o.amount) AS total_amount, (SUM(o.amount * p.price) + o.ship) AS total_price, o.date
     FROM orders o
+    INNER JOIN products p ON o.pid = p.id
     WHERE o.username = p_username
     GROUP BY o.id;
 END //
@@ -237,7 +239,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- CALL Purchase('admin');
+-- CALL Purchase('admin', 'Hanoi', '0969696969', 69000);
 
 
 CREATE TABLE IF NOT EXISTS comments (
