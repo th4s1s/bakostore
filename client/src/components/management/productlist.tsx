@@ -1,7 +1,8 @@
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useRef, useState } from "react";
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import {
     Box,
     Button,
@@ -13,6 +14,7 @@ import {
     IconButton,
     Input,
     InputAdornment,
+    InputBase,
     LinearProgress,
     MenuItem,
     Stack,
@@ -26,7 +28,7 @@ import {
     TableRow,
     TextField,
     TextareaAutosize,
-    Typography
+    Typography,
 } from '@mui/material';
 
 const ProductListTable = ({ productList }) => {
@@ -41,12 +43,6 @@ const ProductListTable = ({ productList }) => {
             [productId]: !prev[productId],
         }));
     };
-    // const handleProductUnSelect = (productId : number) => {
-    //     setSelected((prev) => ({
-    //         ...prev,
-    //         [productId]: false,
-    //     }));
-    // };
 
     const categoryOptions = [
         {
@@ -66,6 +62,22 @@ const ProductListTable = ({ productList }) => {
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
+    };
+
+    //handle update
+    const [newName, setNewName] = useState('');
+    const [newDesc, setNewDesc] = useState('');
+    const [newPrice, setNewPrice] = useState('');
+    const [newType, setNewType] = useState('');
+
+    const handleUpdateProduct = async (e) => {
+        console.log(e)
+    }
+
+    //handle file input
+    const fileInputRef = useRef(null);
+    const handleButtonClick = () => {
+      fileInputRef.current.click();
     };
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, productList.length - page * rowsPerPage);
@@ -164,59 +176,112 @@ const ProductListTable = ({ productList }) => {
                                 <Grid
                                     item
                                     md={6}
-                                    xs={12}
+                                    xs={3}
                                 >
-                                    <TextField
+                                    <Grid
+                                        container
+                                        spacing={3}
+                                    >
+                                    <Grid
+                                        item
+                                        md={6}
+                                        xs={12}
+                                    >
+                                        <img src={`http://localhost:5173${product.image}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                    </Grid>
+                                        <Grid
+                                            item
+                                            md={6}
+                                            xs={12}
+                                        >
+                                        <InputBase
+                                            style={{ display: 'none' }}
+                                            inputProps={{ accept: 'image/*' }}
+                                            type="file"
+                                            name="fileToUpload"
+                                            inputRef={fileInputRef}
+                                        />
+                                        <IconButton onClick={() => {handleButtonClick()}}>
+                                            <AddPhotoAlternateIcon />
+                                        </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid
+                                    item
+                                    md={6}
+                                    xs={3}
+                                >
+                                    {/* <TextField
                                     defaultValue={product.name}
                                     fullWidth
                                     label="Product name"
                                     name="name"
-                                    />
-                                </Grid>
-                                <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                >
-                                    <TextField
-                                    defaultValue={product.type}
-                                    fullWidth
-                                    label="Loại"
-                                    name="type"
-                                    select
+                                    /> */}
+                                    <Grid
+                                        container
+                                        spacing={3}
                                     >
-                                        {categoryOptions.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
-                                            </MenuItem>
-                                        ))}
-                                        {/* <div>{product.type}</div> */}
-                                    </TextField>
+                                        <Grid
+                                            item
+                                            md={12}
+                                            xs={3}
+                                        >
+                                            <TextField
+                                            defaultValue={product.name}
+                                            fullWidth
+                                            onChange={(e) => {setNewName(e.target.value)}}
+                                            label="Tên sản phẩm"
+                                            name="name"
+                                        />
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            md={12}
+                                            xs={3}
+                                        >
+                                            <TextField
+                                            defaultValue={product.price}
+                                            fullWidth
+                                            onChange={(e) => {setNewName(e.target.value)}}
+                                            label="Giá"
+                                            name="price"
+                                            InputProps={{
+                                                startAdornment: (
+                                                <InputAdornment position="start">
+                                                    VNĐ
+                                                </InputAdornment>
+                                                )
+                                            }}
+                                            type="number"
+                                            />
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            md={12}
+                                            xs={3}
+                                        >
+                                            <TextField
+                                            defaultValue={product.type}
+                                            fullWidth
+                                            label="Loại"
+                                            name="type"
+                                            select
+                                            >
+                                                {categoryOptions.map((option) => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                                {/* <div>{product.type}</div> */}
+                                            </TextField>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                                 <Grid
                                     item
                                     md={6}
-                                    xs={12}
-                                >
-                                    <TextField
-                                    defaultValue={product.price}
-                                    fullWidth
-                                    label="Giá"
-                                    name="price"
-                                    InputProps={{
-                                        startAdornment: (
-                                        <InputAdornment position="start">
-                                            VNĐ
-                                        </InputAdornment>
-                                        )
-                                    }}
-                                    type="number"
-                                    />
-                                </Grid>
-                                <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
+                                    xs={3}
                                 >
                                     <TextField
                                     defaultValue={product.rating}
@@ -251,21 +316,11 @@ const ProductListTable = ({ productList }) => {
                                     // disabled
                                     fullWidth
                                     multiline
-                                    rows={8}
+                                    rows={12}
                                     label="Mô tả"
                                     name="description"
                                     />
                                 </Grid>
-                                {/* <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                    sx={{
-                                    alignItems: 'center',
-                                    display: 'flex'
-                                    }}
-                                >
-                                </Grid> */}
                             </Grid>
                         </Grid>
                         </Grid>
@@ -283,7 +338,7 @@ const ProductListTable = ({ productList }) => {
                         spacing={2}
                         >
                         <Button
-                            onClick={() => {}}
+                            onClick={(e) => {handleUpdateProduct(e)}}
                             type="submit"
                             variant="contained"
                         >
