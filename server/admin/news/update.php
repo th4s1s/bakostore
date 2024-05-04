@@ -7,9 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = $_POST['content'];
 
     $cover = upload('news');
-    if ($image === false) {
-        http_response_code(500); // Internal Server Error
-        return;
+    if ($cover === false) {
+        $cover = $_POST['cover'];
     }
 
     require '../connect.php';

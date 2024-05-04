@@ -9,8 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $image = upload('product');
     if ($image === false) {
-        http_response_code(500); // Internal Server Error
-        return;
+        $image = $_POST['image'];
     }
 
     $type = $_POST['type'];
