@@ -4,7 +4,7 @@ function upload($type) {
         return false;
     }
     
-    $target_dir = "../../client/public/img/" . $type . "/";
+    $target_dir = "../../../client/public/img/" . $type . "/";
     $name = hash_file('sha256', $_FILES["fileToUpload"]["tmp_name"]);
     $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
     $target_file = $target_dir . $name . '.' . $imageFileType;
