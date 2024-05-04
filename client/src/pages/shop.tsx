@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Card, CardMedia, CardContent, Typography, Box, Rating, Grid, Pagination } from '@mui/material';
+import { Card, TextField, CardMedia, CardContent, Typography, Box, Rating, Grid, Pagination } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
+
 import { pink } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 
@@ -50,6 +53,36 @@ interface Product {
   rating: number;
 }
 
+
+const CustomSearch = styled(TextField)({
+  '& label.Mui-focused': {
+    color: 'pink',  // Soft pink color for focus
+  },
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: 'pink',  // Soft pink border for focus
+    },
+    '&:hover fieldset': {
+      borderColor: 'lightpink',  // Lighter pink on hover
+    },
+    '& fieldset': {
+      borderRadius: 15, // Rounded corners for a soft look
+      borderColor: 'lightpink',
+    },
+    '& input': {
+      color: '#ff69b4', // Text color
+    }
+  },
+  '& .MuiOutlinedInput-input': {
+    padding: '10px 14px', // Padding for a plump look
+  },
+  '& .MuiInputAdornment-root .MuiSvgIcon-root': {
+    color: '#ff69b4',  // Icon color
+  }
+});
+
+
+
 const Shop: React.FC = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -62,18 +95,38 @@ const Shop: React.FC = () => {
   const [mangaPage, setMangaPage] = useState(initialMangaPage);
   const [novelPage, setNovelPage] = useState(initialNovelPage);
   const [activeTab, setActiveTab] = useState(initialActiveTab);
+  const [mangaSearch, setMangaSearch] = useState('');
+  const [novelSearch, setNovelSearch] = useState('');
   const itemsPerPage = 15;
 
-  const filteredMangaProducts = products.filter(product => product.type === 'manga');
-  const filteredNovelProducts = products.filter(product => product.type === 'novel');
-
+  
+  const normalizeText = (text: string) => {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  };
+  
+  const filteredMangaProducts = products.filter(product => 
+    product.type === 'manga' && normalizeText(product.name).includes(normalizeText(mangaSearch))
+  );
+  
+  const filteredNovelProducts = products.filter(product =>
+    product.type === 'novel' && normalizeText(product.name).includes(normalizeText(novelSearch))
+  );
+    
   const countMangaPages = Math.ceil(filteredMangaProducts.length / itemsPerPage);
   const countNovelPages = Math.ceil(filteredNovelProducts.length / itemsPerPage);
-
+  
   const currentMangaItems = filteredMangaProducts.slice((mangaPage - 1) * itemsPerPage, mangaPage * itemsPerPage);
   const currentNovelItems = filteredNovelProducts.slice((novelPage - 1) * itemsPerPage, novelPage * itemsPerPage);
 
 
+  useEffect(() => {
+    setMangaPage(1);
+  }, [mangaSearch]);
+  
+  useEffect(() => {
+    setNovelPage(1);
+  }, [novelSearch]);
+  
   
   useEffect(() => {
     fetch('/api/product/list.php')
@@ -91,6 +144,10 @@ useEffect(() => {
     navigate(`?novelPage=${novelPage}`);
   }
 }, [mangaPage, novelPage, activeTab, navigate]);
+
+
+
+
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -133,6 +190,17 @@ useEffect(() => {
           </TabList>
         </Box>
         <TabPanel value="manga">
+        <Box sx={{ marginBottom: 2 }}>
+          <CustomSearch
+            fullWidth
+            label="Tìm Manga"
+            variant="outlined"
+            value={mangaSearch}
+            onChange={(e) => setMangaSearch(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+        </Box>
+              {currentMangaItems.length > 0 ? (
           <Grid container spacing={2}>
             {currentMangaItems.map(product => (
               <Grid item xs={12} sm={6} md={4} lg={2.4} key={product.id}>
@@ -159,6 +227,11 @@ useEffect(() => {
               </Grid>
             ))}
           </Grid>
+           ) : (
+            <Typography variant="h6" color="textSecondary" align="center" sx={{ mt: 4 }}>
+              Không tìm thấy kết quả
+            </Typography>
+          )}
           <Pagination
             count={countMangaPages}
             page={mangaPage}
@@ -180,9 +253,20 @@ useEffect(() => {
             />
         </TabPanel>
         <TabPanel value="novel">
-          <Grid container spacing={2}>
-            {currentNovelItems.map(product => (
-              <Grid item xs={12} sm={6} md={4} lg={2.4} key={product.id}>
+        <Box sx={{ marginBottom: 2 }}>
+          <CustomSearch
+            fullWidth
+            label="Tìm Novel"
+            variant="outlined"
+            value={novelSearch}
+            onChange={(e) => setNovelSearch(e.target.value)}
+            sx={{ mb: 2 }}
+            />
+          </Box>
+          {currentNovelItems.length > 0 ? (
+            <Grid container spacing={2}>
+              {currentNovelItems.map(product => (
+                <Grid item xs={12} sm={6} md={4} lg={2.4} key={product.id}>
                 <CustomCard onClick={() => handleCardClick(product.id)}>
                   <CardMedia
                     component="img"
@@ -206,6 +290,11 @@ useEffect(() => {
               </Grid>
             ))}
           </Grid>
+            ) : (
+          <Typography variant="h6" color="textSecondary" align="center" sx={{ mt: 4 }}>
+            Không tìm thấy kết quả
+          </Typography>
+        )}
           <Pagination
             count={countNovelPages}
             page={novelPage}

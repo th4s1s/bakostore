@@ -47,7 +47,6 @@ export const OrderProvider: React.FC<{ children: React.ReactNode, username: stri
         setLoading(true);
         try {
             const response = await axios.get(`/api/order/list.php?username=${encodeURIComponent(username)}`);
-            console.log("API Response:", response.data); // Add this line to log API response
             if (Array.isArray(response.data)) {
                 setOrders(response.data);
             } else {

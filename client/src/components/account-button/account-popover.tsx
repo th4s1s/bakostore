@@ -54,7 +54,7 @@ export const AccountPopover: FC<AccountPopoverProps> = ({ anchorEl, onClose, ope
           <ListItemIcon>
             <SvgIcon fontSize="small"><User03Icon /></SvgIcon>
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body1">Profile</Typography>} />
+          <ListItemText primary={<Typography variant="body1">Hồ sơ</Typography>} />
         </ListItemButton>
         <ListItemButton
           component={RouterLink}
@@ -65,7 +65,7 @@ export const AccountPopover: FC<AccountPopoverProps> = ({ anchorEl, onClose, ope
           <ListItemIcon>
             <SvgIcon fontSize="small"><Container /></SvgIcon>
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body1">Order</Typography>} />
+          <ListItemText primary={<Typography variant="body1">Đơn hàng</Typography>} />
         </ListItemButton>
       </Box>
       <Divider sx={{ my: '0 !important' }} />
@@ -75,7 +75,7 @@ export const AccountPopover: FC<AccountPopoverProps> = ({ anchorEl, onClose, ope
           onClick={handleLogout}
           size="small"
         >
-          Logout
+          Đăng xuất
         </Button>
       </Box>
     </Popover>

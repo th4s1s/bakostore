@@ -69,11 +69,11 @@ useEffect(() => {
         toast.success('Thêm vào giỏ hàng thành công!');
       } catch (error) {
         console.error('Error adding to cart:', error);
-        alert('Error adding to cart.');
+        toast.error('Error adding to cart.');
       }
     } else {
-      alert('You need to be logged in to add items to the cart.');
-    }
+      toast.error('Bạn phải đăng nhập mới được thêm vào giỏ hàng nhé.');   
+     }
   };
 
   const handleRatingChange = (newRating: number) => {
@@ -89,12 +89,12 @@ useEffect(() => {
 
   const handlePostComment = async () => {
     if (!user) {
-      alert('You must be logged in to post comments.');
+      toast.error('Bạn phải đăng nhập mới được đánh giá nhé.');
       return;
     }
   
     if (!productId) {
-      alert('Product ID is not available.');
+      toast.error('Product ID is not available.');
       return;
     }
   

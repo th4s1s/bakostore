@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ButtonBase, Box, Typography, Badge } from '@mui/material';
+import { ButtonBase, Box, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { usePopover } from '../../hooks/use-popover';
 import { ShoppingCartPopover } from './ShoppingCartPopover';
@@ -34,8 +34,8 @@ export const ShoppingCartButton: React.FC = () => {
           width: 85,
           borderRadius: '50%',
           overflow: 'hidden',
-          color: pink[300],  // Setting the icon color to pink
-          '&:hover': {    // Optional: change color on hover
+          color: pink[300], 
+          '&:hover': {   
             color: 'deepPink',
           }
         }}

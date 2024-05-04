@@ -7,7 +7,7 @@ interface NewsItem {
   title: string;
   date: string;
   content: string;
-  cover: string; // URL to the cover image
+  cover: string; 
 }
 
 
@@ -32,7 +32,7 @@ const NewsPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container h-screen mx-auto px-4">
       {newsData.map((news, index) => (
         <div key={news.id} className={`flex flex-wrap md:flex-nowrap my-4 ${index !== 0 ? 'pt-4 border-t-2 border-gray-200' : ''}`}>
           <div className="w-full md:w-1/3 lg:w-1/4">
