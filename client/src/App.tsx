@@ -22,6 +22,7 @@ import UserProfile from "./pages/profile";
 import Admin from "./pages/admin";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotFoundPage from "./pages/error/404";
 
 
 const theme = createTheme({
@@ -37,7 +38,15 @@ const theme = createTheme({
 
 
 function App() {
-  const { user } = useAuth(); 
+  const {user} = useAuth();
+
+  const Layout = ({ children }: { children: React.ReactNode }) => (
+    <>
+      {user ? <NavbarLogged /> : <Navbar />} 
+      {children}
+      <Footer />
+    </>
+  );
 
   return (
     <>
@@ -53,31 +62,30 @@ function App() {
       draggable
       pauseOnHover
     />    
-  <ThemeProvider theme={theme}>
-    <CartProvider username={user?.username} token={user?.token}>
-      <OrderProvider username={user?.username} >
-     {user ? <NavbarLogged /> : <Navbar />} 
+<ThemeProvider theme={theme}>
+  <CartProvider username={user?.username} token={user?.token}>
+    <OrderProvider username={user?.username} >
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/news" element={<NewsPage />} />
-        <Route path="/news/:id" element={<NewsDetail />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/order" element={<OrdersPage />} />
-        <Route path="/order/:orderId" element={<OrderDetailPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/admin" element={<Admin/>} />
+        <Route path="/" element={<Layout><HomePage /></Layout>} />
+        <Route path="/contact" element={<Layout><Contact /></Layout>} />
+        <Route path="/shop" element={<Layout><Shop /></Layout>} />
+        <Route path="/news" element={<Layout><NewsPage /></Layout>} />
+        <Route path="/news/:id" element={<Layout><NewsDetail /></Layout>} />
+        <Route path="/product/:productId" element={<Layout><ProductDetail /></Layout>} />
+        <Route path="/about-us" element={<Layout><AboutUs /></Layout>} />
+        <Route path="/cart" element={<Layout><CartPage /></Layout>} />
+        <Route path="/checkout" element={<Layout><CheckoutPage /></Layout>} />
+        <Route path="/order" element={<Layout><OrdersPage /></Layout>} />
+        <Route path="/order/:orderId" element={<Layout><OrderDetailPage /></Layout>} />
+        <Route path="/login" element={<Layout><Login /></Layout>} />
+        <Route path="/profile" element={<Layout><UserProfile /></Layout>} />
+        <Route path="/admin" element={<Layout><Admin/></Layout>} />
+        <Route path="*" element={<NotFoundPage />} /> {/* 404 page */}
       </Routes>
-      <Footer />
-      </OrderProvider>
-      </CartProvider>
-    </ThemeProvider>
-      </>
+    </OrderProvider>
+  </CartProvider>
+</ThemeProvider>      
+</>
   )
 }
 

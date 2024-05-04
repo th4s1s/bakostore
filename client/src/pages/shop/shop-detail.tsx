@@ -6,17 +6,21 @@ import { useCartContext } from '../../context/CartContext';
 import StarRating from '../../components/rating';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Swal from 'sweetalert2';
 
 
 
 interface Comment {
-  id: number;
+  id: string;
   pid: number;
   name: string;
   avatar: string;
   comment: string;
   rating: number;
   date: string;
+  username: string;
 }
 
 interface Product {
@@ -86,7 +90,53 @@ useEffect(() => {
     console.log(event.target.value)
     setComment(event.target.value);
   };
+ 
+  
 
+  const handleDeleteComment = async (commentId: string) => {
+    if (!user) {
+      toast.error('Bạn cần đăng nhập để thực hiện hành động này.');
+      return;
+    }
+  
+    Swal.fire({
+      title: 'Bạn có chắc không?',
+      text: "Bạn sẽ không thể hoàn tác hành động này!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Có, xóa nó!',
+      cancelButtonText: 'Hủy'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const postData = new URLSearchParams();
+        postData.append('id', commentId);
+        postData.append('token', user.token);
+        if (user.is_admin === 0) {
+          postData.append('username', user.username);
+        }
+  
+        axios.post('/api/comment/delete.php', postData.toString(), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then(response => {
+          if (response.status === 200) {
+            toast.success('Bình luận đã được xóa.');
+            fetchProductDetails(); 
+          } else {
+            toast.error('Không thể xóa bình luận.');
+          }
+        }).catch(error => {
+          console.error('Error deleting comment:', error);
+          toast.error('Lỗi khi xóa bình luận.');
+        });
+      }
+    });
+  };
+  
+  
 
   const handlePostComment = async () => {
     if (!user) {
@@ -96,6 +146,16 @@ useEffect(() => {
   
     if (!productId) {
       toast.error('Product ID is not available.');
+      return;
+    }
+
+    if (!comment) {
+      toast.error('Vui lòng nhập bình luận.');
+      return;
+    }
+
+    if (rating === 0) {
+      toast.error('Vui lòng chọn số sao đánh giá.');
       return;
     }
   
@@ -118,7 +178,7 @@ useEffect(() => {
       }
     } catch (error) {
       console.error('Error posting comment:', error);
-      alert('Error posting comment');
+      toast.error('Error posting comment');
     }
   };
   
@@ -165,10 +225,10 @@ useEffect(() => {
                   </div>
                 </div>
                     <textarea
-                        className="form-textarea mt-1 block w-full border-2 border-pink-300 rounded-lg shadow-sm focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-padding-3"
+                        className="form-textarea mt-1 block w-full border-2 border-pink-300 rounded-lg shadow-sm focus:ring focus:ring-pink-500 focus:ring-opacity-50 p-3"
                         rows={4}
                         value={comment}
-                        placeholder="  Viết bình luận vào đây"
+                        placeholder="Viết bình luận vào đây"
                         onChange={handleCommentChange}
                     >
                     </textarea>
@@ -178,21 +238,30 @@ useEffect(() => {
                     </div>
                     <div className="mt-4">
                     {product.comments.map((comment) => (
-                <div key={comment.id} className="bg-white rounded-md p-4 shadow mb-4 flex gap-4 items-center">
-                  <img src={comment.avatar} alt="Avatar" className="h-12 w-12 rounded-full" />
-                  <div className="flex-grow">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">{comment.name}</h4>
-                      <span className="text-sm text-gray-500">{comment.date}</span>
+                    <div key={comment.id} className="bg-white rounded-md p-4 shadow mb-4 flex gap-4 items-center relative">
+                      <img src={comment.avatar} alt="Avatar" className="h-12 w-12 rounded-full" />
+                      <div className="flex-grow">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-semibold">{comment.name}</h4>
+                          <span className="text-sm text-gray-500">{comment.date}</span>
+                        </div>
+                        <p className="text-gray-800">{comment.comment}</p>
+                        <div className="text-yellow-400">
+                          {'★'.repeat(comment.rating)}
+                          {'☆'.repeat(5 - comment.rating)}
+                        </div>
+                        {user && (user.is_admin === 1 || user.username === comment.username) && (
+                          <IconButton 
+                            aria-label="delete" 
+                            onClick={() => handleDeleteComment(comment.id)} 
+                            sx={{ position: 'absolute', bottom: 8, right: 8 }}
+                            >
+                            <DeleteIcon />
+                          </IconButton>
+                        )}
+                      </div>
                     </div>
-                    <p className="text-gray-800">{comment.comment}</p>
-                    <div className="text-yellow-400">
-                      {'★'.repeat(comment.rating)}
-                      {'☆'.repeat(5 - comment.rating)}
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
               </div>
                 </div>
             </div>

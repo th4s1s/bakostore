@@ -1,4 +1,3 @@
-import React from 'react';
 import { RouterLink } from "./router-link";
 import { AccountButton } from './account-button';
 import { ShoppingCartButton } from './shopping-cart';
@@ -19,7 +18,7 @@ const NavbarLogged: React.FC = () => {
           <RouterLink href="/" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
             Trang Chủ
           </RouterLink>
-          <RouterLink href="/shop" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
+          <RouterLink href="/shop?mangaPage=1" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
             Cửa Hàng
           </RouterLink>
           <RouterLink href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-black hover:text-white mr-8">
