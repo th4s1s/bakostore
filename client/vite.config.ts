@@ -7,6 +7,7 @@ import svgr from '@svgr/rollup'
 export default defineConfig({
   plugins: [react(),  svgr()],
   server: {
+    host: '0.0.0.0',
     proxy: {
       // Using '/api' as an example. Adjust according to your needs.
       '/api': {

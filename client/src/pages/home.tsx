@@ -5,7 +5,7 @@ const HomePage: React.FC = () => {
   
   return (
     <>
-    <section className="relative mt-0 lg:py-44 overflow-hidden z-1 flex items-start justify-center">
+    <section className="relative mt-24 lg:mt-0 lg:py-44 overflow-hidden z-1 flex items-start justify-center">
       <div className="container pl-10">
         <div className="relative grid md:grid-cols-12 grid-cols-1 items-center mt-0 gap-[30px]">
           <div className="md:col-span-7">
@@ -36,8 +36,8 @@ const HomePage: React.FC = () => {
             <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-16 after:left-0 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]">
               <img
                 src="/hero.webp"
-                className="lg:max-w-none md:max-w-md"
-                style={{ width: '400px', height: '400px' }}
+                className="w-3/4 lg:w-full mt-10 lg:mt-0"
+                // style={{ width: '400px', height: '400px' }}
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ const HomePage: React.FC = () => {
       <div className="relative order-2 md:order-1">
       <img
         src='/context.webp'
-        className="rounded-lg shadow-md "
+        className="rounded-lg shadow-md w-3/4 lg:w-full"
         alt="Context"
       />
         </div>
