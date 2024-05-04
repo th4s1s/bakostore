@@ -63,12 +63,16 @@ const Admin = () => {
 
     //handle for products
     const handleShowProduct = async () => {
-        try {
-            const response = await axios.get(`/api/admin/products/show.php`);
-            setProductList(response.data)
-            console.log(response)
-        } catch (error) {
-            console.error('Error:', error);
+        if(isAuth){
+            try {
+                const response = await axios.get(`/api/admin/products/show.php`);
+                setProductList(response.data)
+                // console.log(response)
+                const response1 = await axios.get(`http://localhost:5173/img/product/sasakoi_1.jpg`);
+                console.log(response1)
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     }
 

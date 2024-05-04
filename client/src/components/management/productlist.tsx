@@ -33,17 +33,20 @@ const ProductListTable = ({ productList }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const [isSelected, setSelected] = useState(false);
+    const [isSelected, setSelected] = useState(new Array(productList.length).fill(false));
 
-    const handleProductToggle = useCallback((productId) => {
-        setSelected((prevProductId) => {
-          if (prevProductId === productId) {
-            return null;
-          }
-
-          return productId;
-        });
-      }, []);
+    const handleProductSelect = (productId : number) => {
+        setSelected((prev) => ({
+            ...prev,
+            [productId]: !prev[productId],
+        }));
+    };
+    // const handleProductUnSelect = (productId : number) => {
+    //     setSelected((prev) => ({
+    //         ...prev,
+    //         [productId]: false,
+    //     }));
+    // };
 
     const categoryOptions = [
         {
@@ -115,14 +118,14 @@ const ProductListTable = ({ productList }) => {
                         <TableCell>{product.type}</TableCell>
                         <TableCell>{product.rating}</TableCell>
                         <TableCell>
-                            <IconButton onClick={() => handleProductToggle(product.id)}>
+                            <IconButton onClick={() => handleProductSelect(product.id)}>
                             <SvgIcon>
-                                {isSelected ? <ChevronDownIcon /> : <ChevronRightIcon />}
+                                {isSelected[product.id] ? <ChevronDownIcon /> : <ChevronRightIcon />}
                             </SvgIcon>
                         </IconButton>
                         </TableCell>
                     </TableRow>
-                    {isSelected &&
+                    {isSelected[product.id] &&
                     <TableRow>
                     <TableCell
                       colSpan={7}
@@ -274,7 +277,7 @@ const ProductListTable = ({ productList }) => {
                         </Button>
                         <Button
                             color="inherit"
-                            onClick={() => {handleProductToggle(product.id)}}
+                            onClick={() => {handleProductSelect(product.id)}}
                         >
                             Cancel
                         </Button>
