@@ -182,6 +182,7 @@ const ProductListTable = ({ productList }) => {
                                     defaultValue={product.type}
                                     fullWidth
                                     label="Loại"
+                                    name="type"
                                     select
                                     >
                                         {categoryOptions.map((option) => (
@@ -205,11 +206,24 @@ const ProductListTable = ({ productList }) => {
                                     InputProps={{
                                         startAdornment: (
                                         <InputAdornment position="start">
-                                            $
+                                            VNĐ
                                         </InputAdornment>
                                         )
                                     }}
                                     type="number"
+                                    />
+                                </Grid>
+                                <Grid
+                                    item
+                                    md={6}
+                                    xs={12}
+                                >
+                                    <TextField
+                                    defaultValue={product.rating}
+                                    fullWidth
+                                    disabled
+                                    label="Đánh giá"
+                                    name="rating"
                                     />
                                 </Grid>
                             </Grid>
@@ -239,7 +253,7 @@ const ProductListTable = ({ productList }) => {
                                     multiline
                                     rows={8}
                                     label="Mô tả"
-                                    name="Mô tả"
+                                    name="description"
                                     />
                                 </Grid>
                                 {/* <Grid
@@ -273,13 +287,13 @@ const ProductListTable = ({ productList }) => {
                             type="submit"
                             variant="contained"
                         >
-                            Update
+                            Cập nhật
                         </Button>
                         <Button
                             color="inherit"
                             onClick={() => {handleProductSelect(product.id)}}
                         >
-                            Cancel
+                            Hủy
                         </Button>
                         </Stack>
                         <div>
@@ -287,7 +301,7 @@ const ProductListTable = ({ productList }) => {
                             onClick={() => {}}
                             color="error"
                         >
-                            Delete product
+                            Xóa sản phẩm
                         </Button>
                         </div>
                     </Stack>
