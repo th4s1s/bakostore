@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography, Box, Rating, Grid, Pagination } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -51,11 +51,17 @@ interface Product {
 }
 
 const Shop: React.FC = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialMangaPage = Number(queryParams.get('mangaPage')) || 1;
+  const initialNovelPage = Number(queryParams.get('novelPage')) || 1;
+  const initialActiveTab = queryParams.has('mangaPage') ? 'manga' : 'novel';
   const [products, setProducts] = useState<Product[]>([]);
-  const [value, setValue] = useState('manga');
+  const [value, setValue] = useState(initialActiveTab);
   const navigate = useNavigate();
-  const [mangaPage, setMangaPage] = useState(1);
-  const [novelPage, setNovelPage] = useState(1);
+  const [mangaPage, setMangaPage] = useState(initialMangaPage);
+  const [novelPage, setNovelPage] = useState(initialNovelPage);
+  const [activeTab, setActiveTab] = useState(initialActiveTab);
   const itemsPerPage = 15;
 
   const filteredMangaProducts = products.filter(product => product.type === 'manga');
@@ -68,6 +74,7 @@ const Shop: React.FC = () => {
   const currentNovelItems = filteredNovelProducts.slice((novelPage - 1) * itemsPerPage, novelPage * itemsPerPage);
 
 
+  
   useEffect(() => {
     fetch('/api/product/list.php')
       .then(response => response.json())
@@ -76,6 +83,14 @@ const Shop: React.FC = () => {
         rating: product.rating || 0
       }))));
   }, []);
+
+useEffect(() => {
+  if (activeTab === 'manga') {
+    navigate(`?mangaPage=${mangaPage}`);
+  } else if (activeTab === 'novel') {
+    navigate(`?novelPage=${novelPage}`);
+  }
+}, [mangaPage, novelPage, activeTab, navigate]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -91,6 +106,15 @@ const Shop: React.FC = () => {
 
   };
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.has('mangaPage')) {
+      setActiveTab('manga');
+    } else if (queryParams.has('novelPage')) {
+      setActiveTab('novel');
+    }
+  }, [location.search]);
+
   const handleNovelPageChange = (event: any, value: number) => {
     setNovelPage(value);
     window.scrollTo(0, 0);
@@ -104,8 +128,8 @@ const Shop: React.FC = () => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 4 }}>
           <TabList onChange={handleChange} aria-label="product category tabs" textColor="inherit" indicatorColor="secondary">
-            <CustomTab label="Manga" value="manga" />
-            <CustomTab label="Novel" value="novel" />
+            <CustomTab onClick={() => setActiveTab('manga')} label="Manga" value="manga" />
+            <CustomTab onClick={() => setActiveTab('novel')} label="Novel" value="novel" />
           </TabList>
         </Box>
         <TabPanel value="manga">

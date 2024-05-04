@@ -30,8 +30,8 @@ export const ShoppingCartButton: React.FC = () => {
           alignItems: 'center',
           display: 'flex',
           flexDirection: 'column', 
-          height: 80,
-          width: 80,
+          height: 85,
+          width: 85,
           borderRadius: '50%',
           overflow: 'hidden',
           color: pink[300],  // Setting the icon color to pink

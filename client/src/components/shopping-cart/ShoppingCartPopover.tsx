@@ -51,7 +51,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
             </ListItemIcon>
             <ListItemText
               primary={item.name}
-              secondary={`${item.price.toLocaleString()}₫`}
+              secondary={`${item.price.toLocaleString()}đ x ${item.amount}`}
               primaryTypographyProps={{ noWrap: true }}
               secondaryTypographyProps={{ noWrap: true, style: { fontSize: '1rem' } }}
             />

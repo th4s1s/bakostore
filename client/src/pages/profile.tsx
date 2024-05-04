@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -75,7 +76,7 @@ const UserProfile = () => {
                 });
                 // console.log(response.data)
                 handleRes(response.data);
-            } catch (error) {
+            } catch (error: any) {
                 console.error('Error:', error.response.status);
             }
         }

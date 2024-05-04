@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Iconify from '../components/iconify';
 
 const HomePage: React.FC = () => {
+  
   return (
     <>
     <section className="relative mt-0 lg:py-44 overflow-hidden z-1 flex items-start justify-center">
@@ -19,7 +20,7 @@ const HomePage: React.FC = () => {
               </p>
               <div className="relative mt-8">
               <Link
-                to='/'
+                to='/shop'
                 className="btn bg-pink-200 hover:bg-pink-300 border-pink-200 hover:border-pink-300 hover:text-white text-black rounded-full mr-2 text-xl px-6 py-3 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
                 style={{
                   textShadow: '1px 1px 2px rgba(0,0,0,0.1)' 
