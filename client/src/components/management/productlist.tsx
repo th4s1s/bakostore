@@ -250,7 +250,7 @@ const ProductListTable = ({ productData}) => {
                                         md={6}
                                         xs={12}
                                     >
-                                        <img src={`http://localhost:5173${product.image}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                        <img src={newImg ? URL.createObjectURL(newImg) : `http://localhost:5173${product.image}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                                     </Grid>
                                         <Grid
                                             item

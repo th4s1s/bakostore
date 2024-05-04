@@ -28,7 +28,8 @@ const UserProfile = () => {
         }
         // return res
         localStorage.setItem("user", JSON.stringify(res));
-        navigate('/profile');
+        // navigate('/profile');
+        window.location.reload();
     }
 
     const handleImageUpload = (e: { target: { files: any[]; }; }) => {
@@ -64,9 +65,7 @@ const UserProfile = () => {
             formData.append('name', !tmpName ? info.name : tmpName);
             formData.append('avatar', info.avatar);
             formData.append('phone', !tmpPhone ? info.phone : tmpPhone);
-            if(tmpAvt){
-                formData.append('fileToUpload', tmpAvt);
-            }
+            formData.append('fileToUpload', tmpAvt? tmpAvt : new File([], ""));
 
             try {
                 const response = await axios.post(`/api/user/update_profile.php`, formData, {
@@ -74,8 +73,10 @@ const UserProfile = () => {
                         'Content-Type': 'multipart/form-data',
                     }
                 });
-                // console.log(response.data)
-                handleRes(response.data);
+                // console.log(response)
+                // handleRes(response.data);
+                localStorage.setItem("user", JSON.stringify(response.data));
+                window.location.reload();
             } catch (error: any) {
                 console.error('Error:', error.response.status);
             }
