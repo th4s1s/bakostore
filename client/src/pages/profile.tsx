@@ -27,7 +27,7 @@ const UserProfile = () => {
         }
         // return res
         localStorage.setItem("user", JSON.stringify(res));
-        navigate('/dashboard/social/profile');
+        navigate('/profile');
     }
 
     const handleImageUpload = (e: { target: { files: any[]; }; }) => {
