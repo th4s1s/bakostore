@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useRef, useState } from "react";
+import { Fragment, SetStateAction, Key, useCallback, useRef, useState } from "react";
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
@@ -30,8 +30,12 @@ import {
     TextareaAutosize,
     Typography,
 } from '@mui/material';
+import axios from "axios";
 
-const ProductListTable = ({ productList }) => {
+const ProductListTable = ({ productData}) => {
+    console.log(productData);
+    const [productList, setProductList] = useState(productData);
+
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -55,11 +59,11 @@ const ProductListTable = ({ productList }) => {
         }
     ]
 
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (event: any, newPage: SetStateAction<number>) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event) => {
+    const handleChangeRowsPerPage = (event: { target: { value: string; }; }) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
@@ -69,9 +73,68 @@ const ProductListTable = ({ productList }) => {
     const [newDesc, setNewDesc] = useState('');
     const [newPrice, setNewPrice] = useState('');
     const [newType, setNewType] = useState('');
+    const [newImg, setNewImg] = useState('');
 
-    const handleUpdateProduct = async (e) => {
-        console.log(e)
+    const handleShowProduct = async () => {
+        try {
+            const response = await axios.get(`/api/admin/products/show.php`);
+            // productList = response.data
+            setProductList(response.data);
+            // location.reload();
+            // console.log(response.data)
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    const handleUpdateProduct = async (productId: any) => {
+        const currProduct = productList.find((product: { id: number; }) => product.id === productId);
+        // console.log(currProduct, productId)
+        const formData = new FormData();
+        formData.append('id', currProduct.id);
+        formData.append('name', newName ? newName : currProduct.name);
+        formData.append('description', newDesc ? newDesc : currProduct.description);
+        formData.append('price', newPrice ? newPrice : currProduct.price);
+        formData.append('fileToUpload', newImg? newImg : new File([], ""));
+        formData.append('image', currProduct.image);
+        formData.append('type', newType ? newType : currProduct.type);
+
+        // console.log(newImg)
+        // console.log(formData.get("image"));
+        try {
+            const response = await axios.post(`/api/admin/products/update.php`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            // console.log(response.data)
+            // console.log(response.data);
+            handleShowProduct()
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        setNewName('');
+        setNewDesc('');
+        setNewPrice('');
+        setNewType('');
+        setNewImg('');
+    }
+
+    const handleDeleteProduct = async (productId) => {
+        const formData = new URLSearchParams({
+            id: productId
+        });
+        try {
+            const response = await axios.post(`/api/admin/products/remove.php`, formData, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            // console.log(response.data);
+            handleShowProduct();
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     //handle file input
@@ -114,7 +177,7 @@ const ProductListTable = ({ productList }) => {
         {(rowsPerPage > 0
             ? productList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : productList
-        ).map((product, index) => {
+        ).map((product, index: any) => {
             return (
                 <>
                     <Fragment key={product.id}>
@@ -200,6 +263,7 @@ const ProductListTable = ({ productList }) => {
                                             type="file"
                                             name="fileToUpload"
                                             inputRef={fileInputRef}
+                                            onChange={(e) => {setNewImg(e.target.files[0])}}
                                         />
                                         <IconButton onClick={() => {handleButtonClick()}}>
                                             <AddPhotoAlternateIcon />
@@ -212,12 +276,6 @@ const ProductListTable = ({ productList }) => {
                                     md={6}
                                     xs={3}
                                 >
-                                    {/* <TextField
-                                    defaultValue={product.name}
-                                    fullWidth
-                                    label="Product name"
-                                    name="name"
-                                    /> */}
                                     <Grid
                                         container
                                         spacing={3}
@@ -243,7 +301,7 @@ const ProductListTable = ({ productList }) => {
                                             <TextField
                                             defaultValue={product.price}
                                             fullWidth
-                                            onChange={(e) => {setNewName(e.target.value)}}
+                                            onChange={(e) => {setNewPrice(e.target.value)}}
                                             label="Giá"
                                             name="price"
                                             InputProps={{
@@ -264,6 +322,7 @@ const ProductListTable = ({ productList }) => {
                                             <TextField
                                             defaultValue={product.type}
                                             fullWidth
+                                            onChange={(e) => {setNewType(e.target.value)}}
                                             label="Loại"
                                             name="type"
                                             select
@@ -273,7 +332,6 @@ const ProductListTable = ({ productList }) => {
                                                         {option.label}
                                                     </MenuItem>
                                                 ))}
-                                                {/* <div>{product.type}</div> */}
                                             </TextField>
                                         </Grid>
                                     </Grid>
@@ -315,6 +373,7 @@ const ProductListTable = ({ productList }) => {
                                     defaultValue={product.description}
                                     // disabled
                                     fullWidth
+                                    onChange={(e) => {setNewDesc(e.target.value)}}
                                     multiline
                                     rows={12}
                                     label="Mô tả"
@@ -338,7 +397,7 @@ const ProductListTable = ({ productList }) => {
                         spacing={2}
                         >
                         <Button
-                            onClick={(e) => {handleUpdateProduct(e)}}
+                            onClick={() => {handleUpdateProduct(product.id)}}
                             type="submit"
                             variant="contained"
                         >
@@ -353,7 +412,7 @@ const ProductListTable = ({ productList }) => {
                         </Stack>
                         <div>
                         <Button
-                            onClick={() => {}}
+                            onClick={() => {handleDeleteProduct(product.id)}}
                             color="error"
                         >
                             Xóa sản phẩm
@@ -387,7 +446,8 @@ const ProductListTable = ({ productList }) => {
     );
 }
 
-const ProductList = ({ productList }) => {
+const ProductList = ({ productData }) => {
+    // console.log(productList)
     return (
         <Box
             component="main"
@@ -421,7 +481,7 @@ const ProductList = ({ productList }) => {
                 </Stack>
                 </Stack>
                 <Card>
-                {productList && <ProductListTable productList={productList}/>}
+                {productData && <ProductListTable productData={productData}/>}
                 </Card>
             </Stack>
             </Container>

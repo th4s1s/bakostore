@@ -67,9 +67,17 @@ const Admin = () => {
             try {
                 const response = await axios.get(`/api/admin/products/show.php`);
                 setProductList(response.data)
-                // console.log(response)
-                const response1 = await axios.get(`http://localhost:5173/img/product/sasakoi_1.jpg`);
-                console.log(response1)
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+
+    const handleDeleteProduct = async () => {
+        if(isAuth){
+            try {
+                const response = await axios.get(`/api/admin/products/remove.php`);
+                setProductList(response.data)
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -116,7 +124,7 @@ const Admin = () => {
                     </ul>
                 </div>
                 {/* {isUserMana && <UserMana />} */}
-                {isProductMana && productList && <ProductList productList={productList}/>}
+                {isProductMana && productList && <ProductList productData={productList}/>}
                 {/* {isNewsMana && <NewsMana />} */}
             </div>
             </>
