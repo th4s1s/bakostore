@@ -1,4 +1,4 @@
-import { Fragment, SetStateAction, Key, useCallback, useRef, useState } from "react";
+import { Fragment, SetStateAction, useRef, useState } from "react";
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
@@ -32,8 +32,20 @@ import {
 } from '@mui/material';
 import axios from "axios";
 
-const ProductListTable = ({ productData}) => {
-    console.log(productData);
+const categoryOptions = [
+    {
+      label: 'Manga',
+      value: 'manga'
+    },
+    {
+      label: 'Light Novel',
+      value: 'novel'
+    }
+]
+
+const ProductListTable = ({productData}) => {
+    // console.log(productData);
+
     const [productList, setProductList] = useState(productData);
 
     const [page, setPage] = useState(0);
@@ -46,18 +58,8 @@ const ProductListTable = ({ productData}) => {
             ...prev,
             [productId]: !prev[productId],
         }));
+        setNewImg('');
     };
-
-    const categoryOptions = [
-        {
-          label: 'Manga',
-          value: 'manga'
-        },
-        {
-          label: 'Light Novel',
-          value: 'novel'
-        }
-    ]
 
     const handleChangePage = (event: any, newPage: SetStateAction<number>) => {
         setPage(newPage);
@@ -78,10 +80,8 @@ const ProductListTable = ({ productData}) => {
     const handleShowProduct = async () => {
         try {
             const response = await axios.get(`/api/admin/products/show.php`);
-            // productList = response.data
             setProductList(response.data);
-            // location.reload();
-            // console.log(response.data)
+
         } catch (error) {
             console.error('Error:', error);
         }
@@ -89,7 +89,7 @@ const ProductListTable = ({ productData}) => {
 
     const handleUpdateProduct = async (productId: any) => {
         const currProduct = productList.find((product: { id: number; }) => product.id === productId);
-        // console.log(currProduct, productId)
+
         const formData = new FormData();
         formData.append('id', currProduct.id);
         formData.append('name', newName ? newName : currProduct.name);
@@ -99,16 +99,12 @@ const ProductListTable = ({ productData}) => {
         formData.append('image', currProduct.image);
         formData.append('type', newType ? newType : currProduct.type);
 
-        // console.log(newImg)
-        // console.log(formData.get("image"));
         try {
             const response = await axios.post(`/api/admin/products/update.php`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             });
-            // console.log(response.data)
-            // console.log(response.data);
             handleShowProduct()
         } catch (error) {
             console.error('Error:', error);
@@ -447,8 +443,253 @@ const ProductListTable = ({ productData}) => {
 }
 
 const ProductList = ({ productData }) => {
-    // console.log(productList)
+    const [addNewProduct, setAddNewProduct] = useState(false);
+    const [productList, setProductList] = useState(productData);
+
+    const NewProductForm = () => {
+        // const [newId, setNewId] = useState('');
+        const [newName, setNewName] = useState('');
+        const [newDesc, setNewDesc] = useState('');
+        const [newPrice, setNewPrice] = useState('');
+        const [newType, setNewType] = useState('');
+        const [newImg, setNewImg] = useState('');
+
+        const handleShowProduct = async () => {
+            try {
+                const response = await axios.get(`/api/admin/products/show.php`);
+                setProductList(response.data);
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        const handleAddProduct = async () => {
+            const formData = new FormData();
+            // formData.append('id', newId);
+            formData.append('name', newName);
+            formData.append('description', newDesc);
+            formData.append('price', newPrice);
+            formData.append('fileToUpload', newImg);
+            formData.append('type', newType);
+
+            try {
+                const response = await axios.post(`/api/admin/products/add.php`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                });
+                // productData = response.data
+                // console.log(response.data)
+                handleShowProduct();
+                setAddNewProduct(false);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            setNewName('');
+            setNewDesc('');
+            setNewPrice('');
+            setNewType('');
+            setNewImg('');
+        }
+
+        const fileInputRef = useRef(null);
+        const handleButtonClick = () => {
+          fileInputRef.current.click();
+        };
+
+        return (
+            <>
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                <div className="bg-white w-2/3 rounded-lg p-5">
+                    <CardContent>
+                        <Grid
+                        container
+                        spacing={3}
+                        >
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <Typography variant="h6">
+                            Thông tin cơ bản
+                            </Typography>
+                            <Divider sx={{ my: 2 }} />
+                            <Grid
+                            container
+                            spacing={3}
+                            >
+                                <Grid
+                                    item
+                                    md={6}
+                                    xs={3}
+                                >
+                                    <Grid
+                                        container
+                                        spacing={3}
+                                    >
+                                    <Grid
+                                        item
+                                        md={12}
+                                        xs={12}
+                                    >
+                                        <img src={newImg ? URL.createObjectURL(newImg) : ``} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                    </Grid>
+                                        <Grid
+                                            item
+                                            md={6}
+                                            xs={12}
+                                        >
+                                        <InputBase
+                                            style={{ display: 'none' }}
+                                            inputProps={{ accept: 'image/*' }}
+                                            type="file"
+                                            name="fileToUpload"
+                                            inputRef={fileInputRef}
+                                            onChange={(e) => {setNewImg(e.target.files[0])}}
+                                            required
+                                        />
+                                        <IconButton onClick={() => {handleButtonClick()}}>
+                                            <AddPhotoAlternateIcon />
+                                        </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid
+                                    item
+                                    md={6}
+                                    xs={3}
+                                >
+                                    <Grid
+                                        container
+                                        spacing={3}
+                                    >
+                                        <Grid
+                                            item
+                                            md={12}
+                                            xs={3}
+                                        >
+                                            <TextField
+                                            fullWidth
+                                            onChange={(e) => {setNewName(e.target.value)}}
+                                            label="Tên sản phẩm"
+                                            name="name"
+                                            required
+                                        />
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            md={12}
+                                            xs={3}
+                                        >
+                                            <TextField
+                                            fullWidth
+                                            onChange={(e) => {setNewPrice(e.target.value)}}
+                                            label="Giá"
+                                            name="price"
+                                            required
+                                            InputProps={{
+                                                startAdornment: (
+                                                <InputAdornment position="start">
+                                                    VNĐ
+                                                </InputAdornment>
+                                                )
+                                            }}
+                                            type="number"
+                                            />
+                                        </Grid>
+                                        <Grid
+                                            item
+                                            md={12}
+                                            xs={3}
+                                        >
+                                            <TextField
+                                            fullWidth
+                                            onChange={(e) => {setNewType(e.target.value)}}
+                                            label="Loại"
+                                            name="type"
+                                            select
+                                            required
+                                            >
+                                                {categoryOptions.map((option) => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                {/* <Grid
+                                    item
+                                    md={6}
+                                    xs={3}
+                                >
+                                    <TextField
+                                    fullWidth
+                                    label="Id"
+                                    name="id"
+                                    onChange={(e) => {setNewId(e.target.value)}}
+                                    required
+                                    />
+                                </Grid> */}
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}
+                        >
+                            <Typography variant="h6">
+                            Mô tả
+                            </Typography>
+                            <Divider sx={{ my: 2 }} />
+                            <Grid
+                            container
+                            // spacing={0}
+                            >
+                                <Grid
+                                    item
+                                    md={12}
+                                    xl={12}
+                                >
+                                    <TextField
+                                    // disabled
+                                    fullWidth
+                                    onChange={(e) => {setNewDesc(e.target.value)}}
+                                    multiline
+                                    rows={12}
+                                    label="Mô tả"
+                                    name="description"
+                                    required
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        </Grid>
+                    </CardContent>
+                    <Button
+                        onClick={() => {handleAddProduct()}}
+                        type="submit"
+                        variant="contained"
+                    >
+                        Thêm
+                    </Button>
+                    <Button
+                        color="inherit"
+                        onClick={() => {setAddNewProduct(false)}}
+                    >
+                        Hủy
+                    </Button>
+                </div>
+            </div>
+            </>
+        );
+    }
+
     return (
+    <>
         <Box
             component="main"
             sx={{
@@ -475,17 +716,20 @@ const ProductList = ({ productData }) => {
                         </SvgIcon>
                     )}
                     variant="contained"
+                    onClick={() => {setAddNewProduct(true)}}
                     >
                     Thêm sản phẩm
                     </Button>
                 </Stack>
                 </Stack>
                 <Card>
-                {productData && <ProductListTable productData={productData}/>}
+                {productList && <ProductListTable productData={productList}/>}
                 </Card>
             </Stack>
             </Container>
         </Box>
+        {addNewProduct && <NewProductForm />}
+    </>
     );
 }
 
