@@ -19,24 +19,40 @@ import OrderDetailPage from "./pages/order-detail";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProductDetail from "./pages/shop-detail"
 import UserProfile from "./pages/profile";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const theme = createTheme({
   typography: {
     fontFamily: [
-      '"Comic Sans MS"', // Your desired font
-      'cursive',
-      'sans-serif' // Fallback fonts
+      'Nunito', 
+      'sans-serif' 
     ].join(','),
   },
 });
+
+
+
 
 function App() {
   const { user } = useAuth(); 
 
   return (
     <>
-    <ThemeProvider theme={theme}>
+    <ToastContainer
+      toastClassName="pink-toast"
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />    
+  <ThemeProvider theme={theme}>
     <CartProvider username={user?.username} token={user?.token}>
       <OrderProvider username={user?.username} >
      {user ? <NavbarLogged /> : <Navbar />} 

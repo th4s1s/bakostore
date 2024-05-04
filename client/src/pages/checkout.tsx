@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useOrders } from '../context/OrderContext';
+import { useAuth } from '../context/AuthContext'
+
 
 const CheckoutPage = () => {
   const { cartItems, shippingCost, checkoutCart } = useCartContext();
@@ -12,6 +14,8 @@ const CheckoutPage = () => {
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
   const { fetchOrders } = useOrders();
+  const { user } = useAuth();
+
 
   const totalItems = cartItems.reduce((acc, item) => acc + item.amount, 0);
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.amount, 0);
@@ -24,7 +28,7 @@ const CheckoutPage = () => {
       setSelectedOption(newValue);
       if (newValue === 'true') {
           setAddress(defaultStoreAddress); 
-          setPhone('');
+          setPhone(user.phone);
       } else {
           setAddress('');
           setPhone(''); 
