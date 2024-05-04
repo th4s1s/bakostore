@@ -8,6 +8,8 @@ import { RouterLink } from '../router-link';
 import { useAuth } from '../../context/AuthContext';
 import User03Icon from '@untitled-ui/icons-react/build/esm/User03';
 import Container from '@untitled-ui/icons-react/build/esm/Container';
+import Certificate02 from '@untitled-ui/icons-react/build/esm/Certificate02'
+
 import { useNavigate } from 'react-router-dom';
 
 interface AccountPopoverProps {
@@ -67,6 +69,19 @@ export const AccountPopover: FC<AccountPopoverProps> = ({ anchorEl, onClose, ope
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body1">Đơn hàng</Typography>} />
         </ListItemButton>
+          {user.is_admin === 1 && (
+            <ListItemButton
+              component={RouterLink}
+              href="/admin"
+              onClick={onClose}
+              sx={{ borderRadius: 1, px: 1, py: 0.5 }}
+            >
+              <ListItemIcon>
+                <SvgIcon fontSize="small"><Certificate02 /></SvgIcon>
+              </ListItemIcon>
+              <ListItemText primary={<Typography variant="body1">Admin Dashboard</Typography>} />
+            </ListItemButton>
+          )}
       </Box>
       <Divider sx={{ my: '0 !important' }} />
       <Box sx={{ display: 'flex', p: 1, justifyContent: 'center' }}>

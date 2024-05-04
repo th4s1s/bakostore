@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useCartContext } from '../context/CartContext';
-import StarRating from '../components/rating';
+import { useAuth } from '../../context/AuthContext';
+import { useCartContext } from '../../context/CartContext';
+import StarRating from '../../components/rating';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -45,6 +45,7 @@ const ProductDetail: React.FC = () => {
     try {
         const response = await axios.get(`/api/product/detail.php?id=${productId}`);
         if (response.data) {
+            console.log(response.data)
             setProduct(response.data);
             console.log("Product details fetched:", response.data);
         }

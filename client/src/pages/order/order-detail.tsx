@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useOrders } from '../context/OrderContext';
+import { useOrders } from '../../context/OrderContext';
 
 const OrderDetailPage: React.FC = () => {
     const { orderId } = useParams<{ orderId: string }>();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useOrders } from '../context/OrderContext';
+import { useOrders } from '../../context/OrderContext';
 import { useNavigate } from 'react-router-dom';
 
 const OrdersPage: React.FC = () => {

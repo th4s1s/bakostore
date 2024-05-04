@@ -7,18 +7,19 @@ import { OrderProvider } from "./context/OrderContext";
 import HomePage from "./pages/home"
 import Contact from "./pages/contact"
 import Footer from "./components/footer"
-import Shop from "./pages/shop"
-import NewsPage from "./pages/news"
-import NewsDetail from "./pages/news-detail"
+import Shop from "./pages/shop/shop"
+import NewsPage from "./pages/news/news"
+import NewsDetail from "./pages/news/news-detail"
 import AboutUs from "./pages/about-us"
 import Login from "./pages/login"
 import CartPage from "./pages/cart";
 import CheckoutPage from "./pages/checkout";
-import OrdersPage from "./pages/order";
-import OrderDetailPage from "./pages/order-detail";
+import OrdersPage from "./pages/order/order";
+import OrderDetailPage from "./pages/order/order-detail";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ProductDetail from "./pages/shop-detail"
+import ProductDetail from "./pages/shop/shop-detail"
 import UserProfile from "./pages/profile";
+import Admin from "./pages/admin";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -70,6 +71,7 @@ function App() {
         <Route path="/order/:orderId" element={<OrderDetailPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/admin" element={<Admin/>} />
       </Routes>
       <Footer />
       </OrderProvider>
