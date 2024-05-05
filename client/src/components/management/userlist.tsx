@@ -2,8 +2,9 @@ import { Fragment, SetStateAction, useRef, useState } from "react";
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import {
+    Autocomplete,
     Box,
     Button,
     Card,
@@ -33,10 +34,7 @@ import {
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const UserListTable = ({userData}) => {
-    // console.log(userData);
-
-    const [userList, setUserList] = useState(userData);
+const UserListTable = ({userList, setUserList}) => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -363,13 +361,11 @@ const UserList = ({ userData }) => {
         const [newPassword, setNewPassword] = useState('');
         const [newName, setNewName] = useState('');
         const [newPhone, setNewPhone] = useState('');
-        const [newImg, setNewImg] = useState(new File([], ""));
 
         const handleShowUser = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
                 setUserList(response.data);
-
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -508,6 +504,15 @@ const UserList = ({ userData }) => {
         );
     }
 
+    const handleSearch = (e) => {
+        const term = e ? (e.username ? e.username : e.target.value) : '';
+
+        const filtered = userData.filter(user =>
+            user.username.toLowerCase().includes(term.toLowerCase())
+        );
+        setUserList(filtered)
+    }
+
     return (
     <>
         <Box
@@ -543,7 +548,33 @@ const UserList = ({ userData }) => {
                 </Stack>
                 </Stack>
                 <Card>
-                {userList && <UserListTable userData={userList}/>}
+                <Stack
+                    alignItems="center"
+                    direction="row"
+                    spacing={2}
+                    sx={{ p: 2 }}
+                >
+                    <SvgIcon>
+                        <SearchMdIcon />
+                    </SvgIcon>
+                    <Autocomplete
+                        fullWidth
+                        options={userList}
+                        getOptionLabel={(option:string) => option.username}
+                        onChange={(e, selected) => handleSearch(selected)}
+                        sx={{ border: 'none' }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                placeholder="Tìm kiếm người dùng"
+                                onChange={(e) => handleSearch(e)}
+                            />
+                        )}
+                    />
+                </Stack>
+                </Card>
+                <Card>
+                {userList && <UserListTable userList={userList} setUserList={setUserList}/>}
                 </Card>
             </Stack>
             </Container>

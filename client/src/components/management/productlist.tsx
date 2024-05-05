@@ -3,11 +3,14 @@ import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import {
+    Autocomplete,
     Box,
     Button,
     Card,
     CardContent,
+    Checkbox,
     Container,
     Divider,
     Grid,
@@ -44,10 +47,8 @@ const categoryOptions = [
     }
 ]
 
-const ProductListTable = ({productData}) => {
-    // console.log(productData);
 
-    const [productList, setProductList] = useState(productData);
+const ProductListTable = ({productList , setProductList }) => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -447,9 +448,12 @@ const ProductListTable = ({productData}) => {
     );
 }
 
+
 const ProductList = ({ productData }) => {
     const [addNewProduct, setAddNewProduct] = useState(false);
     const [productList, setProductList] = useState(productData);
+
+    // const [searchTerm, setSearchTerm] = useState('');
 
     const NewProductForm = () => {
         // const [newId, setNewId] = useState('');
@@ -463,7 +467,8 @@ const ProductList = ({ productData }) => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
                 setProductList(response.data);
-
+                // console.log(productList)
+                // console.log("update after add")
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -486,6 +491,7 @@ const ProductList = ({ productData }) => {
                 });
                 // productData = response.data
                 // console.log(response.data)
+                // console.log("add new prod")
                 handleShowProduct();
                 setAddNewProduct(false);
                 toast.success("Thêm sản phẩm mới thành công");
@@ -628,19 +634,6 @@ const ProductList = ({ productData }) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                {/* <Grid
-                                    item
-                                    md={6}
-                                    xs={3}
-                                >
-                                    <TextField
-                                    fullWidth
-                                    label="Id"
-                                    name="id"
-                                    onChange={(e) => {setNewId(e.target.value)}}
-                                    required
-                                    />
-                                </Grid> */}
                             </Grid>
                         </Grid>
                         <Grid
@@ -695,6 +688,15 @@ const ProductList = ({ productData }) => {
         );
     }
 
+    const handleSearch = (e) => {
+        const term = e ? (e.name ? e.name : e.target.value) : '';
+
+        const filtered = productData.filter(product =>
+            product.name.toLowerCase().includes(term.toLowerCase())
+        );
+        setProductList(filtered)
+    }
+
     return (
     <>
         <Box
@@ -730,7 +732,34 @@ const ProductList = ({ productData }) => {
                 </Stack>
                 </Stack>
                 <Card>
-                {productList && <ProductListTable productData={productList}/>}
+                <Stack
+                    alignItems="center"
+                    direction="row"
+                    spacing={2}
+                    sx={{ p: 2 }}
+                >
+                    <SvgIcon>
+                        <SearchMdIcon />
+                    </SvgIcon>
+                    <Autocomplete
+                        fullWidth
+                        options={productList}
+                        getOptionLabel={(option:string) => option.name}
+                        sx={{ border: 'none' }}
+                        onChange={(e, selected) => handleSearch(selected)}
+                        freeSolo
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                placeholder="Tìm kiếm sản phẩm"
+                                onChange={(e) => handleSearch(e)}
+                            />
+                        )}
+                    />
+                </Stack>
+                </Card>
+                <Card>
+                    {productList && <ProductListTable productList={productList} setProductList={setProductList}/>}
                 </Card>
             </Stack>
             </Container>
