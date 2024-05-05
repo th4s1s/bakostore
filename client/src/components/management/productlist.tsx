@@ -80,7 +80,7 @@ const ProductListTable = ({productData}) => {
 
     const handleShowProduct = async () => {
         try {
-            const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/products/show.php`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
             setProductList(response.data);
 
         } catch (error) {
@@ -101,7 +101,7 @@ const ProductListTable = ({productData}) => {
         formData.append('type', newType ? newType : currProduct.type);
 
         try {
-            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/products/update.php`, formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/products/update.php`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -124,7 +124,7 @@ const ProductListTable = ({productData}) => {
             id: productId
         });
         try {
-            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/products/remove.php`, formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/products/remove.php`, formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -461,7 +461,7 @@ const ProductList = ({ productData }) => {
 
         const handleShowProduct = async () => {
             try {
-                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/products/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
                 setProductList(response.data);
 
             } catch (error) {
@@ -479,7 +479,7 @@ const ProductList = ({ productData }) => {
             formData.append('type', newType);
 
             try {
-                const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/products/add.php`, formData, {
+                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/products/add.php`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }

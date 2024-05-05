@@ -68,8 +68,7 @@ const UserProfile = () => {
             formData.append('fileToUpload', tmpAvt? tmpAvt : new File([], ""));
 
             try {
-                const response = await axios.post(`https://bakobackend.azurewebsites.net/user/update_profile.php`, formData, {
-                    headers: {
+                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/update_profile.php`, formData, {                    headers: {
                         'Content-Type': 'multipart/form-data',
                     }
                 });

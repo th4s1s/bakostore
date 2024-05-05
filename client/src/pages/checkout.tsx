@@ -12,6 +12,7 @@ const CheckoutPage = () => {
   const [selectedOption, setSelectedOption] = useState('false');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
+  const [isCheckout, setisCheckout] = useState(false)
   const navigate = useNavigate();
   const { fetchOrders } = useOrders();
   const { user } = useAuth();
@@ -70,6 +71,7 @@ const CheckoutPage = () => {
 
   const handleCheckout = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
+    setisCheckout(true);
     try {
       await checkoutCart(address, phone);
       notifySuccess();
@@ -80,6 +82,9 @@ const CheckoutPage = () => {
     } catch (error) {
       console.error('Checkout failed:', error);
       toast.error('Checkout failed. Please try again.');
+    }
+    finally {
+      setisCheckout(false);
     }
   };
 
@@ -133,7 +138,7 @@ const CheckoutPage = () => {
                 <span className="ml-2">Nhận tại cửa hàng (ở đâu thì tự kiếm)</span>
               </label>
             </div>
-            <button type="submit" className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline float-right">
+            <button type="submit" disabled={isCheckout} className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline float-right">
               Đặt hàng
             </button>
           </form>

@@ -20,7 +20,7 @@ const NewsDetail = () => {
         const fetchNewsDetail = async () => {
           setLoading(true);
           try {
-            const response = await fetch(`https://bakobackend.azurewebsites.net/news/detail.php?id=${id}`);
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/news/detail.php?id=${id}`);
             if (!response.ok) {
               throw new Error('Could not fetch news details');
             }

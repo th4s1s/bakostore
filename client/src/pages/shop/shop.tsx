@@ -137,7 +137,7 @@ const Shop: React.FC = () => {
   
   useEffect(() => {
     setLoading(true); 
-    fetch('https://bakobackend.azurewebsites.net/product/list.php')
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/product/list.php`)
       .then(response => response.json())
       .then(data => {
         setProducts(data.map((product: Product) => ({

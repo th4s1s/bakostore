@@ -61,7 +61,7 @@ const UserListTable = ({userData}) => {
 
     const handleShowUser = async () => {
         try {
-            const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/users/show.php`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
             setUserList(response.data);
 
         } catch (error) {
@@ -74,7 +74,7 @@ const UserListTable = ({userData}) => {
             username: username
         });
         try {
-            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/users/remove.php`, formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/users/remove.php`, formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -367,7 +367,7 @@ const UserList = ({ userData }) => {
 
         const handleShowUser = async () => {
             try {
-                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/users/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
                 setUserList(response.data);
 
             } catch (error) {
@@ -386,7 +386,7 @@ const UserList = ({ userData }) => {
             if(newUsername && newPassword && newName)
             {
                 try {
-                    const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/users/add.php`, formData, {
+                    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/users/add.php`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         }

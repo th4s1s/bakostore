@@ -19,7 +19,7 @@ const Admin = () => {
             });
             try {
                 //localhost
-                const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/auth.php`, formData, {
+                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/auth.php`, formData, {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
@@ -69,7 +69,7 @@ const Admin = () => {
     const handleShowProduct = async () => {
         if(isAuth){
             try {
-                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/products/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
                 setProductList(response.data)
             } catch (error) {
                 console.error('Error:', error);
@@ -80,7 +80,7 @@ const Admin = () => {
     const handleShowNews = async () => {
         if(isAuth){
             try {
-                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/news/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`);
                 setNewsList(response.data)
             } catch (error) {
                 console.error('Error:', error);
@@ -91,7 +91,7 @@ const Admin = () => {
     const handleShowUser = async () => {
         if(isAuth){
             try {
-                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/users/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
                 setUserList(response.data)
             } catch (error) {
                 console.error('Error:', error);

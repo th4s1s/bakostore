@@ -44,7 +44,7 @@ const NewsPage = () => {
   const fetchNewsData = async () => {
     setIsLoading(true); // Start loading
     try {
-      const response = await fetch('https://bakobackend.azurewebsites.net/news/list.php');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/news/list.php`);
       if (!response.ok) {
         throw new Error('HTTP error ' + response.status);
       }
@@ -66,14 +66,11 @@ const NewsPage = () => {
         type="text"
         value={searchTerm}
         onChange={handleSearchChange}
-        placeholder="Search news..."
+        placeholder="Tìm kiếm tin tức..."
         className="kawaii-search-input"
     />
         <i className="fa fa-search kawaii-search-icon"></i> 
-    </div>
-
-\
-  
+    </div>  
       {/* Content Area */}
       {isLoading ? (
         <div className="flex justify-center items-center h-full">

@@ -48,7 +48,7 @@ const ProductDetail: React.FC = () => {
 
   const fetchProductDetails = async () => {
     try {
-        const response = await axios.get(`https://bakobackend.azurewebsites.net/product/detail.php?id=${productId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/product/detail.php?id=${productId}`);
         if (response.data) {
             console.log(response.data)
             setProduct(response.data);
@@ -118,7 +118,7 @@ useEffect(() => {
           postData.append('username', user.username);
         }
   
-        axios.post('https://bakobackend.azurewebsites.net/comment/delete.php', postData.toString(), {
+        axios.post(`${import.meta.env.VITE_API_BASE_URL}/comment/delete.php`, postData.toString(), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
@@ -164,7 +164,7 @@ useEffect(() => {
     const urlEncodedData = `pid=${encodeURIComponent(productId)}&username=${encodeURIComponent(user.username)}&comment=${encodeURIComponent(comment)}&rating=${encodeURIComponent(rating)}&token=${encodeURIComponent(user.token)}`;
   
     try {
-      const response = await axios.post('https://bakobackend.azurewebsites.net/comment/add.php', urlEncodedData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/comment/add.php`, urlEncodedData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
