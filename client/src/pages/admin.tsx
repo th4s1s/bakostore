@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import ProductList from "../components/management/productlist";
 import NewsList from "../components/management/newslist";
+import UserList from "../components/management/userlist";
 
 const Admin = () => {
     // const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Admin = () => {
     const [isNewsMana,setNewsMana] = useState(false);
 
     // data
+    const [userList, setUserList] = useState(null);
     const [productList, setProductList] = useState(null);
     const [newsList, setNewsList] = useState(null);
 
@@ -86,12 +88,23 @@ const Admin = () => {
         }
     }
 
+    const handleShowUser = async () => {
+        if(isAuth){
+            try {
+                const response = await axios.get(`/api/admin/users/show.php`);
+                setUserList(response.data)
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+
     const ManaPage = () => {
         return (
         <>
         <div className="flex flex-col gap-2">
             <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
-                    onClick={() => {checkAuth(); handleMana("user");}}
+                    onClick={() => {checkAuth(); handleMana("user"); handleShowUser()}}
             >
                 <h2 className="text-xl">Quản lý người dùng</h2>
                 <p className="">Xem, xóa, thêm người dùng</p>
@@ -119,7 +132,7 @@ const Admin = () => {
             <div className="">
                 <div className="nav bg-pink-700 text-white p-4">
                     <ul className="flex justify-center gap-40">
-                        <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("user"); } } className={`${isUserMana ? 'underline' : ''} hover:underline`}>Quản lý Người dùng</a></li>
+                        <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("user"); handleShowUser()} } className={`${isUserMana ? 'underline' : ''} hover:underline`}>Quản lý Người dùng</a></li>
                         <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("product"); handleShowProduct()} } className={`${isProductMana ? 'underline' : ''} hover:underline`}>Quản lý Sản phẩm</a></li>
                         <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("news"); handleShowNews()} } className={`${isNewsMana ? 'underline' : ''} hover:underline`}>Quản lý Tin tức</a></li>
                         <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("return"); } } className={`hover:underline`}>Quay lại</a></li>
@@ -128,6 +141,7 @@ const Admin = () => {
                 {/* {isUserMana && <UserMana />} */}
                 {isProductMana && productList && <ProductList productData={productList}/>}
                 {isNewsMana && newsList && <NewsList newsData={newsList}/>}
+                {isUserMana && userList && <UserList userData={userList}/>}
             </div>
             </>
         );

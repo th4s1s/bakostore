@@ -148,7 +148,7 @@ const ProductListTable = ({productData}) => {
 
     return (
     <>
-        <Table sx={{ minWidth: 1200 }}>
+        <Table>
         <TableHead>
             <TableRow>
                 {/* <TableCell /> */}
