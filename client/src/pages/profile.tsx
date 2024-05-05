@@ -20,17 +20,17 @@ const UserProfile = () => {
     const[isEditMode, setEditMode] = useState(false)
     const[tmpAvt, setTmpAvt] = useState(null)
 
-    const handleRes = (res : string) => {
-        if(res.constructor  == String){
-            const startIndex = res.indexOf('{');
-            const jsonString = res.substring(startIndex);
-            res = JSON.parse(jsonString);
-        }
-        // return res
-        localStorage.setItem("user", JSON.stringify(res));
-        // navigate('/profile');
-        window.location.reload();
-    }
+    // const handleRes = (res : string) => {
+    //     if(res.constructor  == String){
+    //         const startIndex = res.indexOf('{');
+    //         const jsonString = res.substring(startIndex);
+    //         res = JSON.parse(jsonString);
+    //     }
+    //     // return res
+    //     localStorage.setItem("user", JSON.stringify(res));
+    //     // navigate('/profile');
+    //     window.location.reload();
+    // }
 
     const handleImageUpload = (e: { target: { files: any[]; }; }) => {
         const file = e.target.files[0];
