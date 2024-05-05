@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useCartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,6 +22,19 @@ const CheckoutPage = () => {
   const total = subtotal + shippingCost;
 
   const defaultStoreAddress = '268 Lý Thường Kiệt P13 Quận 10 TPHCM'; 
+
+  useEffect(() => {
+    const shouldPickUp = shippingCost === 0;
+    setSelectedOption(shouldPickUp ? 'true' : 'false');
+    if (shouldPickUp) {
+      setAddress('268 Lý Thường Kiệt P13 Quận 10 TPHCM');
+      setPhone(user?.phone || '0969696900');
+    } else {
+      setAddress('');
+      setPhone('');
+    }
+  }, [shippingCost, user?.phone]);
+  
 
   const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
       const newValue = event.target.value;
@@ -81,8 +94,10 @@ const CheckoutPage = () => {
           <form autoComplete="off" onSubmit={handleCheckout} className="mt-8">
             <input name="utf8" type="hidden" value="✓" />
             <div className="mb-4">
-              <label className="radio-label">
-                <input type="radio" name="customer_pick_at_location" className="input-radio" value="false" checked={selectedOption === 'false'} onChange={handleOptionChange} />
+            <label className={`radio-label ${shippingCost === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <input type="radio" name="shippingOption" className="input-radio" value="false"
+                checked={selectedOption === 'false'} onChange={handleOptionChange} 
+                disabled={shippingCost === 0}/>
                 <span className="ml-2">Giao tận nơi</span>
               </label>
             </div>
@@ -111,8 +126,10 @@ const CheckoutPage = () => {
               </div>
             )}
             <div className="mb-4">
-              <label className="radio-label">
-                <input type="radio" name="customer_pick_at_location" className="input-radio" value="true" checked={selectedOption === 'true'} onChange={handleOptionChange} />
+            <label className={`radio-label ${shippingCost !== 0 ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <input type="radio" name="shippingOption" className="input-radio" value="true"
+                checked={selectedOption === 'true'} onChange={handleOptionChange} 
+                disabled={shippingCost !== 0}/>                
                 <span className="ml-2">Nhận tại cửa hàng (ở đâu thì tự kiếm)</span>
               </label>
             </div>
