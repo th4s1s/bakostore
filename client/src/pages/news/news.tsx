@@ -7,7 +7,7 @@ interface NewsItem {
   title: string;
   date: string;
   content: string;
-  cover: string; 
+  cover: string;
 }
 
 

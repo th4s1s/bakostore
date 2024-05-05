@@ -31,6 +31,7 @@ import {
     Typography,
 } from '@mui/material';
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const categoryOptions = [
     {
@@ -106,8 +107,10 @@ const ProductListTable = ({productData}) => {
                 }
             });
             handleShowProduct()
+            toast.success("Cập nhật sản phẩm thành công");
         } catch (error) {
-            console.error('Error:', error);
+            // console.error('Error:', error);
+            toast.error("Cập nhật sản không thành công");
         }
         setNewName('');
         setNewDesc('');
@@ -128,8 +131,10 @@ const ProductListTable = ({productData}) => {
             });
             // console.log(response.data);
             handleShowProduct();
+            toast.success("Xóa sản phẩm thành công");
         } catch (error) {
-            console.error('Error:', error);
+            // console.error('Error:', error);
+            toast.error("Xóa sản phẩm không thành công");
         }
     }
 
@@ -185,9 +190,9 @@ const ProductListTable = ({productData}) => {
 
                         <TableCell>{product.name}</TableCell>
                         <TableCell>{product.description}</TableCell>
-                        <TableCell>{product.price}</TableCell>
-                        <TableCell>{product.type}</TableCell>
-                        <TableCell>{product.rating}</TableCell>
+                        <TableCell align="center">{product.price}</TableCell>
+                        <TableCell align="center">{product.type}</TableCell>
+                        <TableCell align="center">{product.rating}</TableCell>
                         <TableCell>
                             <IconButton onClick={() => handleProductSelect(product.id)}>
                             <SvgIcon>
@@ -483,8 +488,10 @@ const ProductList = ({ productData }) => {
                 // console.log(response.data)
                 handleShowProduct();
                 setAddNewProduct(false);
+                toast.success("Thêm sản phẩm mới thành công");
             } catch (error) {
-                console.error('Error:', error);
+                // console.error('Error:', error);
+                toast.error("Xin hãy nhập đầy đủ thông tin sản phẩm");
             }
             setNewName('');
             setNewDesc('');
