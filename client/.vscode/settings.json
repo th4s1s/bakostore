@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d4768e90-13e3-42a3-bd5e-99c95aece892/resourceGroups/Pepe/providers/Microsoft.Web/sites/bakostore",
+    "appService.deploySubpath": "dist"
+}

@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Card, TextField, CardMedia, CardContent, Typography, Box, Rating, Grid, Pagination } from '@mui/material';
+import { Card, TextField, CardMedia, CardContent, Typography, Box, Rating, Grid, Pagination, CircularProgress } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import Tab from '@mui/material/Tab';
 import TabPanel from '@mui/lab/TabPanel';
-
 import { pink } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 
@@ -92,6 +91,7 @@ const Shop: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [value, setValue] = useState(initialActiveTab);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);  // State to track loading data
   const [mangaPage, setMangaPage] = useState(initialMangaPage);
   const [novelPage, setNovelPage] = useState(initialNovelPage);
   const [activeTab, setActiveTab] = useState(initialActiveTab);
@@ -129,12 +129,16 @@ const Shop: React.FC = () => {
   
   
   useEffect(() => {
-    fetch('/api/product/list.php')
+    setLoading(true); 
+    fetch('https://bakobackend.azurewebsites.net/product/list.php')
       .then(response => response.json())
-      .then(data => setProducts(data.map((product: Product) => ({
-        ...product,
-        rating: product.rating || 0
-      }))));
+      .then(data => {
+        setProducts(data.map((product: Product) => ({
+          ...product,
+          rating: product.rating || 0
+        })));
+        setLoading(false); 
+      });
   }, []);
 
 useEffect(() => {
@@ -189,6 +193,13 @@ useEffect(() => {
             <CustomTab onClick={() => setActiveTab('novel')} label="Novel" value="novel" />
           </TabList>
         </Box>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: 4 }}>
+            <CircularProgress />  {/* Loading spinner */}
+          </Box>
+        ) : (
+          <>
+
         <TabPanel value="manga">
         <Box sx={{ marginBottom: 2 }}>
           <CustomSearch
@@ -314,6 +325,8 @@ useEffect(() => {
             }}
           />
         </TabPanel>
+        </>
+        )}
       </TabContext>
     </Box>
   );

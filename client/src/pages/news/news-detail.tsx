@@ -20,7 +20,7 @@ const NewsDetail = () => {
         const fetchNewsDetail = async () => {
           setLoading(true);
           try {
-            const response = await fetch(`/api/news/detail.php?id=${id}`);
+            const response = await fetch(`https://bakobackend.azurewebsites.net/news/detail.php?id=${id}`);
             if (!response.ok) {
               throw new Error('Could not fetch news details');
             }

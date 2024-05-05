@@ -26,7 +26,7 @@ export const useCart = (username: string): UseCartHook => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`/api/cart/show.php?username=${encodeURIComponent(username)}`);
+      const response = await axios.get(`https://bakobackend.azurewebsites.net/cart/show.php?username=${encodeURIComponent(username)}`);
       if (response.status === 200 && response.data) {
         setCartItems(response.data); 
       } else {

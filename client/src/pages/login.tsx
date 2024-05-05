@@ -96,7 +96,7 @@ function Login() {
 
                 try {
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    const response = await axios.post(`/api/user/register.php`, formData, {
+                    const response = await axios.post(`https://bakobackend.azurewebsites.net/user/register.php`, formData, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
@@ -126,7 +126,7 @@ function Login() {
                 });
                 try {
                     //localhost
-                    const response = await axios.post(`/api/user/login.php`, formData, {
+                    const response = await axios.post(`https://bakobackend.azurewebsites.net/user/login.php`, formData, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }

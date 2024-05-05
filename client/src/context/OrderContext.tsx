@@ -46,7 +46,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode, username: stri
     const fetchOrders = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`/api/order/list.php?username=${encodeURIComponent(username)}`);
+            const response = await axios.get(`https://bakobackend.azurewebsites.net/order/list.php?username=${encodeURIComponent(username)}`);
             if (Array.isArray(response.data)) {
                 setOrders(response.data);
             } else {
@@ -67,7 +67,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode, username: stri
 
     const fetchOrderDetails = async (orderId: string) => {
         try {
-            const response = await axios.get(`/api/order/detail.php?id=${orderId}`);
+            const response = await axios.get(`https://bakobackend.azurewebsites.net/order/detail.php?id=${orderId}`);
             console.log(response.data)
             setSelectedOrder(response.data);
         } catch (err) {

@@ -35,7 +35,7 @@ const HomePage: React.FC = () => {
           <div className="md:col-span-5">
             <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-16 after:left-0 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]">
               <img
-                src="/hero.webp"
+                src="/hero.png"
                 className="w-3/4 lg:w-full mt-10 lg:mt-0"
                 // style={{ width: '400px', height: '400px' }}
               />
@@ -136,7 +136,7 @@ const HomePage: React.FC = () => {
       <div className="relative order-2 md:order-1">
       <div className="relative order-2 md:order-1">
       <img
-        src='/context.webp'
+        src='/context.png'
         className="rounded-lg shadow-md w-3/4 lg:w-full"
         alt="Context"
       />

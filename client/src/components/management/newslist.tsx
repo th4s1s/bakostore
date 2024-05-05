@@ -82,7 +82,7 @@ const NewsListTable = ({newsData}) => {
 
     const handleShowNews = async () => {
         try {
-            const response = await axios.get(`/api/admin/news/show.php`);
+            const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/news/show.php`);
             setNewsList(response.data);
 
         } catch (error) {
@@ -102,7 +102,7 @@ const NewsListTable = ({newsData}) => {
         formData.append('image', currNews.cover);
 
         try {
-            const response = await axios.post(`/api/admin/news/update.php`, formData, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/news/update.php`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -124,7 +124,7 @@ const NewsListTable = ({newsData}) => {
             id: newsId
         });
         try {
-            const response = await axios.post(`/api/admin/news/remove.php`, formData, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/news/remove.php`, formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -180,7 +180,7 @@ const NewsListTable = ({newsData}) => {
                         hover
                         key={news.id}
                     >
-                        <TableCell><img src={`http://localhost:5173${news.cover}`}></img></TableCell>
+                        <TableCell><img src={`${news.cover}`}></img></TableCell>
 
                         <TableCell>{news.title}</TableCell>
                         <TableCell>{news.content}</TableCell>
@@ -245,7 +245,7 @@ const NewsListTable = ({newsData}) => {
                                         md={6}
                                         xs={12}
                                     >
-                                        <img src={newImg ? URL.createObjectURL(newImg) : `http://localhost:5173${news.cover}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                        <img src={newImg ? URL.createObjectURL(newImg) : `${news.cover}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                                     </Grid>
                                         <Grid
                                             item
@@ -413,7 +413,7 @@ const NewsList = ({ newsData }) => {
 
         const handleShowNews = async () => {
             try {
-                const response = await axios.get(`/api/admin/news/show.php`);
+                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/news/show.php`);
                 // set(response.data);
 
             } catch (error) {
@@ -431,7 +431,7 @@ const NewsList = ({ newsData }) => {
                 formData.append('fileToUpload', newImg);
                 // console.log()
                 try {
-                    const response = await axios.post(`/api/admin/news/add.php`, formData, {
+                    const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/news/add.php`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         }

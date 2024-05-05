@@ -80,7 +80,7 @@ const ProductListTable = ({productData}) => {
 
     const handleShowProduct = async () => {
         try {
-            const response = await axios.get(`/api/admin/products/show.php`);
+            const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/products/show.php`);
             setProductList(response.data);
 
         } catch (error) {
@@ -101,7 +101,7 @@ const ProductListTable = ({productData}) => {
         formData.append('type', newType ? newType : currProduct.type);
 
         try {
-            const response = await axios.post(`/api/admin/products/update.php`, formData, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/products/update.php`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -124,7 +124,7 @@ const ProductListTable = ({productData}) => {
             id: productId
         });
         try {
-            const response = await axios.post(`/api/admin/products/remove.php`, formData, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/products/remove.php`, formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -186,7 +186,7 @@ const ProductListTable = ({productData}) => {
                         hover
                         key={product.id}
                     >
-                        <TableCell><img src={`http://localhost:5173${product.image}`}></img></TableCell>
+                        <TableCell><img src={`${product.image}`}></img></TableCell>
 
                         <TableCell>{product.name}</TableCell>
                         <TableCell>{product.description}</TableCell>
@@ -251,7 +251,7 @@ const ProductListTable = ({productData}) => {
                                         md={6}
                                         xs={12}
                                     >
-                                        <img src={newImg ? URL.createObjectURL(newImg) : `http://localhost:5173${product.image}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                        <img src={newImg ? URL.createObjectURL(newImg) : `${product.image}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                                     </Grid>
                                         <Grid
                                             item
@@ -461,7 +461,7 @@ const ProductList = ({ productData }) => {
 
         const handleShowProduct = async () => {
             try {
-                const response = await axios.get(`/api/admin/products/show.php`);
+                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/products/show.php`);
                 setProductList(response.data);
 
             } catch (error) {
@@ -479,7 +479,7 @@ const ProductList = ({ productData }) => {
             formData.append('type', newType);
 
             try {
-                const response = await axios.post(`/api/admin/products/add.php`, formData, {
+                const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/products/add.php`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }

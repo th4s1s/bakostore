@@ -47,7 +47,7 @@ const Contact: React.FC = () => {
               </Typography>
             </Stack>
             <div className="flex justify-center items-center">
-          <img src="/contact.webp" alt="contact" className="w-3/4 h-auto" />
+          <img src="/contact.png" alt="contact" className="w-3/4 h-auto" />
             </div>              
             <Typography
               sx={{ mb: 3, mt: 3 }}

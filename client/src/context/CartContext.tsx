@@ -38,7 +38,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`/api/cart/show.php?username=${encodeURIComponent(username)}`);
+            const response = await axios.get(`https://bakobackend.azurewebsites.net/cart/show.php?username=${encodeURIComponent(username)}`);
             if (response.status === 200 && response.data) {
                 saveCartItems(response.data);
             } else {
@@ -77,7 +77,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
         const updatedCartItems = [...cartItems, newItem];
         saveCartItems(updatedCartItems);
         try {
-            await axios.post(`/api/cart/add.php`, `username=${username}&token=${token}&pid=${productId}&amount=${amount}`, {
+            await axios.post(`https://bakobackend.azurewebsites.net/cart/add.php`, `username=${username}&token=${token}&pid=${productId}&amount=${amount}`, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
             fetchCart(); 
@@ -90,7 +90,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
         const updatedCartItems = cartItems.map(item => item.pid === productId ? { ...item, amount: newAmount } : item);
         saveCartItems(updatedCartItems);
         try {
-            const response = await axios.post(`/api/cart/update.php`, `username=${username}&token=${token}&pid=${productId}&amount=${newAmount}`, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/cart/update.php`, `username=${username}&token=${token}&pid=${productId}&amount=${newAmount}`, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
             if (response.status === 200) {
@@ -105,7 +105,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
 
     const checkoutCart = async (address: string, phone: string) => {
         try {
-            const response = await axios.post(`/api/cart/purchase.php`, `username=${username}&token=${token}&address=${encodeURIComponent(address)}&phone=${encodeURIComponent(phone)}&ship=${shippingCost}`, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/cart/purchase.php`, `username=${username}&token=${token}&address=${encodeURIComponent(address)}&phone=${encodeURIComponent(phone)}&ship=${shippingCost}`, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
             if (response.status === 200) {

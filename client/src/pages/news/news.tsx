@@ -20,7 +20,7 @@ const NewsPage = () => {
 
   const fetchNewsData = async () => {
     try {
-      const response = await fetch('/api/news/list.php');
+      const response = await fetch('https://bakobackend.azurewebsites.net/news/list.php');
       if (!response.ok) {
         throw new Error('HTTP error ' + response.status);
       }

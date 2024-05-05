@@ -61,7 +61,7 @@ const UserListTable = ({userData}) => {
 
     const handleShowUser = async () => {
         try {
-            const response = await axios.get(`/api/admin/users/show.php`);
+            const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/users/show.php`);
             setUserList(response.data);
 
         } catch (error) {
@@ -74,7 +74,7 @@ const UserListTable = ({userData}) => {
             username: username
         });
         try {
-            const response = await axios.post(`/api/admin/users/remove.php`, formData, {
+            const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/users/remove.php`, formData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -134,7 +134,7 @@ const UserListTable = ({userData}) => {
                         hover
                         key={index}
                     >
-                        <TableCell><img className="rounded-full" src={`http://localhost:5173${user.avatar}`}></img></TableCell>
+                        <TableCell><img className="rounded-full" src={`${user.avatar}`}></img></TableCell>
 
                         <TableCell align="center">{user.username}</TableCell>
                         <TableCell align="center">{user.name}</TableCell>
@@ -190,7 +190,7 @@ const UserListTable = ({userData}) => {
                                     md={6}
                                     xs={3}
                                 >
-                                        <img className="rounded-full" src={`http://localhost:5173${user.avatar}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                        <img className="rounded-full" src={`${user.avatar}`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                                 </Grid>
                                 <Grid
                                     item
@@ -367,7 +367,7 @@ const UserList = ({ userData }) => {
 
         const handleShowUser = async () => {
             try {
-                const response = await axios.get(`/api/admin/users/show.php`);
+                const response = await axios.get(`https://bakobackend.azurewebsites.net/admin/users/show.php`);
                 setUserList(response.data);
 
             } catch (error) {
@@ -386,7 +386,7 @@ const UserList = ({ userData }) => {
             if(newUsername && newPassword && newName)
             {
                 try {
-                    const response = await axios.post(`/api/admin/users/add.php`, formData, {
+                    const response = await axios.post(`https://bakobackend.azurewebsites.net/admin/users/add.php`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         }
