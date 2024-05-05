@@ -80,6 +80,13 @@ const CustomSearch = styled(TextField)({
   }
 });
 
+const CuteProgress = styled(CircularProgress)(({ theme }) => ({
+  color: '#f06292', 
+  '& .MuiCircularProgress-circle': {
+    strokeLinecap: 'round' 
+  }
+}));
+
 
 
 const Shop: React.FC = () => {
@@ -195,7 +202,7 @@ useEffect(() => {
         </Box>
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: 4 }}>
-            <CircularProgress />  {/* Loading spinner */}
+            <CuteProgress />  {/* Loading spinner */}
           </Box>
         ) : (
           <>

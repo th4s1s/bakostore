@@ -41,6 +41,7 @@ const ProductDetail: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [isPostingComment, setIsPostingComment] = useState(false);
   const { user } = useAuth(); 
   const { addProductToCart } = useCartContext(); 
 
@@ -148,17 +149,18 @@ useEffect(() => {
       toast.error('Product ID is not available.');
       return;
     }
-
+  
     if (!comment) {
       toast.error('Vui lòng nhập bình luận.');
       return;
     }
-
+  
     if (rating === 0) {
       toast.error('Vui lòng chọn số sao đánh giá.');
       return;
     }
   
+    setIsPostingComment(true); // Disable the button when the post operation starts
     const urlEncodedData = `pid=${encodeURIComponent(productId)}&username=${encodeURIComponent(user.username)}&comment=${encodeURIComponent(comment)}&rating=${encodeURIComponent(rating)}&token=${encodeURIComponent(user.token)}`;
   
     try {
@@ -172,15 +174,18 @@ useEffect(() => {
         toast.success("Đăng bình luận thành công!");
         setComment('');
         setRating(0);
-        fetchProductDetails();
+        fetchProductDetails(); // Fetch again to show the new comment
       } else {
         alert('Failed to post comment');
       }
     } catch (error) {
       console.error('Error posting comment:', error);
       toast.error('Error posting comment');
+    } finally {
+      setIsPostingComment(false); // Re-enable the button after the operation
     }
   };
+  
   
   
   
@@ -233,7 +238,9 @@ useEffect(() => {
                     >
                     </textarea>
                     <div className="flex justify-end gap-4 mt-4">
-                        <button onClick={handlePostComment} className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-700 focus:outline-none">Đăng</button>
+                    <button onClick={handlePostComment} disabled={isPostingComment} className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-700 focus:outline-none">
+                      Đăng
+                    </button>
                         <button onClick={handleCancelComment} className="bg-white text-pink-500 py-2 px-4 rounded border border-pink-500 hover:bg-pink-100 focus:outline-none">Hủy</button>
                     </div>
                     <div className="mt-4">

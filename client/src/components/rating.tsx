@@ -25,7 +25,6 @@ const StarRating: React.FC<StarRatingProps> = ({ value, onChange }) => {
         ))}
         <div className="emoji-wrapper">
           <div className="emoji">
-            {/* Always include all images, manage visibility via CSS */}
             <img src="/rating0.jpg" alt="Star 0" className="rating-0 w-24" />
             <img src="/rating1.jpg" alt="Star 1" className="rating-1 w-24" />
             <img src="/rating2.jpg" alt="Star 2" className="rating-2 w-24" />

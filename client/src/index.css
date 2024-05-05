@@ -712,4 +712,36 @@
   transform: translateY(-2px); /* Slight raise effect on hover */
 }
 
+.kawaii-search-bar {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.kawaii-search-input {
+  width: 100%;
+  padding: 12px 20px;
+  padding-right: 40px; /* Make space for the icon */
+  font-size: 16px;
+  border: 2px solid #f9a8d4; /* Soft pink border */
+  border-radius: 20px; /* Fully rounded borders */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: border-color 0.3s;
+}
+
+.kawaii-search-input:focus {
+  outline: none;
+  border-color: #f472b6; /* Brighter pink on focus */
+}
+
+.kawaii-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f472b6;
+  font-size: 24px;
+}
+
+
 
