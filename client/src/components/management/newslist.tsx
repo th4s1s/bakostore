@@ -422,32 +422,37 @@ const NewsList = ({ newsData }) => {
         }
 
         const handleAddNews = async () => {
-            const formData = new FormData();
-            // formData.append('id', newId);
-            formData.append('title', newTitle);
-            formData.append('content', newContent);
-            formData.append('date', newDate);
-            formData.append('fileToUpload', newImg);
-
-            try {
-                const response = await axios.post(`/api/admin/news/add.php`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                });
-                // productData = response.data
-                // console.log(response.data)
-                handleShowNews();
-                setAddNewNews(false);
-                toast.success("Thêm tin tức mới thành công");
-            } catch (error) {
-                // console.error('Error:', error);
+            if(newTitle && newContent && newImg){
+                const formData = new FormData();
+                // formData.append('id', newId);
+                formData.append('title', newTitle);
+                formData.append('content', newContent);
+                formData.append('date', (new Date()).toISOString().split('T')[0]);
+                formData.append('fileToUpload', newImg);
+                // console.log()
+                try {
+                    const response = await axios.post(`/api/admin/news/add.php`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    });
+                    // productData = response.data
+                    handleShowNews();
+                    setAddNewNews(false);
+                    toast.success("Thêm tin tức mới thành công");
+                } catch (error) {
+                    // console.error('Error:', error);
+                    toast.error("Xin hãy nhập đầy đủ thông tin tin tức");
+                }
+                setNewTitle('');
+                setNewContent('');
+                setNewDate('');
+                setNewImg(new File([], ""));
+            }
+            else
+            {
                 toast.error("Xin hãy nhập đầy đủ thông tin tin tức");
             }
-            setNewTitle('');
-            setNewContent('');
-            setNewDate('');
-            setNewImg(new File([], ""));
         }
 
         const fileInputRef = useRef(null);

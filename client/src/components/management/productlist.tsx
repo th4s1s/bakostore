@@ -190,9 +190,9 @@ const ProductListTable = ({productData}) => {
 
                         <TableCell>{product.name}</TableCell>
                         <TableCell>{product.description}</TableCell>
-                        <TableCell>{product.price}</TableCell>
-                        <TableCell>{product.type}</TableCell>
-                        <TableCell>{product.rating}</TableCell>
+                        <TableCell align="center">{product.price}</TableCell>
+                        <TableCell align="center">{product.type}</TableCell>
+                        <TableCell align="center">{product.rating}</TableCell>
                         <TableCell>
                             <IconButton onClick={() => handleProductSelect(product.id)}>
                             <SvgIcon>
