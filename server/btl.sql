@@ -291,7 +291,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE GetProductComments(IN p_pid INT)
 BEGIN
-    SELECT c.id, c.pid, u.name, c.comment, c.rating, c.date
+    SELECT c.id, c.pid, u.username, u.name, u.avatar, c.comment, c.rating, c.date
     FROM comments c
     INNER JOIN users u ON c.username = u.username
     WHERE c.pid = p_pid;
@@ -331,17 +331,17 @@ CREATE TABLE IF NOT EXISTS news (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO news (title, content, cover) VALUES
-('[ĐIỂM SÁCH] BAKEMONOGATARI - THANH XUÂN "THÚ VỊ" BÊN MUÔN VÀN ĐIỀU "QUÁI GỞ"', 'Giữa thời đại của động cơ tuyến tính và tàu đệm từ trường siêu tốc, cậu nam sinh cấp ba Araragi Koyomi lại bị ma cà rồng tấn công tại một thị trấn vùng quê Nhật Bản, phải để một ông chú vô gia cư lôi thôi lếch thếch tình cờ đi ngang qua ra tay cứu giúp mới có thể thoát nạn và trở thành một thứ nửa người nửa ngợm. Và kể từ sau sự kiện mang tính “nỗi hổ thẹn đối với nhân loại hiện đại” ấy, cậu chàng với cái tên dễ líu lưỡi này liên tiếp gặp vấn đề với “quái dị” - những sự tồn tại bí ẩn sở hữu mối liên hệ vô cùng mật thiết với thế giới mà khoa học không tài nào giải thích nổi. 
+('[ĐIỂM SÁCH] BAKEMONOGATARI - THANH XUÂN "THÚ VỊ" BÊN MUÔN VÀN ĐIỀU "QUÁI GỞ"', 'Giữa thời đại của động cơ tuyến tính và tàu đệm từ trường siêu tốc, cậu nam sinh cấp ba Araragi Koyomi lại bị ma cà rồng tấn công tại một thị trấn vùng quê Nhật Bản, phải để một ông chú vô gia cư lôi thôi lếch thếch tình cờ đi ngang qua ra tay cứu giúp mới có thể thoát nạn và trở thành một thứ nửa người nửa ngợm. Và kể từ sau sự kiện mang tính “nỗi hổ thẹn đối với nhân loại hiện đại” ấy, cậu chàng với cái tên dễ líu lưỡi này liên tiếp gặp vấn đề với “quái dị” - những sự tồn tại bí ẩn sở hữu mối liên hệ vô cùng mật thiết với thế giới mà khoa học không tài nào giải thích nổi.
 
 Từ Cua tới Ốc Sên, hết Khỉ lại Rắn, chưa kể đến Ong, Phượng Hoàng hay Mèo... Tuy nhiên, trong họa cũng có phúc. Trải qua hàng loạt rắc rối ấy, Araragi Koyomi dần thoát khỏi kiếp tự kỉ lánh đời để kết thân với nhiều nhân vật đầy cá tính, mở ra một câu chuyện thanh xuân quái lạ, ngập tràn hài hước nhưng cũng không kém phần nhân văn, để lại trong lòng người đọc nhiều điều cần suy nghĩ.
 
-Được phân loại là light-novel, song series Monogatari lại sở hữu một đặc điểm khá nổi bật là sử dụng rất ít tranh minh họa. Chi tiết này vốn xuất phát từ một thử nghiệm đầy tính hiếu kì - Liệu có thể làm nên một tác phẩm light-novel gần như chỉ có chữ? - của cây bút gạo cội NISIO ISIN. Thử nghiệm ấy đã thành công rực rỡ. 
+Được phân loại là light-novel, song series Monogatari lại sở hữu một đặc điểm khá nổi bật là sử dụng rất ít tranh minh họa. Chi tiết này vốn xuất phát từ một thử nghiệm đầy tính hiếu kì - Liệu có thể làm nên một tác phẩm light-novel gần như chỉ có chữ? - của cây bút gạo cội NISIO ISIN. Thử nghiệm ấy đã thành công rực rỡ.
 
-Chẳng cần tới quá nhiều hình minh họa, ông vẫn dựng được nên những hình tượng nhân vật kinh điển - một cô nàng độc miệng toàn thân vũ trang bằng văn phòng phẩm, một lớp trưởng tưởng chừng hoàn hảo không tì vết, một cô nhóc tiểu học lanh lợi láu lỉnh, một đàn em xinh xắn giỏi giang nhưng lại có phần biến thái, vân vân và vân vân. Tất cả đã được ngòi bút với sở trường vẽ nên cá tính cho nhân vật qua lời thoại của NISIO ISIN khắc họa vô cùng rõ nét. 
+Chẳng cần tới quá nhiều hình minh họa, ông vẫn dựng được nên những hình tượng nhân vật kinh điển - một cô nàng độc miệng toàn thân vũ trang bằng văn phòng phẩm, một lớp trưởng tưởng chừng hoàn hảo không tì vết, một cô nhóc tiểu học lanh lợi láu lỉnh, một đàn em xinh xắn giỏi giang nhưng lại có phần biến thái, vân vân và vân vân. Tất cả đã được ngòi bút với sở trường vẽ nên cá tính cho nhân vật qua lời thoại của NISIO ISIN khắc họa vô cùng rõ nét.
 
 Và khi có thêm những tấm hình minh họa tuy ít về số lượng nhưng tuyệt đỉnh về chất lượng của “Phù thủy ánh sáng” VOFAN tiếp sức, những nhân vật ấy lại như hổ mọc cánh, cùng cốt truyện đầy thú vị và hấp dẫn tạo nên một tượng đài không thể lay chuyển trong làng light-novel Nhật Bản.
 
-Bakemonogatari nói riêng và Monogatari Series nói chung có lẽ vốn chẳng hề xa lạ với người hâm mộ Việt Nam qua các phiên bản chuyển thể giàu tính trực quan như anime hay manga. Tuy nhiên, khác với lối vận dụng hình ảnh để truyền tải và tăng thêm tính hấp dẫn cho câu chuyện của các phiên bản chuyển thể, light-novel gốc lại không quá chú trọng vào việc miêu tả các cảnh hành động/chiến đấu với “quái dị” hay quá trình khám phá/giải mã bí ẩn, mà chủ yếu tập trung vào những màn “đối đáp” đầy hài hước và xoắn não giữa các nhân vật hòng khai thác triệt để sở trường của NISIO ISIN. 
+Bakemonogatari nói riêng và Monogatari Series nói chung có lẽ vốn chẳng hề xa lạ với người hâm mộ Việt Nam qua các phiên bản chuyển thể giàu tính trực quan như anime hay manga. Tuy nhiên, khác với lối vận dụng hình ảnh để truyền tải và tăng thêm tính hấp dẫn cho câu chuyện của các phiên bản chuyển thể, light-novel gốc lại không quá chú trọng vào việc miêu tả các cảnh hành động/chiến đấu với “quái dị” hay quá trình khám phá/giải mã bí ẩn, mà chủ yếu tập trung vào những màn “đối đáp” đầy hài hước và xoắn não giữa các nhân vật hòng khai thác triệt để sở trường của NISIO ISIN.
 
 Bản thân tác giả cũng từng phát biểu rằng đây là đặc điểm khiến tác phẩm “rất khó chuyển thể”, và thực tế thì “hội thoại” chính là điểm nhấn mà các phiên bản anime hay manga, tuy đều rất nỗ lực và đạt được thành công mỹ mãn với cách thể hiện của mình, song vẫn chưa thể truyền tải trọn vẹn tới người đọc/người xem.', '/img/news/default.webp');
 
