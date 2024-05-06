@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
+import { Box, Rating } from '@mui/material';
 
 
 
@@ -50,9 +51,9 @@ const ProductDetail: React.FC = () => {
     try {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/product/detail.php?id=${productId}`);
         if (response.data) {
-            console.log(response.data)
+            //console.log(response.data)
             setProduct(response.data);
-            console.log("Product details fetched:", response.data);
+            //console.log("Product details fetched:", response.data);
         }
     } catch (error) {
         console.error("Failed to fetch product details:", error);
@@ -83,12 +84,12 @@ useEffect(() => {
   };
 
   const handleRatingChange = (newRating: number) => {
-    console.log(newRating)
+    //console.log(newRating)
     setRating(newRating);
   };
 
   const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(event.target.value)
+   // console.log(event.target.value)
     setComment(event.target.value);
   };
  
@@ -186,7 +187,16 @@ useEffect(() => {
     }
   };
   
-  
+  const calculatePercentage = (rating: number , count: number) => {
+    if (count === 0) return 0;
+    return (rating / count) * 100;
+  };
+
+  // Create an array for 1 to 5 star ratings
+  const starCounts: number[] = Array.from({ length: 5 }, (_, i) => (product?.comments || []).filter(c => c.rating === 5 - i).length);
+
+  // Total ratings count
+  const totalRatings = starCounts.reduce((acc, count) => acc + count, 0);
   
   
   const handleCancelComment = () => {
@@ -223,8 +233,31 @@ useEffect(() => {
             </div>
             <div className="w-full mt-8 flex flex-col items-center">
                 <div className="bg-pink-100 rounded-xl shadow p-6 w-full">
-                <div className="text-center mb-4">
-                  <h2 className="text-2xl font-semibold text-pink-600">Đánh giá sản phẩm này</h2>
+                <h1 className='text-3xl mb-4 font-bold text-pink-600'>Đánh giá sản phẩm</h1>
+                <div className="w-7/12 lg:w-full pl-16 flex">
+                  <div className="flex flex-col mr-10 space-y-2">
+                    <div><span className="text-6xl font-bold text-pink-500">{Number(product?.rating).toFixed(1)}</span><span className="text-2xl text-gray-600">/5</span>
+                    </div>
+                    <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
+                      <Rating name="read-only" value={Number(product?.rating)} precision={0.1} readOnly />
+                    </Box>
+                    <span className="text-sm ml-2 text-gray-500">({totalRatings} đánh giá)</span>
+                  </div>
+                  <div className="flex flex-col w-full space-y-1">
+                    {starCounts.map((count, index) => (
+                      <div key={index} className="flex items-center my-1">
+                        <span className="w-12 text-gray-700 font-medium">{5 - index} sao</span>
+                        <span className="mx-2 text-gray-500">({count})</span>
+                        <div className="flex-1 bg-pink-200 rounded-full h-2">
+                          <div className="bg-pink-500 h-2 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${calculatePercentage(count, totalRatings)}%` }}></div>
+                        </div>
+                        <span className="w-12 text-right text-gray-700">{calculatePercentage(count, totalRatings).toFixed(0)}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>        
+                <div className="text-center mt-4 mb-4">
+                  <h2 className="text-2xl font-bold text-pink-600">Đánh giá sản phẩm này</h2>
                   <div className="flex justify-center items-center">
                   <StarRating value={rating} onChange={handleRatingChange} />
                   </div>

@@ -108,7 +108,8 @@ const UserProfile = () => {
                                 <div className="flex items-center justify-between">
                                     <h2 className="text-sm font-semibold text-gray-800">Thông tin liên lạc</h2>
                                 </div>
-                                <p className="text-sm text-gray-600 mt-2">Số điện thoại: <input className='border-2 border-pink-300' defaultValue={info.phone} onBlur={(e) => {setTmpPhone(e.target.value)}}/></p>
+                                <p className="text-sm text-gray-600 mt-2">Số điện thoại: <input className='border-2 border-pink-300' defaultValue={info.av} onBlur={(e) => {setTmpPhone(e.target.value)}}/></p>
+
                             </div>
                             <div className='mt-8 w-full flex items-end justify-end gap-5'>
                                 <button

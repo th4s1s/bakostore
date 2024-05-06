@@ -83,6 +83,7 @@ const CartPage = () => {
             <select onChange={handleShippingChange} value={shippingCost} className="block p-2 text-gray-600 w-full text-sm rounded bg-pink-50">
               <option value={20000}>Tiêu chuẩn - 20,000₫</option>
               <option value={50000}>Hỏa tốc - 50,000₫</option>
+              <option value={1000000}>Trực thăng - 1,000,000₫</option>
               <option value={0}>Tự đến lấy - Miễn phí</option>
             </select>
           </div>

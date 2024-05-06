@@ -68,7 +68,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode, username: stri
     const fetchOrderDetails = async (orderId: string) => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/order/detail.php?id=${orderId}`);
-            console.log(response.data)
+            //console.log(response.data)
             setSelectedOrder(response.data);
         } catch (err) {
             console.error('Failed to fetch order details', err);

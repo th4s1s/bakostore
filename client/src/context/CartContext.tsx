@@ -109,7 +109,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode, username: strin
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
             if (response.status === 200) {
-                console.log('Checkout successful:', response);
+                //console.log('Checkout successful:', response);
                 localStorage.removeItem('cartItems');  // Remove cart items from local storage
                 localStorage.setItem('shippingCost', JSON.stringify(20000));  // Reset shipping cost 
                 setTimeout(() => {
