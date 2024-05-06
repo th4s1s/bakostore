@@ -597,7 +597,7 @@ const NewsList = ({ newsData }) => {
     }
 
     const handleSearch = (e) => {
-        console.log(e)
+        //console.log(e)
         const term = e ? (e.title ? e.title : e.target.value) : '';
 
         const filtered = newsData.filter(news =>

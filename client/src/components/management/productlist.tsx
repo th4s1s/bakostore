@@ -490,7 +490,7 @@ const ProductList = ({ productData }) => {
                     }
                 });
                 // productData = response.data
-                // console.log(response.data)
+                //console.log(response.data)
                 // console.log("add new prod")
                 handleShowProduct();
                 setAddNewProduct(false);

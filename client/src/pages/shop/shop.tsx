@@ -208,16 +208,25 @@ useEffect(() => {
           <>
 
         <TabPanel value="manga">
-        <Box sx={{ marginBottom: 2 }}>
+    <div className="kawaii-search-bar">
+    <input
+        type="text"
+        value={mangaSearch}
+        onChange={(e) => setMangaSearch(e.target.value)}
+        placeholder="Tìm Manga..."
+        className="kawaii-search-input"
+    />
+        <i className="fa fa-search kawaii-search-icon"></i> 
+    </div>  
+        {/* <Box sx={{ marginBottom: 2 }}>
           <CustomSearch
             fullWidth
             label="Tìm Manga"
             variant="outlined"
             value={mangaSearch}
-            onChange={(e) => setMangaSearch(e.target.value)}
             sx={{ mb: 2 }}
           />
-        </Box>
+        </Box> */}
               {currentMangaItems.length > 0 ? (
           <Grid container spacing={2}>
             {currentMangaItems.map(product => (
@@ -271,7 +280,17 @@ useEffect(() => {
             />
         </TabPanel>
         <TabPanel value="novel">
-        <Box sx={{ marginBottom: 2 }}>
+    <div className="kawaii-search-bar">
+    <input
+        type="text"
+        value={novelSearch}
+        onChange={(e) => setNovelSearch(e.target.value)}
+        placeholder="Tìm LN..."
+        className="kawaii-search-input"
+    />
+        <i className="fa fa-search kawaii-search-icon"></i> 
+    </div>  
+        {/* <Box sx={{ marginBottom: 2 }}>
           <CustomSearch
             fullWidth
             label="Tìm Novel"
@@ -280,7 +299,7 @@ useEffect(() => {
             onChange={(e) => setNovelSearch(e.target.value)}
             sx={{ mb: 2 }}
             />
-          </Box>
+          </Box> */}
           {currentNovelItems.length > 0 ? (
             <Grid container spacing={2}>
               {currentNovelItems.map(product => (
