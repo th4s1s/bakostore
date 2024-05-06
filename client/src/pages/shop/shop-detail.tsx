@@ -73,6 +73,10 @@ useEffect(() => {
     fetchProductDetails();
 }, [productId]);
 
+useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
+
 
   const handleQuantityChange = (delta: number) => {
     setQuantity((prev) => Math.max(1, prev + delta));
@@ -232,8 +236,15 @@ useEffect(() => {
             </div>
             <div className="w-full lg:w-7/12 pl-16">
                 <h1 className="mt-12 text-3xl font-semibold text-pink-500">{product.name}</h1>
-                <p className="text-lg text-gray-700 mt-2">{product.description}</p>
-                <p className="text-3xl mt-2 font-bold text-pink-600">{`${product.price.toLocaleString()}đ`}</p>
+                <p className="text-lg text-gray-700 mt-2">
+                {product.description.split('\n').map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+              </p>                
+              <p className="text-3xl mt-2 font-bold text-pink-600">{`${product.price.toLocaleString()}đ`}</p>
                 <div className="mt-4 flex items-center">
             <button onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1} className="text-gray-600 border border-gray-400 hover:bg-gray-200 focus:outline-none rounded-l-md px-3 py-2">
               -

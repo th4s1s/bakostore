@@ -54,8 +54,8 @@ const Contact: React.FC = () => {
               variant="h6"
               style={{ color: '#333' }} // Soft black for body text
             >
-              Nếu có thắc mắc nào hãy điền vào form kế bên, chúng tôi sẽ trả lời bạn trong thời gian sớm nhất.
-            </Typography>
+          Hãy tìm đến chúng tôi tại 268 Lý Thường Kiệt Phường 13 Quận 10 TPHCM            
+          </Typography>
             <Stack
               alignItems="center"
               direction="row"
