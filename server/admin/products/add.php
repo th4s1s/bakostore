@@ -1,5 +1,12 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $token = $_POST["token"];
+    require '../auth.php';
+    if (!auth($token)) {
+        http_response_code(403); // Forbidden
+        return;
+    }
+    
     require '../upload.php';
 
     $name = $_POST['name'];
