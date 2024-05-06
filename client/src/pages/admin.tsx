@@ -3,37 +3,13 @@ import { useState } from "react";
 import ProductList from "../components/management/productlist";
 import NewsList from "../components/management/newslist";
 import UserList from "../components/management/userlist";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const userInfor = localStorage.getItem("user");
-    const [isAuth, setAuth] = useState(!(!userInfor));
-
-    const checkAuth = async () => {
-        // console.log("checkAuth")
-        if(userInfor){
-            const infor = JSON.parse(userInfor);
-            const formData = new URLSearchParams({
-                username: infor.username,
-                token: infor.token,
-            });
-            try {
-                //localhost
-                const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/auth.php`, formData, {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                });
-                setAuth(true)
-                // console.log(response.data)
-            } catch (error) {
-                // console.error('Error:', error);
-                setAuth(false)
-            }
-        } else {
-            setAuth(false)
-        }
-    }
+    // const [isAuth, setAuth] = useState(!(!userInfor));
 
     const [isUserMana,setUserMana] = useState(false);
     const [isProductMana,setProductMana] = useState(false);
@@ -45,7 +21,7 @@ const Admin = () => {
     const [newsList, setNewsList] = useState(null);
 
     const handleMana = (typ : string) => {
-        console.log("checker");
+        // console.log("checker");
         if(typ === "user"){
             setUserMana(true);
             setProductMana(false);
@@ -67,34 +43,49 @@ const Admin = () => {
 
     //handle for products
     const handleShowProduct = async () => {
-        if(isAuth){
+        if(userInfor){
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
+                const infor = JSON.parse(userInfor);
+                const formData = new URLSearchParams({
+                    token: infor.token
+                })
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`, {params:formData});
                 setProductList(response.data)
             } catch (error) {
-                console.error('Error:', error);
+                // console.error('Error:', error);
+                navigate("/hellodarknessmyoldfriend");
             }
         }
     }
 
     const handleShowNews = async () => {
-        if(isAuth){
+        if(userInfor){
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`);
+                const infor = JSON.parse(userInfor);
+                const formData = new URLSearchParams({
+                    token: infor.token
+                })
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`, {params:formData});
                 setNewsList(response.data)
             } catch (error) {
-                console.error('Error:', error);
+                // console.error('Error:', error);
+                navigate("/hellodarknessmyoldfriend");
             }
         }
     }
 
     const handleShowUser = async () => {
-        if(isAuth){
+        if(userInfor){
+            const infor = JSON.parse(userInfor);
+            const formData = new URLSearchParams({
+                token: infor.token
+            })
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`, {params:formData});
                 setUserList(response.data)
             } catch (error) {
-                console.error('Error:', error);
+                // console.error('Error:', error);
+                navigate("/hellodarknessmyoldfriend");
             }
         }
     }
@@ -104,19 +95,19 @@ const Admin = () => {
         <>
         <div className="flex flex-col gap-2">
             <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
-                    onClick={() => {checkAuth(); handleMana("user"); handleShowUser()}}
+                    onClick={() => { handleMana("user"); handleShowUser()}}
             >
                 <h2 className="text-xl">Quản lý người dùng</h2>
                 <p className="">Xem, xóa người dùng và thêm người quản trị</p>
             </button>
             <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
-                    onClick={() => {checkAuth(); handleMana("product"); handleShowProduct()}}
+                    onClick={() => { handleMana("product"); handleShowProduct()}}
             >
                 <h2 className="text-xl">Quản lý sản phẩm</h2>
                 <p className="">Xem, xóa, thêm, chỉnh sửa sản phẩm</p>
             </button>
             <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
-                    onClick={() => {checkAuth(); handleMana("news"); handleShowNews()}}
+                    onClick={() => { handleMana("news"); handleShowNews()}}
             >
                 <h2 className="text-xl">Quản lý tin tức</h2>
                 <p className="">Xem, xóa, thêm, chỉnh sửa tin tức</p>
@@ -125,40 +116,50 @@ const Admin = () => {
         </>
         );
     }
-    const ShortCut = () => {
+    const ShortCut = ({token}) => {
         // console.log(productList)
-        return (
-            <>
-            <div className="">
-                <div className="nav bg-pink-700 text-white p-4">
-                    <ul className="flex justify-center gap-40">
-                        <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("user"); handleShowUser()} } className={`${isUserMana ? 'underline' : ''} hover:underline`}>Quản lý Người dùng</a></li>
-                        <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("product"); handleShowProduct()} } className={`${isProductMana ? 'underline' : ''} hover:underline`}>Quản lý Sản phẩm</a></li>
-                        <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("news"); handleShowNews()} } className={`${isNewsMana ? 'underline' : ''} hover:underline`}>Quản lý Tin tức</a></li>
-                        <li className="mx-2"><a onClick={() => {checkAuth(); handleMana("return"); } } className={`hover:underline`}>Quay lại</a></li>
-                    </ul>
+        // console.log(isAuth)
+        if(userInfor){
+            return (
+                <>
+                <div className="">
+                    <div className="nav bg-pink-700 text-white p-4">
+                        <ul className="flex justify-center gap-40">
+                            <li className="mx-2"><a onClick={() => { handleMana("user"); handleShowUser()} } className={`${isUserMana ? 'underline' : ''} hover:underline`}>Quản lý Người dùng</a></li>
+                            <li className="mx-2"><a onClick={() => { handleMana("product"); handleShowProduct()} } className={`${isProductMana ? 'underline' : ''} hover:underline`}>Quản lý Sản phẩm</a></li>
+                            <li className="mx-2"><a onClick={() => { handleMana("news"); handleShowNews()} } className={`${isNewsMana ? 'underline' : ''} hover:underline`}>Quản lý Tin tức</a></li>
+                            <li className="mx-2"><a onClick={() => { handleMana("return"); } } className={`hover:underline`}>Quay lại</a></li>
+                        </ul>
+                    </div>
+                    {/* {isUserMana && <UserMana />} */}
+                    {isProductMana && productList && <ProductList productData={productList} token={token}/>}
+                    {isNewsMana && newsList && <NewsList newsData={newsList} token={token}/>}
+                    {isUserMana && userList && <UserList userData={userList} token={token}/>}
                 </div>
-                {/* {isUserMana && <UserMana />} */}
-                {isProductMana && productList && <ProductList productData={productList}/>}
-                {isNewsMana && newsList && <NewsList newsData={newsList}/>}
-                {isUserMana && userList && <UserList userData={userList}/>}
-            </div>
-            </>
-        );
+                </>
+            );
+        }
+        else{
+            return <Navigate to="/eb9e7f08551b80d86f6d94e03260c5cc6c64555566a70c4ee55d238b0c2e20d0673cd2240052c43a00c6f812d71ef3317f11c910a138b623725cb2a734d8ecf7" replace={true} />
+        }
     }
     // checkAuth()
-    if(isAuth){
+    if(userInfor){
         return (
         <>
         <div className="container mx-auto">
             {
             (isUserMana || isProductMana || isNewsMana) ?
-            <ShortCut />
+            <ShortCut token={JSON.parse(userInfor).token} />
             : <ManaPage />
             }
         </div>
         </>
         );
+    }
+    else
+    {
+        return <Navigate to="/login" replace={true} />
     }
 }
 

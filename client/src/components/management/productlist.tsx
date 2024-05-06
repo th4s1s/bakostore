@@ -48,7 +48,7 @@ const categoryOptions = [
 ]
 
 
-const ProductListTable = ({productList , setProductList }) => {
+const ProductListTable = ({productList , setProductList, token }) => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -81,7 +81,7 @@ const ProductListTable = ({productList , setProductList }) => {
 
     const handleShowProduct = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`,{params:{token:token}});
             setProductList(response.data);
 
         } catch (error) {
@@ -100,6 +100,7 @@ const ProductListTable = ({productList , setProductList }) => {
         formData.append('fileToUpload', newImg? newImg : new File([], ""));
         formData.append('image', currProduct.image);
         formData.append('type', newType ? newType : currProduct.type);
+        formData.append('token', token);
 
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/products/update.php`, formData, {
@@ -122,7 +123,8 @@ const ProductListTable = ({productList , setProductList }) => {
 
     const handleDeleteProduct = async (productId) => {
         const formData = new URLSearchParams({
-            id: productId
+            id: productId,
+            token: token
         });
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/products/remove.php`, formData, {
@@ -449,7 +451,7 @@ const ProductListTable = ({productList , setProductList }) => {
 }
 
 
-const ProductList = ({ productData }) => {
+const ProductList = ({ productData , token}) => {
     const [addNewProduct, setAddNewProduct] = useState(false);
     const [productList, setProductList] = useState(productData);
 
@@ -465,7 +467,7 @@ const ProductList = ({ productData }) => {
 
         const handleShowProduct = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/products/show.php`, {params:{token:token}});
                 setProductList(response.data);
                 // console.log(productList)
                 // console.log("update after add")
@@ -482,6 +484,7 @@ const ProductList = ({ productData }) => {
             formData.append('price', newPrice);
             formData.append('fileToUpload', newImg);
             formData.append('type', newType);
+            formData.append('token', token);
 
             try {
                 const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/products/add.php`, formData, {
@@ -547,7 +550,7 @@ const ProductList = ({ productData }) => {
                                         md={12}
                                         xs={12}
                                     >
-                                        <img src={newImg ? URL.createObjectURL(newImg) : ``} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                        <img src={newImg ? URL.createObjectURL(newImg) : `/preview.png`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                                     </Grid>
                                         <Grid
                                             item
@@ -759,7 +762,7 @@ const ProductList = ({ productData }) => {
                 </Stack>
                 </Card>
                 <Card>
-                    {productList && <ProductListTable productList={productList} setProductList={setProductList}/>}
+                    {productList && <ProductListTable productList={productList} setProductList={setProductList} token={token}/>}
                 </Card>
             </Stack>
             </Container>

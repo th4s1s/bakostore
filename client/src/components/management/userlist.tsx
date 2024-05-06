@@ -34,7 +34,7 @@ import {
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const UserListTable = ({userList, setUserList}) => {
+const UserListTable = ({userList, setUserList, token}) => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -59,7 +59,7 @@ const UserListTable = ({userList, setUserList}) => {
 
     const handleShowUser = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`, {params:{token:token}});
             setUserList(response.data);
 
         } catch (error) {
@@ -69,7 +69,8 @@ const UserListTable = ({userList, setUserList}) => {
 
     const handleDeleteUser = async (username) => {
         const formData = new URLSearchParams({
-            username: username
+            username: username,
+            token: token
         });
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/users/remove.php`, formData, {
@@ -351,7 +352,7 @@ const UserListTable = ({userList, setUserList}) => {
     );
 }
 
-const UserList = ({ userData }) => {
+const UserList = ({ userData , token}) => {
     const [addNewUser, setAddNewUser] = useState(false);
     const [userList, setUserList] = useState(userData);
 
@@ -364,7 +365,7 @@ const UserList = ({ userData }) => {
 
         const handleShowUser = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/users/show.php`, {params:{token:token}});
                 setUserList(response.data);
             } catch (error) {
                 console.error('Error:', error);
@@ -378,6 +379,7 @@ const UserList = ({ userData }) => {
             formData.append('name', newName);
             formData.append('password', newPassword);
             formData.append('phone', newPhone);
+            formData.append('token', token);
 
             if(newUsername && newPassword && newName)
             {
@@ -574,7 +576,7 @@ const UserList = ({ userData }) => {
                 </Stack>
                 </Card>
                 <Card>
-                {userList && <UserListTable userList={userList} setUserList={setUserList}/>}
+                {userList && <UserListTable userList={userList} setUserList={setUserList} token={token}/>}
                 </Card>
             </Stack>
             </Container>

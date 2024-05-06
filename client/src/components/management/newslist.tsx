@@ -36,7 +36,7 @@ import {
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const NewsListTable = ({newsList, setNewsList}) => {
+const NewsListTable = ({newsList, setNewsList, token}) => {
     // console.log(productData);
 
     // const [newsList, setNewsList] = useState(newsData);
@@ -71,7 +71,7 @@ const NewsListTable = ({newsList, setNewsList}) => {
 
     const handleShowNews = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`,{params:{token:token}});
             setNewsList(response.data);
 
         } catch (error) {
@@ -89,6 +89,7 @@ const NewsListTable = ({newsList, setNewsList}) => {
         formData.append('date', newDate ? newDate : currNews.price);
         formData.append('fileToUpload', newImg? newImg : new File([], ""));
         formData.append('image', currNews.cover);
+        formData.append('token', token);
 
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/news/update.php`, formData, {
@@ -110,7 +111,8 @@ const NewsListTable = ({newsList, setNewsList}) => {
 
     const handleDeleteNews = async (newsId) => {
         const formData = new URLSearchParams({
-            id: newsId
+            id: newsId,
+            token: token
         });
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/news/remove.php`, formData, {
@@ -389,7 +391,7 @@ const NewsListTable = ({newsList, setNewsList}) => {
     );
 }
 
-const NewsList = ({ newsData }) => {
+const NewsList = ({ newsData, token }) => {
     const [addNewNews, setAddNewNews] = useState(false);
     const [newsList, setNewsList] = useState(newsData);
 
@@ -402,7 +404,7 @@ const NewsList = ({ newsData }) => {
 
         const handleShowNews = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`);
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`, {params:{token: token}});
                 // set(response.data);
                 setNewsList(response.data)
             } catch (error) {
@@ -418,6 +420,7 @@ const NewsList = ({ newsData }) => {
                 formData.append('content', newContent);
                 formData.append('date', (new Date()).toISOString().split('T')[0]);
                 formData.append('fileToUpload', newImg);
+                formData.append('token', token);
                 // console.log()
                 try {
                     const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admin/news/add.php`, formData, {
@@ -485,7 +488,7 @@ const NewsList = ({ newsData }) => {
                                         md={6}
                                         xs={12}
                                     >
-                                        <img src={newImg ? URL.createObjectURL(newImg) : ``} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                        <img src={newImg["name"] ? URL.createObjectURL(newImg) : `/preview.png`} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                                     </Grid>
                                         <Grid
                                             item
@@ -668,7 +671,7 @@ const NewsList = ({ newsData }) => {
                 </Stack>
                 </Card>
                 <Card>
-                {newsList && <NewsListTable newsList={newsList} setNewsList={setNewsList}/>}
+                {newsList && <NewsListTable newsList={newsList} setNewsList={setNewsList} token={token}/>}
                 </Card>
             </Stack>
             </Container>
