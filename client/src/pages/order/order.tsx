@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { useOrders } from '../../context/OrderContext';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress, styled } from '@mui/material';
+
+
+const CuteProgress = styled(CircularProgress)(({ theme }) => ({
+    color: '#f06292', 
+    '& .MuiCircularProgress-circle': {
+      strokeLinecap: 'round' 
+    }
+  }));
+
 
 const OrdersPage: React.FC = () => {
     const { orders, loading, error } = useOrders();
@@ -11,7 +21,14 @@ const OrdersPage: React.FC = () => {
         navigate(`/order/${orderId}`);
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center min-h-screen">
+          <CuteProgress />  
+        </div>
+      );
+    }
+    
     if (error) return <div>Error: {error}</div>;
 
     return (

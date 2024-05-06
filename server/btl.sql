@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS orders (
   address varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   phone varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   ship int(11) NOT NULL DEFAULT 0,
-  date date NOT NULL DEFAULT CURRENT_DATE,
+  date date NOT NULL DEFAULT (CURRENT_DATE()),
   PRIMARY KEY (id, username, pid),
   FOREIGN KEY (username) REFERENCES users(username),
   FOREIGN KEY (pid) REFERENCES products(id)
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS comments (
   username varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   comment text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   rating int(11) NOT NULL,
-  date date NOT NULL DEFAULT CURRENT_DATE,
+  date date NOT NULL DEFAULT (CURRENT_DATE()),
   FOREIGN KEY (username) REFERENCES users(username),
   FOREIGN KEY (pid) REFERENCES products(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -330,7 +330,7 @@ CREATE TABLE IF NOT EXISTS news (
   id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   title varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   content text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  date date NOT NULL DEFAULT CURRENT_DATE,
+  date date NOT NULL DEFAULT (CURRENT_DATE()),
   cover varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '/img/news/default.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -377,7 +377,7 @@ Và khi gấp sách lại (hoặc ngay khi cầm sách lên), hẳn nhiều đ�
 
 Diogenes là tên một triết gia Hy Lạp cổ đại có chủ trương sống tối giản. Truyền thuyết kể rằng Diogenes lúc nào cũng một mình một kiểu chẳng giống ai, ông sống như một người lang thang trong một cái thùng gỗ. Vì ngưỡng mộ danh tiếng Diogenes, một lần Alexander Đại Đế đã đến thăm và hứa sẽ giúp ông thực hiện một nguyện vọng. Lúc đó Diogenes đang phơi nắng nên chỉ có đúng một yêu cầu: "Ngài tránh ra đi, ngài chắn mất ánh mặt trời của tôi rồi."
 
-Chan Ho Kei chia sẻ, "Các truyện ngắn trong cuốn sách này đều được sáng tác khi tôi ở "trạng thái Diogenes" và đắm chìm trong suy nghĩ của bản thân."', '/img/news/new2.webp'),
+Chan Ho Kei chia sẻ, "Các truyện ngắn trong cuốn sách này đều được sáng tác khi tôi ở "trạng thái Diogenes" và đắm chìm trong suy nghĩ của bản thân."', '/img/news/new2.png'),
 
 ('2024-05-05', '4 ONESHOT NOVEL CÓ YẾU TỐ KỲ ẢO VỚI THÔNG ĐIỆP THỰC TẾ', 'Đôi khi, thế giới trong sách vở không phải nơi nào đó xa xôi, xa cách hoàn toàn với thế giới thực...
 
@@ -427,4 +427,4 @@ KHÓA CHẶT CỬA NÀO, SUZUME
 
 Cô nữ sinh 17 tuổi Suzume sống cùng dì ở một thị trấn bình yên ven biển Kyushu. Một ngày nọ, trên đường đến trường, Suzume đi ngang qua một thanh niên điển trai và nghe anh kể "Anh đang đi tìm cửa". Tò mò theo dấu thanh niên nọ, Suzume tiến vào một phế tích trong núi. Điều cô bắt gặp ở đó là một cánh cửa màu trắng cũ kĩ, đứng trơ trọi giữa cảnh hoang tàn đổ nát. Như bị điều gì đó thôi thúc, Suzume đặt tay lên cánh cửa… Đó chính là khởi đầu "hành trình đóng cửa" của Suzume, một hành trình kết nối hiện tại và quá khứ.
 
-KHÓA CHẶT CỬA NÀO, SUZUME là phiên bản tiểu thuyết của anime điện ảnh cùng tên do Shinkai Makoto làm đạo diễn, ra mắt năm 2022. Cuốn sách chứa đựng nỗi lòng đau đáu của đạo diễn nổi tiếng được mệnh danh "phù thủy nỗi buồn" Shinkai đối với thảm họa động đất-sóng thần đặc biệt thảm khốc xảy ra vào tháng 3 năm 2011 tại miền Đông Nhật Bản. Ở đó có những nỗi đau dai dẳng, những mất mát mãi chưa được xoa dịu, song cũng có thật nhiều nỗ lực sống tiếp, thật nhiều hi vọng và ánh sáng soi rọi bước đường tương lai của những con người từng trải qua sinh li tử biệt vì sự tàn khốc của thiên tai.', '/img/news/new3.webp')
+KHÓA CHẶT CỬA NÀO, SUZUME là phiên bản tiểu thuyết của anime điện ảnh cùng tên do Shinkai Makoto làm đạo diễn, ra mắt năm 2022. Cuốn sách chứa đựng nỗi lòng đau đáu của đạo diễn nổi tiếng được mệnh danh "phù thủy nỗi buồn" Shinkai đối với thảm họa động đất-sóng thần đặc biệt thảm khốc xảy ra vào tháng 3 năm 2011 tại miền Đông Nhật Bản. Ở đó có những nỗi đau dai dẳng, những mất mát mãi chưa được xoa dịu, song cũng có thật nhiều nỗ lực sống tiếp, thật nhiều hi vọng và ánh sáng soi rọi bước đường tương lai của những con người từng trải qua sinh li tử biệt vì sự tàn khốc của thiên tai.', '/img/news/new3.png')

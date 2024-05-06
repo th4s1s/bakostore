@@ -53,32 +53,6 @@ interface Product {
 }
 
 
-const CustomSearch = styled(TextField)({
-  '& label.Mui-focused': {
-    color: 'pink',  // Soft pink color for focus
-  },
-  '& .MuiOutlinedInput-root': {
-    '&.Mui-focused fieldset': {
-      borderColor: 'pink',  // Soft pink border for focus
-    },
-    '&:hover fieldset': {
-      borderColor: 'lightpink',  // Lighter pink on hover
-    },
-    '& fieldset': {
-      borderRadius: 15, // Rounded corners for a soft look
-      borderColor: 'lightpink',
-    },
-    '& input': {
-      color: '#ff69b4', // Text color
-    }
-  },
-  '& .MuiOutlinedInput-input': {
-    padding: '10px 14px', // Padding for a plump look
-  },
-  '& .MuiInputAdornment-root .MuiSvgIcon-root': {
-    color: '#ff69b4',  // Icon color
-  }
-});
 
 const CuteProgress = styled(CircularProgress)(({ theme }) => ({
   color: '#f06292', 

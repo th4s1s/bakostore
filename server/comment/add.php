@@ -1,5 +1,11 @@
-<?php
+<?php    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        header("Access-Control-Allow-Origin: *");
+
+            
+        header("Access-Control-Allow-Headers: Content-Type");
+
         if (!isset($_POST["pid"]) || !isset($_POST["username"]) || !isset($_POST["comment"]) || !isset($_POST["rating"]) || !isset($_POST["token"])) {
             http_response_code(400); // Bad Request
             exit;
@@ -21,7 +27,7 @@
             exit;
         }
 
-        $mysqli = new mysqli('localhost', 'root', '', 'btl');
+        $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
 
         if ($mysqli->connect_error) {
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);

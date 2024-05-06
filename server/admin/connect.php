@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$mysqli = new mysqli('localhost', 'root', '', 'btl');
+$mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
 
 // Check connection
 if ($mysqli->connect_error) {

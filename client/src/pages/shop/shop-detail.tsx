@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Swal from 'sweetalert2';
-import { Box, Rating } from '@mui/material';
+import { Box, CircularProgress, Rating, styled } from '@mui/material';
 
 
 
@@ -35,6 +35,15 @@ interface Product {
   comments: Comment[];
 
 }
+
+
+const CuteProgress = styled(CircularProgress)(({ theme }) => ({
+  color: '#f06292', 
+  '& .MuiCircularProgress-circle': {
+    strokeLinecap: 'round' 
+  }
+}));
+
 
 const ProductDetail: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -138,6 +147,9 @@ useEffect(() => {
     });
   };
   
+
+
+  
   
 
   const handlePostComment = async () => {
@@ -205,7 +217,11 @@ useEffect(() => {
   };
 
   if (!product) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <CuteProgress />  
+      </div>
+    );
   }
 
   return (

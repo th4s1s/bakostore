@@ -1,5 +1,10 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    header("Access-Control-Allow-Origin: *");
+
+    header("Access-Control-Allow-Headers: Content-Type");
+
     $token = $_POST["token"];
     require '../auth.php';
     if (!auth($token)) {
