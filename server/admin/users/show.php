@@ -8,8 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 
     require '../connect.php';
-    $sql = "SELECT * FROM users WHERE token != $token";
-    $result = $mysqli->query($sql);
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE token != ?");
+    $stmt->bind_param("s", $token);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
     $users = [];
 
     while ($row = $result->fetch_assoc()) {
@@ -24,6 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 
     echo json_encode($users);
+
+    $stmt->close();
     $mysqli->close();
 }
 else {

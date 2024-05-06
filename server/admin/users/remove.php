@@ -11,15 +11,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     require '../connect.php';
 
-    $sql = "SELECT * FROM users WHERE username = '$username'";
-    $result = $mysqli->query($sql);
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    
+    $stmt->execute();
+
+    $result = $stmt->get_result();
 
     if ($result->num_rows <= 0) {
         echo "User not found";
     }
     else {
-        $sql = "DELETE FROM users WHERE username = '$username'";
-        $result = $mysqli->query($sql);
+        $stmt = $mysqli->prepare("DELETE FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+
+        $result = $stmt->execute();
 
         if ($result) {
             echo "Deleted user successfully";
@@ -28,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    $stmt->close();
     $mysqli->close();
 }
 else {

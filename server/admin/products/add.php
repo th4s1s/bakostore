@@ -23,8 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     require '../connect.php';
 
-    $sql = "INSERT INTO products (name, description, price, image, type) VALUES ('$name', '$description', '$price', '$image', '$type')";
-    $result = $mysqli->query($sql);
+    $stmt = $mysqli->prepare("INSERT INTO products (name, description, price, image, type) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssiss", $name, $description, $price, $image, $type);
+
+    $result = $stmt->execute();
 
     if ($result) {
         echo "Product created successfully";
@@ -32,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $sql . "<br>" . $mysqli->error;
     }
 
+    $stmt->close();
     $mysqli->close();
 }
 else {

@@ -23,8 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     require '../connect.php';
 
-    $sql = "UPDATE products SET name = '$name', description = '$description', price = '$price', image = '$image', type = '$type' WHERE id = '$id'";
-    $result = $mysqli->query($sql);
+    $stmt = $mysqli->prepare("UPDATE products SET name = ?, description = ?, price = ?, image = ?, type = ? WHERE id = ?");
+    $stmt->bind_param("ssissi", $name, $description, $price, $image, $type, $id);
+
+    $result = $stmt->execute();
 
     if ($result) {
         echo "Product updated successfully";
@@ -32,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $sql . "<br>" . $mysqli->error;
     }
 
+    $stmt->close();
     $mysqli->close();
 }
 else {
