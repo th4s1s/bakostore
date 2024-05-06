@@ -36,8 +36,8 @@
             exit;
         }
 
-        $stmt = $mysqli->prepare("UPDATE users SET name = ?, phone = ?, avatar = ? WHERE username = ?");
-        $stmt->bind_param("ssss", $name, $phone, $avatar, $username);
+        $stmt = $mysqli->prepare("UPDATE users SET name = ?, phone = ?, avatar = ? WHERE username = ? and token = ?");
+        $stmt->bind_param("sssss", $name, $phone, $avatar, $username, $token);
         $stmt->execute();
 
         $stmt->close();
