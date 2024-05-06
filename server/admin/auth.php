@@ -1,11 +1,8 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $token = $_POST['token'];
-
+function auth($token) {
     require 'connect.php';
-    $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ? and token = ?");
-    $stmt->bind_param("ss", $username, $token);
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE token = ?");
+    $stmt->bind_param("s", $token);
 
     $stmt->execute();
 
@@ -15,13 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 
     if ($user and $user['is_admin'] == 1) {
-        http_response_code(200); // OK
+        return true;
     }
     else {
-        http_response_code(401); // Unauthorized
+        return false;
     }
-}
-else {
-    http_response_code(405); // Method Not Allowed
 }
 ?>

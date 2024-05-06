@@ -1,5 +1,12 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $token = $_GET["token"];
+    require '../auth.php';
+    if (!auth($token)) {
+        http_response_code(403); // Forbidden
+        return;
+    }
+
     require '../connect.php';
     $sql = "SELECT * FROM users WHERE is_admin = 0";
     $result = $mysqli->query($sql);
