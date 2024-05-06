@@ -46,10 +46,10 @@ const NewsListTable = ({newsList, setNewsList, token}) => {
 
     const [isSelected, setSelected] = useState(new Array(newsList.length).fill(false));
 
-    const handleSelect = (productId : number) => {
+    const handleSelect = (newId : number) => {
         setSelected((prev) => ({
             ...prev,
-            [productId]: !prev[productId],
+            [newId]: !prev[newId],
         }));
         setNewImg('');
     };
@@ -135,6 +135,16 @@ const NewsListTable = ({newsList, setNewsList, token}) => {
       fileInputRef.current.click();
     };
 
+    //show more
+    const [showFullContent, setShowFullContent] = useState(new Array(newsList.length).fill(false));
+    const toggleShowMore = (newId : number) => {
+        setShowFullContent((prev) => ({
+            ...prev,
+            [newId]: !prev[newId],
+        }));
+        setNewImg('');
+    };
+
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, newsList.length - page * rowsPerPage);
 
     return (
@@ -174,7 +184,7 @@ const NewsListTable = ({newsList, setNewsList, token}) => {
                         <TableCell><img src={`${news.cover}`}></img></TableCell>
 
                         <TableCell>{news.title}</TableCell>
-                        <TableCell>{news.content}</TableCell>
+                        <TableCell>{!showFullContent[news.id] ? news.content.substring(0, 500) : news.content}{!showFullContent[news.id] ? "... " : " "}<button className="text-blue-500 underline underline-offset-1" onClick={() => toggleShowMore(news.id)}>{!showFullContent[news.id] ? "Xem thêm " : "Thu gọn"}</button></TableCell>
                         <TableCell align="center">{news.date}</TableCell>
                         {/* <TableCell>{product.type}</TableCell>
                         <TableCell>{product.rating}</TableCell> */}

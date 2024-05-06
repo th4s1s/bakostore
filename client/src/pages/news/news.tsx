@@ -14,16 +14,16 @@ interface NewsItem {
 }
 
 const CuteProgress = styled(CircularProgress)(({ theme }) => ({
-  color: '#f06292', 
+  color: '#f06292',
   '& .MuiCircularProgress-circle': {
-    strokeLinecap: 'round' 
+    strokeLinecap: 'round'
   }
 }));
 
 
 const NewsPage = () => {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
 
@@ -31,11 +31,11 @@ const NewsPage = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredNews = newsData.filter(news => 
+  const filteredNews = newsData.filter(news =>
     news.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     news.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+
 
   useEffect(() => {
     fetchNewsData();
@@ -56,10 +56,10 @@ const NewsPage = () => {
       setIsLoading(false); // End loading regardless of the outcome
     }
   };
-  
+
 
   return (
-    <div className="container mt-24 h-screen mx-auto px-4">
+    <div className="container mt-24 min-h-screen mx-auto px-4">
       {/* Search Bar */}
       <div className="kawaii-search-bar">
     <input
@@ -69,8 +69,8 @@ const NewsPage = () => {
         placeholder="Tìm kiếm tin tức..."
         className="kawaii-search-input"
     />
-        <i className="fa fa-search kawaii-search-icon"></i> 
-    </div>  
+        <i className="fa fa-search kawaii-search-icon"></i>
+    </div>
       {/* Content Area */}
       {isLoading ? (
         <div className="flex justify-center items-center h-full">

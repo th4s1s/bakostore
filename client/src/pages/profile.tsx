@@ -34,14 +34,14 @@ const theme = createTheme({
         styleOverrides: {
           root: {
             '& label.Mui-focused': {
-              color: '#f6a5c0', 
+              color: '#f6a5c0',
             },
             '& .MuiOutlinedInput-root': {
               '&.Mui-focused fieldset': {
-                borderColor: '#f6a5c0', 
+                borderColor: '#f6a5c0',
               },
               '& fieldset': {
-                borderRadius: '15px', 
+                borderRadius: '15px',
               },
             },
           },
@@ -50,13 +50,13 @@ const theme = createTheme({
       MuiDialog: {
         styleOverrides: {
           paper: {
-            borderRadius: '15px', 
+            borderRadius: '15px',
           },
         },
       },
     },
   });
-  
+
 
 interface FormErrors {
     name?: string;
@@ -104,18 +104,18 @@ const UserProfile = () => {
             toast.error('New passwords do not match.');
             return;
         }
-    
+
         const info = JSON.parse(gotUser || '{}');
-    
+
         try {
             const hashedOldPassword = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(currentPassword));
             const hashedNewPassword = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(newPassword));
-            
+
             const oldPwdHex = Array.from(new Uint8Array(hashedOldPassword)).map(b => b.toString(16).padStart(2, '0')).join('');
             const newPwdHex = Array.from(new Uint8Array(hashedNewPassword)).map(b => b.toString(16).padStart(2, '0')).join('');
-    
+
             const urlEncodedData = `token=${encodeURIComponent(info.token)}&oldpwd=${encodeURIComponent(oldPwdHex)}&newpwd=${encodeURIComponent(newPwdHex)}`;
-    
+
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/update_pwd.php`, urlEncodedData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -130,8 +130,8 @@ const UserProfile = () => {
             toast.error(`Error: ${error.response.data.message}`);
         }
     };
-    
-    
+
+
 
     const handlePasswordDialogOpen = () => {
         setPasswordDialogOpen(true);
@@ -263,10 +263,10 @@ const UserProfile = () => {
                             </div>
                             <div className='mt-4'>
                             <Button variant="outlined" onClick={handlePasswordDialogOpen} color="primary">
-                            🌸 Quên mật khẩu 🌸
+                            🌸 Đổi mật khẩu 🌸
                         </Button>
                         <Dialog open={passwordDialogOpen} onClose={handlePasswordDialogClose}>
-                            <DialogTitle>Quên mật khẩu</DialogTitle>
+                            <DialogTitle>Đổi mật khẩu</DialogTitle>
                             <DialogContent>
                                 <TextField
                                     autoFocus
