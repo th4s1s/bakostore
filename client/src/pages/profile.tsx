@@ -1,7 +1,62 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, createTheme, ThemeProvider } from '@mui/material';
+import { toast } from 'react-toastify';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#f6a5c0', // A soft pink
+        contrastText: '#ffffff', // Ensuring text on primary is white for better readability
+      },
+      secondary: {
+        main: '#fde4cf', // A soft peach
+      },
+      error: {
+        main: '#fbd1a2', // A soft orange for errors
+      }
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: '25px', // Even more rounded corners for a softer look
+            textTransform: 'none', // Avoids capitalizing all letters
+            fontSize: '1rem', // Slightly larger text for readability and cuteness
+            padding: '10px 20px', // More padding for a buttonier feel
+            boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)', // Soft shadow for depth
+          },
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            '& label.Mui-focused': {
+              color: '#f6a5c0', 
+            },
+            '& .MuiOutlinedInput-root': {
+              '&.Mui-focused fieldset': {
+                borderColor: '#f6a5c0', 
+              },
+              '& fieldset': {
+                borderRadius: '15px', 
+              },
+            },
+          },
+        },
+      },
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            borderRadius: '15px', 
+          },
+        },
+      },
+    },
+  });
+  
 
 interface FormErrors {
     name?: string;
@@ -14,11 +69,17 @@ const UserProfile = () => {
         phone: '',
     });
 
-    const navigate = useNavigate();
     const gotUser = localStorage.getItem("user");
 
     const[isEditMode, setEditMode] = useState(false)
-    const[tmpAvt, setTmpAvt] = useState(null)
+    const [tmpAvt, setTmpAvt] = useState<File | null>(null);
+    const [tmpName, setTmpName] = useState<string | null>(null);
+    const [tmpPhone, setTmpPhone] = useState<string | null>(null);
+    const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
 
     // const handleRes = (res : string) => {
     //     if(res.constructor  == String){
@@ -38,8 +99,52 @@ const UserProfile = () => {
         // console.log(file)
     };
 
-    const[tmpName, setTmpName] = useState(null)
-    const[tmpPhone, setTmpPhone] = useState(null)
+    const handleChangePassword = async () => {
+        if (newPassword !== confirmNewPassword) {
+            toast.error('New passwords do not match.');
+            return;
+        }
+    
+        const info = JSON.parse(gotUser || '{}');
+    
+        try {
+            const hashedOldPassword = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(currentPassword));
+            const hashedNewPassword = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(newPassword));
+            
+            const oldPwdHex = Array.from(new Uint8Array(hashedOldPassword)).map(b => b.toString(16).padStart(2, '0')).join('');
+            const newPwdHex = Array.from(new Uint8Array(hashedNewPassword)).map(b => b.toString(16).padStart(2, '0')).join('');
+    
+            const urlEncodedData = `token=${encodeURIComponent(info.token)}&oldpwd=${encodeURIComponent(oldPwdHex)}&newpwd=${encodeURIComponent(newPwdHex)}`;
+    
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/update_pwd.php`, urlEncodedData, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            toast.success('Quên mật khẩu thành công.');
+            setPasswordDialogOpen(false);
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmNewPassword('');
+        } catch (error: any) {
+            toast.error(`Error: ${error.response.data.message}`);
+        }
+    };
+    
+    
+
+    const handlePasswordDialogOpen = () => {
+        setPasswordDialogOpen(true);
+    };
+
+    const handlePasswordDialogClose = () => {
+        setPasswordDialogOpen(false);
+    };
+
+
+
+
+
 
     const handleSave = async () => {
         const newErrors: FormErrors = {};
@@ -130,6 +235,7 @@ const UserProfile = () => {
                     </>
                 ) :
                     <>
+                        <ThemeProvider theme={theme}>
                     <div className="flex h-screen bg-white justify-center place-items-start">
                         <div className="w-6/12 bg-white rounded-lg border border-pink-200 shadow-default py-10 px-16 mt-5 box-border">
                             <div className='w-full flex items-end justify-end'>
@@ -155,15 +261,59 @@ const UserProfile = () => {
                                 <p className="text-sm text-gray-600 mt-2">Số điện thoại: {info.phone}</p>
                                 {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone}</p>}
                             </div>
+                            <div className='mt-4'>
+                            <Button variant="outlined" onClick={handlePasswordDialogOpen} color="primary">
+                            🌸 Quên mật khẩu 🌸
+                        </Button>
+                        <Dialog open={passwordDialogOpen} onClose={handlePasswordDialogClose}>
+                            <DialogTitle>Quên mật khẩu</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="current-password"
+                                    label="Mật khẩu hiện tại"
+                                    type="password"
+                                    fullWidth
+                                    variant="outlined"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="new-password"
+                                    label="Mật khẩu mới"
+                                    type="password"
+                                    fullWidth
+                                    variant="outlined"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="confirm-new-password"
+                                    label="Xác nhận mật khẩu mới"
+                                    type="password"
+                                    fullWidth
+                                    variant="outlined"
+                                    value={confirmNewPassword}
+                                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handlePasswordDialogClose}>Hủy</Button>
+                                <Button onClick={handleChangePassword} color="primary">Xác Nhận</Button>
+                            </DialogActions>
+                        </Dialog>
+                        </div>
                         </div>
                     </div>
+                    </ThemeProvider>
                     </>
         );
     }
     else{
-        return
-        <>
-        </>
+        return <>User not found.</>;
     }
 };
 

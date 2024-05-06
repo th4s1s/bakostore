@@ -23,6 +23,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
     navigate('/cart');
     onClose();
   };
+  const cartItems = Array.isArray(items) ? items : [];
 
   return (
     <Popover
@@ -44,7 +45,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
       </Typography>
       <Divider />
       <List dense>
-        {items.map(item => (
+      {cartItems.map(item => (
           <ListItem key={item.pid} sx={{ alignItems: 'center' }}>
             <ListItemIcon>
               <img src={item.image} alt={item.name} style={{ width: 50, height: 50, marginRight: 10 }} />

@@ -10,10 +10,10 @@ import { pink } from '@mui/material/colors';
 
 export const ShoppingCartButton: React.FC = () => {
   const { user } = useAuth(); 
-  const { cartItems, refreshCart } = useCartContext();
+  const { cartItems = [], refreshCart } = useCartContext();
   const popover = usePopover<HTMLButtonElement>();
-  const totalItems = cartItems.reduce((acc, item) => acc + item.amount, 0);
-
+  const totalItems = (Array.isArray(cartItems) ? cartItems : []).reduce((acc, item) => acc + item.amount, 0);
+  
   useEffect(() => {
     if (user?.username) {
       refreshCart();
