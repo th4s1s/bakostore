@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress, Box, Typography } from '@mui/material';
+import { CircularProgress, Box, Typography, styled } from '@mui/material';
 
 interface NewsItem {
     id: string;
@@ -9,6 +9,17 @@ interface NewsItem {
     content: string;
     cover: string; 
   }
+
+
+  const CuteProgress = styled(CircularProgress)(({ theme }) => ({
+    color: '#f06292', 
+    '& .MuiCircularProgress-circle': {
+      strokeLinecap: 'round' 
+    }
+  }));
+  
+  
+  
 
 const NewsDetail = () => {
     const { id } = useParams();  // Get the news ID from the URL
@@ -40,8 +51,15 @@ const NewsDetail = () => {
       fetchNewsDetail();
     }, [id]);
   
-    if (loading) return <CircularProgress color="secondary" />;
-    if (error) return <Typography color="error">{error}</Typography>;
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center min-h-screen">
+          <CuteProgress />  
+        </div>
+      );
+    }
+     
+  if (error) return <Typography color="error">{error}</Typography>;
   
     return (
       <Box sx={{ maxWidth: 800, mx: 'auto', p: 2 }}>

@@ -1,6 +1,17 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useOrders } from '../../context/OrderContext';
+import { CircularProgress, styled } from '@mui/material';
+
+
+const CuteProgress = styled(CircularProgress)(({ theme }) => ({
+    color: '#f06292', 
+    '& .MuiCircularProgress-circle': {
+      strokeLinecap: 'round' 
+    }
+  }));
+
+
 
 const OrderDetailPage: React.FC = () => {
     const { orderId } = useParams<{ orderId: string }>();
@@ -13,7 +24,14 @@ const OrderDetailPage: React.FC = () => {
     }, [orderId, fetchOrderDetails]);
 
     if (error) return <div className="text-red-500">Error: {error}</div>;
-    if (!selectedOrder) return <div className="text-center text-xl">Loading...</div>;
+
+    if (!selectedOrder) {
+        return (
+          <div className="flex items-center justify-center min-h-screen">
+            <CuteProgress />  
+          </div>
+        );
+      }
 
     const totalAmount = selectedOrder.reduce((acc, item) => acc + item.amount, 0);
     const totalPrice = selectedOrder.reduce((acc, item) => acc + item.total_price, 0);

@@ -1,5 +1,11 @@
-<?php
+<?php    
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+    header("Access-Control-Allow-Origin: *");
+
+    
+    header("Access-Control-Allow-Headers: Content-Type");
+
     if(!isset($_GET["username"])) {
         http_response_code(404);
         exit;
@@ -7,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $username = $_GET["username"];
 
-    $mysqli = new mysqli('localhost', 'root', '', 'btl');
+    $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
 
     if ($mysqli->connect_error) {
         die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
