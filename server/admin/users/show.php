@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 
     require '../connect.php';
-    $sql = "SELECT * FROM users WHERE is_admin = 0";
+    $sql = "SELECT * FROM users WHERE token != $token";
     $result = $mysqli->query($sql);
     $users = [];
 
