@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
     }
 
-    $result = $mysqli->query("SELECT * FROM products");
+    $result = $mysqli->query("SELECT * FROM products ORDER BY id DESC");
 
     $products = array();
     while($row = $result->fetch_assoc()) {
