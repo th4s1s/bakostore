@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $cover = upload('news');
     if ($cover === false) {
-        echo "Upload failed";
+        http_response_code(403); // Forbidden
         return;
     }
 
