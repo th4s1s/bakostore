@@ -234,8 +234,8 @@ useEffect(() => {
             <div className="w-full lg:w-5/12">
                 <img src={product.image} alt={product.name} className="w-full" />
             </div>
-            <div className="w-full lg:w-7/12 pl-16">
-                <h1 className="mt-12 text-3xl font-semibold text-pink-500">{product.name}</h1>
+            <div className="w-full lg:w-7/12 mx-auto lg:pl-16">               
+             <h1 className="mt-12 text-3xl font-semibold text-pink-500">{product.name}</h1>
                 <p className="text-lg text-gray-700 mt-2">
                 {product.description.split('\n').map((line, i) => (
                   <React.Fragment key={i}>
@@ -258,32 +258,32 @@ useEffect(() => {
               <button onClick={handleAddToCart} className="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600">Thêm vào giỏ hàng</button>
             </div>
             </div>
-            <div className="w-full mt-8 flex flex-col items-center">
-                <div className="bg-pink-100 rounded-xl shadow p-6 w-full">
-                <h1 className='text-3xl mb-4 font-bold text-pink-600'>Đánh giá sản phẩm</h1>
-                <div className="w-7/12 lg:w-full pl-16 flex">
-                  <div className="flex flex-col mr-10 space-y-2">
-                    <div><span className="text-6xl font-bold text-pink-500">{Number(product?.rating).toFixed(1)}</span><span className="text-2xl text-gray-600">/5</span>
-                    </div>
-                    <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-                      <Rating name="read-only" value={Number(product?.rating)} precision={0.1} readOnly />
-                    </Box>
-                    <span className="text-sm ml-2 text-gray-500">({totalRatings} đánh giá)</span>
+          <div className="w-full mt-8 flex flex-col items-center">
+            <div className="bg-pink-100 rounded-xl shadow p-6 w-full">
+              <h1 className='text-3xl mb-4 font-bold text-pink-600'>Đánh giá sản phẩm</h1>
+              <div className="flex flex-col md:flex-row md:pl-16">
+              <div className="flex flex-col items-center md:items-start mr-10 space-y-2">
+                  <div><span className="text-6xl font-bold text-pink-500">{Number(product?.rating).toFixed(1)}</span><span className="text-2xl text-gray-600">/5</span>
                   </div>
-                  <div className="flex flex-col w-full space-y-1">
-                    {starCounts.map((count, index) => (
-                      <div key={index} className="flex items-center my-1">
-                        <span className="w-12 text-gray-700 font-medium">{5 - index} sao</span>
-                        <span className="mx-2 text-gray-500">({count})</span>
-                        <div className="flex-1 bg-pink-200 rounded-full h-2">
-                          <div className="bg-pink-500 h-2 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${calculatePercentage(count, totalRatings)}%` }}></div>
-                        </div>
-                        <span className="w-12 text-right text-gray-700">{calculatePercentage(count, totalRatings).toFixed(0)}%</span>
+                  <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
+                    <Rating name="read-only" value={Number(product?.rating)} precision={0.1} readOnly />
+                  </Box>
+                  <span className="text-sm ml-2 text-gray-500">({totalRatings} đánh giá)</span>
+                </div>
+                <div className="flex flex-col w-full space-y-1 mt-4 md:mt-0">
+                  {starCounts.map((count, index) => (
+                    <div key={index} className="flex items-center my-1">
+                      <span className="w-12 text-gray-700 font-medium">{5 - index} sao</span>
+                      <span className="mx-2 text-gray-500">({count})</span>
+                      <div className="flex-1 bg-pink-200 rounded-full h-2">
+                        <div className="bg-pink-500 h-2 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${calculatePercentage(count, totalRatings)}%` }}></div>
                       </div>
-                    ))}
-                  </div>
-                </div>        
-                <div className="text-center mt-4 mb-4">
+                      <span className="w-12 text-right text-gray-700">{calculatePercentage(count, totalRatings).toFixed(0)}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            <div className="text-center mt-4 mb-4">
                   <h2 className="text-2xl font-bold text-pink-600">Đánh giá sản phẩm này</h2>
                   <div className="flex justify-center items-center">
                   <StarRating value={rating} onChange={handleRatingChange} />

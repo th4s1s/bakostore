@@ -256,16 +256,17 @@ function Login() {
 
     return (
     <>
+      <div className="relative overflow-hidden">
     <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-16 after:left-10 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
     <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-10 after:right-12 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
     <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-80 after:right-52 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
         <div className="h-screen flex bg-white mt-20 justify-center place-items-start">
             <div className='w-96'>
                 <div className='flex place-self-stretch mb-0'>
-                    <button className={`w-6/12 p-2 border bg-${isSignIn ? 'pink-500' : 'white'} text-${isSignIn ? 'white' : 'pink-600'} hover:bg-${isSignIn ? 'pink-600' : 'pink-600'} hover:text-${isSignIn ? 'white' : 'white'}`} onClick={handleSignIn}>
+                    <button className={`w-6/12 p-2 z-10 border bg-${isSignIn ? 'pink-500' : 'white'} text-${isSignIn ? 'white' : 'pink-600'} hover:bg-${isSignIn ? 'pink-600' : 'pink-600'} hover:text-${isSignIn ? 'white' : 'white'}`} onClick={handleSignIn}>
                         Đăng nhập
                     </button>
-                    <button className={`w-6/12 p-2 border bg-${!isSignIn ? 'pink-500' : 'white'} text-${!isSignIn ? 'white' : 'pink-600'} hover:bg-${!isSignIn ? 'pink-600' : 'pink-600'} hover:text-${!isSignIn ? 'white' : 'white'}`} onClick={handleSignUp}>
+                    <button className={`w-6/12 p-2  z-10 border bg-${!isSignIn ? 'pink-500' : 'white'} text-${!isSignIn ? 'white' : 'pink-600'} hover:bg-${!isSignIn ? 'pink-600' : 'pink-600'} hover:text-${!isSignIn ? 'white' : 'white'}`} onClick={handleSignUp}>
                         Đăng ký
                     </button>
                 </div>
@@ -279,6 +280,7 @@ function Login() {
             </div>
         </div>
         <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:bottom-32 after:left-96 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
+        </div>
     </>
     );
   }
