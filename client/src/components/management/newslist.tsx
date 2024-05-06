@@ -296,6 +296,7 @@ const NewsListTable = ({newsList, setNewsList, token}) => {
                                         >
                                             <TextField
                                             defaultValue={news.date}
+                                            disabled
                                             fullWidth
                                             onChange={(e) => {setNewTitle(e.target.value)}}
                                             label="Năm - Tháng - Ngày"
