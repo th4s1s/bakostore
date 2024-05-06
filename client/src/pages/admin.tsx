@@ -107,7 +107,7 @@ const Admin = () => {
                     onClick={() => {checkAuth(); handleMana("user"); handleShowUser()}}
             >
                 <h2 className="text-xl">Quản lý người dùng</h2>
-                <p className="">Xem, xóa, thêm người dùng</p>
+                <p className="">Xem, xóa người dùng và thêm người quản trị</p>
             </button>
             <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
                     onClick={() => {checkAuth(); handleMana("product"); handleShowProduct()}}

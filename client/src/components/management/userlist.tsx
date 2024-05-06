@@ -391,7 +391,7 @@ const UserList = ({ userData }) => {
                     // console.log(response.data)
                     handleShowUser();
                     setAddNewUser(false);
-                    toast.success("Thêm người dùng mới thành công");
+                    toast.success("Thêm người quản trị mới thành công");
                 } catch (error) {
                     // console.error('Error:', error);
                     toast.error("Xin hãy nhập đầy đủ thông tin cơ bản");
@@ -437,7 +437,7 @@ const UserList = ({ userData }) => {
                                         <TextField
                                         fullWidth
                                         onChange={(e) => {setNewUsername(e.target.value)}}
-                                        label="Tên người dùng"
+                                        label="Tên tài khoản người quản trị"
                                         name="username"
                                         required
                                         />
@@ -463,7 +463,7 @@ const UserList = ({ userData }) => {
                                         <TextField
                                         fullWidth
                                         onChange={(e) => {setNewName(e.target.value)}}
-                                        label="Họ và Tên"
+                                        label="Họ và Tên người quản trị"
                                         name="name"
                                         required
                                         />
@@ -543,7 +543,7 @@ const UserList = ({ userData }) => {
                     variant="contained"
                     onClick={() => {setAddNewUser(true)}}
                     >
-                    Thêm người dùng quản trị
+                    Thêm người quản trị
                     </Button>
                 </Stack>
                 </Stack>
