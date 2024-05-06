@@ -3,10 +3,10 @@ import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+
 import {
+    Autocomplete,
     Box,
     Button,
     Card,
@@ -36,21 +36,10 @@ import {
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const categoryOptions = [
-    {
-      label: 'Manga',
-      value: 'manga'
-    },
-    {
-      label: 'Light Novel',
-      value: 'novel'
-    }
-]
-
-const NewsListTable = ({newsData}) => {
+const NewsListTable = ({newsList, setNewsList}) => {
     // console.log(productData);
 
-    const [newsList, setNewsList] = useState(newsData);
+    // const [newsList, setNewsList] = useState(newsData);
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -415,7 +404,7 @@ const NewsList = ({ newsData }) => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admin/news/show.php`);
                 // set(response.data);
-
+                setNewsList(response.data)
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -607,6 +596,17 @@ const NewsList = ({ newsData }) => {
         );
     }
 
+    const handleSearch = (e) => {
+        console.log(e)
+        const term = e ? (e.title ? e.title : e.target.value) : '';
+
+        const filtered = newsData.filter(news =>
+            news.title.toLowerCase().includes(term.toLowerCase())
+        );
+        setNewsList(filtered)
+    }
+
+
     return (
     <>
         <Box
@@ -642,7 +642,33 @@ const NewsList = ({ newsData }) => {
                 </Stack>
                 </Stack>
                 <Card>
-                {newsList && <NewsListTable newsData={newsList}/>}
+                <Stack
+                    alignItems="center"
+                    direction="row"
+                    spacing={2}
+                    sx={{ p: 2 }}
+                >
+                    <SvgIcon>
+                        <SearchMdIcon />
+                    </SvgIcon>
+                    <Autocomplete
+                        fullWidth
+                        options={newsData}
+                        getOptionLabel={(option:string) => option.title}
+                        onChange={(e, selected) => handleSearch(selected)}
+                        sx={{ border: 'none' }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                placeholder="Tìm kiếm tin tức"
+                                onChange={(e) => handleSearch(e)}
+                            />
+                        )}
+                    />
+                </Stack>
+                </Card>
+                <Card>
+                {newsList && <NewsListTable newsList={newsList} setNewsList={setNewsList}/>}
                 </Card>
             </Stack>
             </Container>
