@@ -22,7 +22,7 @@ const CheckoutPage = () => {
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.amount, 0);
   const total = subtotal + shippingCost;
 
-  const defaultStoreAddress = '268 Lý Thường Kiệt P13 Quận 10 TPHCM'; 
+  const defaultStoreAddress = '268 Lý Thường Kiệt P13 Quận 10 TPHCM';
 
   useEffect(() => {
     const shouldPickUp = shippingCost === 0;
@@ -35,17 +35,17 @@ const CheckoutPage = () => {
       setPhone('');
     }
   }, [shippingCost, user?.phone]);
-  
+
 
   const handleOptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
       const newValue = event.target.value;
       setSelectedOption(newValue);
       if (newValue === 'true') {
-          setAddress(defaultStoreAddress); 
+          setAddress(defaultStoreAddress);
           setPhone(user.phone);
       } else {
           setAddress('');
-          setPhone(''); 
+          setPhone('');
       }
   };
 
@@ -78,7 +78,7 @@ const CheckoutPage = () => {
       fetchOrders();
       setTimeout(() => {
         navigate('/shop');
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       console.error('Checkout failed:', error);
       toast.error('Checkout failed. Please try again.');
@@ -101,7 +101,7 @@ const CheckoutPage = () => {
             <div className="mb-4">
             <label className={`radio-label ${shippingCost === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}>
               <input type="radio" name="shippingOption" className="input-radio" value="false"
-                checked={selectedOption === 'false'} onChange={handleOptionChange} 
+                checked={selectedOption === 'false'} onChange={handleOptionChange}
                 disabled={shippingCost === 0}/>
                 <span className="ml-2">Giao tận nơi</span>
               </label>
@@ -133,9 +133,9 @@ const CheckoutPage = () => {
             <div className="mb-4">
             <label className={`radio-label ${shippingCost !== 0 ? 'opacity-50 cursor-not-allowed' : ''}`}>
               <input type="radio" name="shippingOption" className="input-radio" value="true"
-                checked={selectedOption === 'true'} onChange={handleOptionChange} 
-                disabled={shippingCost !== 0}/>                
-                <span className="ml-2">Nhận tại cửa hàng (ở đâu thì tự kiếm)</span>
+                checked={selectedOption === 'true'} onChange={handleOptionChange}
+                disabled={shippingCost !== 0}/>
+                <span className="ml-2">Nhận tại cửa hàng</span>
               </label>
             </div>
             <button type="submit" disabled={isCheckout} className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline float-right">
