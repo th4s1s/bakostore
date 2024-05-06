@@ -20,8 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     require '../connect.php';
 
-    $sql = "INSERT INTO news (title, content, cover) VALUES ('$title', '$content', '$cover')";
-    $result = $mysqli->query($sql);
+    $stmt = $mysqli->prepare("INSERT INTO news (title, content, cover) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $title, $content, $cover);
+
+    $result = $stmt->execute();
 
     if ($result) {
         echo "News created successfully";
@@ -29,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $sql . "<br>" . $mysqli->error;
     }
 
+    $stmt->close();
     $mysqli->close();
 }
 else {

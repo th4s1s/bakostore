@@ -11,8 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     require '../connect.php';
 
-    $sql = "Delete FROM news WHERE id = '$id'";
-    $result = $mysqli->query($sql);
+    $stmt = $mysqli->prepare("DELETE FROM news WHERE id = ?");
+    $stmt->bind_param("i", $id);
+
+    $result = $stmt->execute();
 
     if ($result) {
         echo "Deleted news successfully";
@@ -20,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $sql . "<br>" . $mysqli->error;
     }
 
+    $stmt->close();
     $mysqli->close();
 }
 else {
