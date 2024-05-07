@@ -14,11 +14,7 @@
         $newpwd = $_POST["newpwd"];
         $oldpwd = $_POST["oldpwd"];
 
-        $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
-
-        if ($mysqli->connect_error) {
-            die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-        }
+        require "../connect.php";
 
         $stmt = $mysqli->prepare("SELECT * FROM users WHERE token = ?");
         $stmt->bind_param("s", $token);

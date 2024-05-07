@@ -13,11 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $id = intval($_GET["id"]);
 
-    $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
-
-    if ($mysqli->connect_error) {
-        die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-    }
+    require "../connect.php";
 
     $stmt = $mysqli->prepare("SELECT * FROM news WHERE id = ?");
     $stmt->bind_param("i", $id);

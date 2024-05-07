@@ -14,13 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
     
-
-    
-    $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
-
-    if ($mysqli->connect_error) {
-        die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-    }
+    require "../connect.php";
 
     $password = hash('sha256', $password);
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
