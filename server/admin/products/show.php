@@ -1,5 +1,11 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+    header("Access-Control-Allow-Origin: *");
+
+
+    header("Access-Control-Allow-Headers: Content-Type");
+    
     $token = $_GET["token"];
     require '../auth.php';
     if (!auth($token)) {

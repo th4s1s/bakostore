@@ -1,5 +1,10 @@
-<?php
+<?php    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        header("Access-Control-Allow-Origin: *");
+
+            header("Access-Control-Allow-Headers: Content-Type");
+
         if (!isset($_POST["username"]) || !isset($_POST["token"]) || !isset($_POST["pid"]) || !isset($_POST["amount"])) {
             http_response_code(404);
             exit;
@@ -10,15 +15,11 @@
         $pid = intval($_POST["pid"]);
         $amount = intval($_POST["amount"]);
 
-<<<<<<< Updated upstream
-        $mysqli = new mysqli('localhost', 'root', '', 'btl');
+        $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
 
         if ($mysqli->connect_error) {
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
         }
-=======
-        require '../connect.php';
->>>>>>> Stashed changes
 
         $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND token = ?");
         $stmt->bind_param("ss", $username, $token);

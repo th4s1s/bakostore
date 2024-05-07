@@ -1,5 +1,10 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        header("Access-Control-Allow-Origin: *");
+
+        header("Access-Control-Allow-Headers: Content-Type");
+        
         if (!isset($_POST["token"]) || !isset($_POST["newpwd"]) || !isset($_POST["oldpwd"])){
             http_response_code(404);
             exit;
@@ -9,15 +14,11 @@
         $newpwd = $_POST["newpwd"];
         $oldpwd = $_POST["oldpwd"];
 
-<<<<<<< Updated upstream
-        $mysqli = new mysqli('localhost', 'root', '', 'btl');
+        $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
 
         if ($mysqli->connect_error) {
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
         }
-=======
-        require '../connect.php';
->>>>>>> Stashed changes
 
         $stmt = $mysqli->prepare("SELECT * FROM users WHERE token = ?");
         $stmt->bind_param("s", $token);

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface FormErrors {
     username?: string;
@@ -10,7 +11,7 @@ interface FormErrors {
     name?: string;
     phone?: string;
   }
-  
+
 
 function Login() {
     const { login } = useAuth();
@@ -51,7 +52,7 @@ function Login() {
         e.preventDefault();
 
         if(!isSignIn){
-            const newErrors: FormErrors = {}; 
+            const newErrors: FormErrors = {};
 
             if (e.target.username.value.length < 8 || e.target.username.value.length > 25) {
                 newErrors.username = 'Tên đăng ký phải có độ dài từ 8 đến 25 ký tự';
@@ -96,11 +97,13 @@ function Login() {
 
                 try {
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    const response = await axios.post(`/api/user/register.php`, formData, {
+                    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/register.php`, formData, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     });
+                    toast.success("Đăng ký thành công");
+                    setIsSignIn(true);
                 } catch (error) {
                     // console.error('Error:', error.response.status);
                     if((error as any).response.status == 409){
@@ -111,7 +114,7 @@ function Login() {
             setErrors(newErrors);
         }
         else{
-            const newErrors: FormErrors = {}; 
+            const newErrors: FormErrors = {};
             if(!e.target.username.value){
                 newErrors.username = 'Vui lòng nhập tên đăng nhập';
             }
@@ -126,14 +129,14 @@ function Login() {
                 });
                 try {
                     //localhost
-                    const response = await axios.post(`/api/user/login.php`, formData, {
+                    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/login.php`, formData, {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     });
                     // console.log(response.data)
-                    login(response.data); 
-                    navigate('/shop'); 
+                    login(response.data);
+                    navigate('/shop');
                 } catch (error) {
                     console.error('Error:', error);
                     if((error as any).response.status == 404 || (error as any).response.status == 400){
@@ -256,16 +259,17 @@ function Login() {
 
     return (
     <>
+      <div className="relative overflow-hidden">
     <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-16 after:left-10 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
     <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-10 after:right-12 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
     <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:top-80 after:right-52 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
         <div className="h-screen flex bg-white mt-20 justify-center place-items-start">
             <div className='w-96'>
                 <div className='flex place-self-stretch mb-0'>
-                    <button className={`w-6/12 p-2 border bg-${isSignIn ? 'pink-500' : 'white'} text-${isSignIn ? 'white' : 'pink-600'} hover:bg-${isSignIn ? 'pink-600' : 'pink-600'} hover:text-${isSignIn ? 'white' : 'white'}`} onClick={handleSignIn}>
+                    <button className={`w-6/12 p-2 z-10 border bg-${isSignIn ? 'pink-500' : 'white'} text-${isSignIn ? 'white' : 'pink-600'} hover:bg-${isSignIn ? 'pink-600' : 'pink-600'} hover:text-${isSignIn ? 'white' : 'white'}`} onClick={handleSignIn}>
                         Đăng nhập
                     </button>
-                    <button className={`w-6/12 p-2 border bg-${!isSignIn ? 'pink-500' : 'white'} text-${!isSignIn ? 'white' : 'pink-600'} hover:bg-${!isSignIn ? 'pink-600' : 'pink-600'} hover:text-${!isSignIn ? 'white' : 'white'}`} onClick={handleSignUp}>
+                    <button className={`w-6/12 p-2  z-10 border bg-${!isSignIn ? 'pink-500' : 'white'} text-${!isSignIn ? 'white' : 'pink-600'} hover:bg-${!isSignIn ? 'pink-600' : 'pink-600'} hover:text-${!isSignIn ? 'white' : 'white'}`} onClick={handleSignUp}>
                         Đăng ký
                     </button>
                 </div>
@@ -279,6 +283,7 @@ function Login() {
             </div>
         </div>
         <div className="relative after:content-[''] after:absolute after:h-32 after:w-32 after:bg-indigo-600/5 after:bottom-32 after:left-96 after:-z-1 after:rounded-3xl after:animate-[spin_10s_linear_infinite]"></div>
+        </div>
     </>
     );
   }

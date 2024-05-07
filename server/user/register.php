@@ -1,5 +1,11 @@
-<?php
+<?php    
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    header("Access-Control-Allow-Origin: *");
+
+    
+    header("Access-Control-Allow-Headers: Content-Type");
+
     if (!isset($_POST["username"]) || !isset($_POST["password"]) || !isset($_POST["name"]) || !isset($_POST["phone"])) {
         http_response_code(400); // Bad Request
         exit;
@@ -25,15 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-<<<<<<< Updated upstream
-    $mysqli = new mysqli('localhost', 'root', '', 'btl');
+    $mysqli = new mysqli('bakostore-server.mysql.database.azure.com', 'root123', '@Bako123', 'btl');
 
     if ($mysqli->connect_error) {
         die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
     }
-=======
-    require '../connect.php';
->>>>>>> Stashed changes
 
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);

@@ -47,15 +47,15 @@ const Contact: React.FC = () => {
               </Typography>
             </Stack>
             <div className="flex justify-center items-center">
-          <img src="/contact.webp" alt="contact" className="w-3/4 h-auto" />
+          <img src="/contact.png" alt="contact" className="w-3/4 h-auto" />
             </div>              
             <Typography
               sx={{ mb: 3, mt: 3 }}
               variant="h6"
               style={{ color: '#333' }} // Soft black for body text
             >
-              Nếu có thắc mắc nào hãy điền vào form kế bên, chúng tôi sẽ trả lời bạn trong thời gian sớm nhất.
-            </Typography>
+          Hãy tìm đến chúng tôi tại 268 Lý Thường Kiệt Phường 13 Quận 10 TPHCM            
+          </Typography>
             <Stack
               alignItems="center"
               direction="row"

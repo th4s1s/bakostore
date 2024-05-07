@@ -2,11 +2,11 @@ import { Popover, Box, Typography, Button, Divider, List, ListItem, ListItemText
 import { useNavigate } from 'react-router-dom';
 
 interface CartItem {
-    id: string;
+    pid: string;
     name: string;
-    quantity: number; 
+    amount: number; 
     price: number;
-    image: string;  // Ensure the image URL is provided
+    image: string;  
 }
 
 interface ShoppingCartPopoverProps {
@@ -23,6 +23,7 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
     navigate('/cart');
     onClose();
   };
+  const cartItems = Array.isArray(items) ? items : [];
 
   return (
     <Popover
@@ -44,14 +45,14 @@ export const ShoppingCartPopover = ({ anchorEl, onClose, open, items }: Shopping
       </Typography>
       <Divider />
       <List dense>
-        {items.map(item => (
-          <ListItem key={item.id} sx={{ alignItems: 'center' }}>
+      {cartItems.map(item => (
+          <ListItem key={item.pid} sx={{ alignItems: 'center' }}>
             <ListItemIcon>
               <img src={item.image} alt={item.name} style={{ width: 50, height: 50, marginRight: 10 }} />
             </ListItemIcon>
             <ListItemText
               primary={item.name}
-              secondary={`${item.price} đ`}
+              secondary={`${item.price.toLocaleString()}đ x ${item.amount}`}
               primaryTypographyProps={{ noWrap: true }}
               secondaryTypographyProps={{ noWrap: true, style: { fontSize: '1rem' } }}
             />
