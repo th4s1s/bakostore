@@ -73,6 +73,10 @@ const CheckoutPage = () => {
     event.preventDefault();
     setisCheckout(true);
     try {
+      if (phone.length !== 10 || phone[0] !== '0') {
+        toast.error('Số điện thoại phải bắt đầu bằng số 0 và có đúng 10 chữ số.');
+        return;
+      }
       await checkoutCart(address, phone);
       notifySuccess();
       fetchOrders();

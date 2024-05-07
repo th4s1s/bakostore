@@ -190,8 +190,9 @@ const UserProfile = () => {
         const info = JSON.parse(gotUser);
         return (
                 isEditMode ? (
-                    <><div className="flex h-screen bg-white justify-center place-items-start">
-                        <div className="w-6/12 bg-white rounded-lg border border-pink-500 shadow-default py-10 px-16 mt-5">
+                    <>
+                    <div className="flex h-screen bg-white justify-center place-items-start">
+                    <div className="w-full md:w-6/12 bg-white rounded-lg border border-pink-500 shadow-default py-10 px-4 md:px-16 mt-5">
                             <div className='w-full flex items-end justify-end'>
                                 <button className='rounded-lg border-2 p-1 right-0 bg-pink-500 text-white font-bold py-2 px-4' onClick={() => { setEditMode(false); setTmpAvt(null); setTmpName(null); setTmpPhone(null)} }>
                                     {/* <svg xmlns="http://www.w3.org/2000/svg" width="26px" viewBox="0 0 24 24" fill="none">
@@ -236,8 +237,8 @@ const UserProfile = () => {
                 ) :
                     <>
                         <ThemeProvider theme={theme}>
-                    <div className="flex h-screen bg-white justify-center place-items-start">
-                        <div className="w-6/12 bg-white rounded-lg border border-pink-200 shadow-default py-10 px-16 mt-5 box-border">
+                        <div className="flex h-screen bg-white justify-center place-items-start">
+                        <div className="w-full md:w-6/12 bg-white rounded-lg border border-pink-200 shadow-default py-10 px-4 md:px-16 mt-5 box-border">
                             <div className='w-full flex items-end justify-end'>
                                 <button className='rounded-lg border-2 p-1 right-0 font-bold py-2 px-4' onClick={() => {setEditMode(true); setTmpAvt(null); setTmpName(null); setTmpPhone(null)}}>
                                     {/* <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="26px" viewBox="0 0 24 24" fill="none">
