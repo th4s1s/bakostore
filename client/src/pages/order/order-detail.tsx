@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useOrders } from '../../context/OrderContext';
 import { CircularProgress, styled } from '@mui/material';
-
 
 const CuteProgress = styled(CircularProgress)(({ theme }) => ({
     color: '#f06292', 
@@ -16,6 +15,15 @@ const CuteProgress = styled(CircularProgress)(({ theme }) => ({
 const OrderDetailPage: React.FC = () => {
     const { orderId } = useParams<{ orderId: string }>();
     const { fetchOrderDetails, selectedOrder, error } = useOrders();
+    const user = localStorage.getItem("user")
+    
+    if (!user) {
+        return <Navigate to="/login" replace={true}/>
+    }
+    
+    if (user && selectedOrder && user.username !== selectedOrder[0]?.username) {
+        return <Navigate to="/hellodarknessmyoldfriend" replace={true}/>
+    }
 
     useEffect(() => {
         if (orderId) {

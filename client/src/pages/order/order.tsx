@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useOrders } from '../../context/OrderContext';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress, styled } from '@mui/material';
-
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const CuteProgress = styled(CircularProgress)(({ theme }) => ({
     color: '#f06292', 
@@ -16,6 +17,7 @@ const OrdersPage: React.FC = () => {
     const { orders, loading, error } = useOrders();
     const [limit, setLimit] = useState(10);
     const navigate = useNavigate();
+    const user = useAuth();
 
     const handleViewDetails = (orderId: string) => {
         navigate(`/order/${orderId}`);
@@ -28,10 +30,12 @@ const OrdersPage: React.FC = () => {
         </div>
       );
     }
+
     
     if (error) return <div>Error: {error}</div>;
 
-    return (
+return (
+    localStorage.getItem("user") ? (
         <div className="container min-h-screen mx-auto mt-10 p-5 bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400 rounded-xl shadow-lg">
             <div className="flex justify-between">
                 <h2 className="text-3xl font-bold text-gray-700">Đơn hàng của tôi</h2>
@@ -77,7 +81,11 @@ const OrdersPage: React.FC = () => {
                 </table>
             </div>
         </div>
-    );
+    ) : (
+        <Navigate to="/login" replace={true}/>
+    )
+);
+
 };
 
 export default OrdersPage;

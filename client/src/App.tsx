@@ -24,7 +24,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFoundPage from "./pages/error/404";
 
-
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -39,6 +38,7 @@ const theme = createTheme({
 
 function App() {
   const {user} = useAuth();
+
 
   const Layout = ({ children }: { children: React.ReactNode }) => (
     <>
@@ -75,8 +75,8 @@ function App() {
         <Route path="/about-us" element={<Layout><AboutUs /></Layout>} />
         <Route path="/cart" element={<Layout><CartPage /></Layout>} />
         <Route path="/checkout" element={<Layout><CheckoutPage /></Layout>} />
-        <Route path="/order" element={<Layout><OrdersPage /></Layout>} />
-        <Route path="/order/:orderId" element={<Layout><OrderDetailPage /></Layout>} />
+        <Route path="/order" element={<Layout><OrdersPage /></Layout>} />        
+        <Route path="/order/:orderId" element={<Layout><OrderDetailPage /></Layout>} />   
         <Route path="/login" element={<Layout><Login /></Layout>} />
         <Route path="/profile" element={<Layout><UserProfile /></Layout>} />
         <Route path="/admin" element={<Layout><Admin/></Layout>} />
