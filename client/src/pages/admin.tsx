@@ -94,13 +94,13 @@ const Admin = () => {
         return (
         <>
         <div className="flex flex-col gap-2">
-            <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
+            <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 p-4 rounded-lg shadow-lg"
                     onClick={() => { handleMana("user"); handleShowUser()}}
             >
                 <h2 className="text-xl">Quản lý người dùng</h2>
                 <p className="">Xem, xóa người dùng và thêm người quản trị</p>
             </button>
-            <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 bg-white p-4 rounded-lg shadow-lg"
+            <button className="transition ease-in-out delay-50 bg-white hover:-translate-y-1 hover:scale-100 hover:bg-pink-400 hover:text-white duration-300 p-4 rounded-lg shadow-lg"
                     onClick={() => { handleMana("product"); handleShowProduct()}}
             >
                 <h2 className="text-xl">Quản lý sản phẩm</h2>
