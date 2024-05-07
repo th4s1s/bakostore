@@ -9,11 +9,15 @@
         $newpwd = $_POST["newpwd"];
         $oldpwd = $_POST["oldpwd"];
 
+<<<<<<< Updated upstream
         $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
         if ($mysqli->connect_error) {
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
         }
+=======
+        require '../connect.php';
+>>>>>>> Stashed changes
 
         $stmt = $mysqli->prepare("SELECT * FROM users WHERE token = ?");
         $stmt->bind_param("s", $token);

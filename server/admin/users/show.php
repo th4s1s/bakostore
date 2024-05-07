@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         return;
     }
 
-    require '../connect.php';
+    require '../../connect.php';
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE token != ?");
     $stmt->bind_param("s", $token);
 

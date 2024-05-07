@@ -1,6 +1,16 @@
 <?php
 function auth($token) {
+<<<<<<< Updated upstream
     require 'connect.php';
+=======
+
+    header("Access-Control-Allow-Origin: *");
+
+
+    header("Access-Control-Allow-Headers: Content-Type");
+    
+    require '../connect.php';
+>>>>>>> Stashed changes
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE token = ?");
     $stmt->bind_param("s", $token);
 

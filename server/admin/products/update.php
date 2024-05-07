@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $type = $_POST['type'];
 
-    require '../connect.php';
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("UPDATE products SET name = ?, description = ?, price = ?, image = ?, type = ? WHERE id = ?");
     $stmt->bind_param("ssissi", $name, $description, $price, $image, $type, $id);

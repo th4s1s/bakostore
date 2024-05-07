@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $id = $_POST['id'];
 
-    require '../connect.php';
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("DELETE FROM products WHERE id = ?");
     $stmt->bind_param("i", $id);

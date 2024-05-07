@@ -7,11 +7,15 @@
 
         $id = intval($_GET["id"]);
 
+<<<<<<< Updated upstream
         $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
         if ($mysqli->connect_error) {
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
         }
+=======
+        require '../connect.php';
+>>>>>>> Stashed changes
 
         $stmt = $mysqli->prepare("CALL GetOrderDetail(?)");
         $stmt->bind_param("i", $id);

@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    require '../connect.php';
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("INSERT INTO news (title, content, cover) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $title, $content, $cover);

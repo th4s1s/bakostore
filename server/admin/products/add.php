@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $type = $_POST['type'];
 
-    require '../connect.php';
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("INSERT INTO products (name, description, price, image, type) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $name, $description, $price, $image, $type);

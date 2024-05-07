@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $username = $_POST["username"];
 
-    require '../connect.php';
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);

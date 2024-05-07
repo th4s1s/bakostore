@@ -1,5 +1,11 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    header("Access-Control-Allow-Origin: *");
+
+
+    header("Access-Control-Allow-Headers: Content-Type");
+    
     if (!isset($_POST["username"]) || !isset($_POST["password"]) || !isset($_POST["name"]) || !isset($_POST["phone"])) {
         http_response_code(400); // Bad Request
         exit;
@@ -15,25 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    if (strlen($username) < 8 || strlen($username) > 25 || strlen($password) < 8 || strlen($password) > 25) {
-        http_response_code(400); // Bad Request
-        exit;
-    }
-
-    if (strlen($phone) !== 10 || strpos($phone, '0') !== 0) {
-        http_response_code(400); // Bad Request
-        exit;
-    }
-
-<<<<<<< Updated upstream
-    $mysqli = new mysqli('localhost', 'root', '', 'btl');
-
-    if ($mysqli->connect_error) {
-        die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-    }
-=======
-    require '../connect.php';
->>>>>>> Stashed changes
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
@@ -46,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $token = hash('sha256', $username . $password . $name . $phone . time());
     $password = hash('sha256', $password);
-    $stmt = $mysqli->prepare("INSERT INTO users (username, password, name, phone, token) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $mysqli->prepare("INSERT INTO users (username, password, name, phone, token, is_admin) VALUES (?, ?, ?, ?, ?, 1)");
     $stmt->bind_param("sssss", $username, $password, $name, $phone, $token);
 
     if ($stmt->execute()) {

@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         return;
     }
 
-    require '../connect.php';
+    require '../../connect.php';
     $sql = "SELECT * FROM news";
     $result = $mysqli->query($sql);
     $news = [];

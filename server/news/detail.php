@@ -7,11 +7,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $id = intval($_GET["id"]);
 
+<<<<<<< Updated upstream
     $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
     if ($mysqli->connect_error) {
         die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
     }
+=======
+    require '../connect.php';
+>>>>>>> Stashed changes
 
     $stmt = $mysqli->prepare("SELECT * FROM news WHERE id = ?");
     $stmt->bind_param("i", $id);

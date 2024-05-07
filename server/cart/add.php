@@ -10,11 +10,15 @@
         $pid = intval($_POST["pid"]);
         $amount = intval($_POST["amount"]);
 
+<<<<<<< Updated upstream
         $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
         if ($mysqli->connect_error) {
             die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
         }
+=======
+        require '../connect.php';
+>>>>>>> Stashed changes
 
         $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND token = ?");
         $stmt->bind_param("ss", $username, $token);

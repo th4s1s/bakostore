@@ -9,11 +9,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     
 
+<<<<<<< Updated upstream
     $mysqli = new mysqli('localhost', 'root', '', 'btl');
 
     if ($mysqli->connect_error) {
         die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
     }
+=======
+    
+    require '../connect.php';
+>>>>>>> Stashed changes
 
     $password = hash('sha256', $password);
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ? AND password = ?");

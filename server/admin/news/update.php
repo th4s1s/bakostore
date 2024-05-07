@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cover = $_POST['cover'];
     }
 
-    require '../connect.php';
+    require '../../connect.php';
 
     $stmt = $mysqli->prepare("UPDATE news SET title = ?, content = ?, cover = ? WHERE id = ?");
     $stmt->bind_param("sssi", $title, $content, $cover, $id);
