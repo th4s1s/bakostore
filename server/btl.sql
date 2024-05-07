@@ -129,8 +129,8 @@ CREATE TABLE IF NOT EXISTS cart (
   pid int(11) NOT NULL,
   amount int(11) NOT NULL,
   PRIMARY KEY (username, pid),
-  FOREIGN KEY (username) REFERENCES users(username),
-  FOREIGN KEY (pid) REFERENCES products(id)
+  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELIMITER //
@@ -203,8 +203,8 @@ CREATE TABLE IF NOT EXISTS orders (
   ship int(11) NOT NULL DEFAULT 0,
   date date NOT NULL DEFAULT (CURRENT_DATE()),
   PRIMARY KEY (id, username, pid),
-  FOREIGN KEY (username) REFERENCES users(username),
-  FOREIGN KEY (pid) REFERENCES products(id)
+  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELIMITER //
@@ -254,8 +254,8 @@ CREATE TABLE IF NOT EXISTS comments (
   comment text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   rating int(11) NOT NULL,
   date date NOT NULL DEFAULT (CURRENT_DATE()),
-  FOREIGN KEY (username) REFERENCES users(username),
-  FOREIGN KEY (pid) REFERENCES products(id)
+  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DELIMITER //
