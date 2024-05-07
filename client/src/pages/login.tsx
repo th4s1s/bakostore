@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface FormErrors {
     username?: string;
@@ -10,7 +11,7 @@ interface FormErrors {
     name?: string;
     phone?: string;
   }
-  
+
 
 function Login() {
     const { login } = useAuth();
@@ -51,7 +52,7 @@ function Login() {
         e.preventDefault();
 
         if(!isSignIn){
-            const newErrors: FormErrors = {}; 
+            const newErrors: FormErrors = {};
 
             if (e.target.username.value.length < 8 || e.target.username.value.length > 25) {
                 newErrors.username = 'Tên đăng ký phải có độ dài từ 8 đến 25 ký tự';
@@ -101,6 +102,8 @@ function Login() {
                             'Content-Type': 'application/x-www-form-urlencoded'
                         }
                     });
+                    toast.success("Đăng ký thành công");
+                    setIsSignIn(true);
                 } catch (error) {
                     // console.error('Error:', error.response.status);
                     if((error as any).response.status == 409){
@@ -111,7 +114,7 @@ function Login() {
             setErrors(newErrors);
         }
         else{
-            const newErrors: FormErrors = {}; 
+            const newErrors: FormErrors = {};
             if(!e.target.username.value){
                 newErrors.username = 'Vui lòng nhập tên đăng nhập';
             }
@@ -132,8 +135,8 @@ function Login() {
                         }
                     });
                     // console.log(response.data)
-                    login(response.data); 
-                    navigate('/shop'); 
+                    login(response.data);
+                    navigate('/shop');
                 } catch (error) {
                     console.error('Error:', error);
                     if((error as any).response.status == 404 || (error as any).response.status == 400){

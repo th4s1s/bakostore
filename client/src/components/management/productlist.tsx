@@ -48,9 +48,8 @@ const categoryOptions = [
 ]
 
 
-const ProductListTable = ({productList , setProductList, token }) => {
+const ProductListTable = ({productList , setProductList, token, page, setPage }) => {
 
-    const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [isSelected, setSelected] = useState(new Array(productList.length).fill(false));
@@ -455,6 +454,8 @@ const ProductList = ({ productData , token}) => {
     const [addNewProduct, setAddNewProduct] = useState(false);
     const [productList, setProductList] = useState(productData);
 
+    //page
+    const [page, setPage] = useState(0);
     // const [searchTerm, setSearchTerm] = useState('');
 
     const NewProductForm = () => {
@@ -698,6 +699,7 @@ const ProductList = ({ productData , token}) => {
             product.name.toLowerCase().includes(term.toLowerCase())
         );
         setProductList(filtered)
+        setPage(0);
     }
 
     return (
@@ -762,7 +764,7 @@ const ProductList = ({ productData , token}) => {
                 </Stack>
                 </Card>
                 <Card>
-                    {productList && <ProductListTable productList={productList} setProductList={setProductList} token={token}/>}
+                    {productList && <ProductListTable productList={productList} setProductList={setProductList} token={token} page={page} setPage={setPage}/>}
                 </Card>
             </Stack>
             </Container>

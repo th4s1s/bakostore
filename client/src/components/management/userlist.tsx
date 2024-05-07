@@ -34,9 +34,8 @@ import {
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const UserListTable = ({userList, setUserList, token}) => {
+const UserListTable = ({userList, setUserList, token, page, setPage}) => {
 
-    const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [isSelected, setSelected] = useState(new Array(userList.length).fill(false));
@@ -356,6 +355,8 @@ const UserList = ({ userData , token}) => {
     const [addNewUser, setAddNewUser] = useState(false);
     const [userList, setUserList] = useState(userData);
 
+    const [page, setPage] = useState(0);
+
     const NewUserForm = () => {
         // const [newId, setNewId] = useState('');
         const [newUsername, setNewUsername] = useState('');
@@ -576,7 +577,7 @@ const UserList = ({ userData , token}) => {
                 </Stack>
                 </Card>
                 <Card>
-                {userList && <UserListTable userList={userList} setUserList={setUserList} token={token}/>}
+                {userList && <UserListTable userList={userList} setUserList={setUserList} token={token} page={page} setPage={setPage}/>}
                 </Card>
             </Stack>
             </Container>

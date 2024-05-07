@@ -36,12 +36,11 @@ import {
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const NewsListTable = ({newsList, setNewsList, token}) => {
+const NewsListTable = ({newsList, setNewsList, token, page, setPage}) => {
     // console.log(productData);
 
     // const [newsList, setNewsList] = useState(newsData);
 
-    const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [isSelected, setSelected] = useState(new Array(newsList.length).fill(false));
@@ -406,6 +405,8 @@ const NewsList = ({ newsData, token }) => {
     const [addNewNews, setAddNewNews] = useState(false);
     const [newsList, setNewsList] = useState(newsData);
 
+    const [page, setPage] = useState(0);
+
     const NewProductForm = () => {
         // const [newId, setNewId] = useState('');
         const [newTitle, setNewTitle] = useState('');
@@ -618,6 +619,7 @@ const NewsList = ({ newsData, token }) => {
             news.title.toLowerCase().includes(term.toLowerCase())
         );
         setNewsList(filtered)
+        setPage(0);
     }
 
 
@@ -682,7 +684,7 @@ const NewsList = ({ newsData, token }) => {
                 </Stack>
                 </Card>
                 <Card>
-                {newsList && <NewsListTable newsList={newsList} setNewsList={setNewsList} token={token}/>}
+                {newsList && <NewsListTable newsList={newsList} setNewsList={setNewsList} token={token} page={page} setPage={setPage}/>}
                 </Card>
             </Stack>
             </Container>
