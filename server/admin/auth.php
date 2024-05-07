@@ -6,7 +6,7 @@ function auth($token) {
 
     header("Access-Control-Allow-Headers: Content-Type");
     
-    require 'connect.php';
+    require '../../connect.php';
     $stmt = $mysqli->prepare("SELECT * FROM users WHERE token = ?");
     $stmt->bind_param("s", $token);
 
